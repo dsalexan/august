@@ -10,26 +10,21 @@ var server = app.listen(port, () => {
 })
 
 var Test = require('./models/Test')
-var authController = require('./auth/AuthController')
+var authController = require('./controllers/AuthController')
 
+// log request middleware
 router.use(function(req, res, next) {
     console.log(req.method, req.url)
 
     next()
 })
 
-router.get('/api/test/get', (req, res, next) => {
-    Test.getTest().then(data => {
-        res.status(200)
-            .json({
-                status: 'success',
-                data: data,
-                message: 'Get Test'
-            })
-    }).catch(err => {
-        return next(err)
-    })
-})
-
 app.use('/api/auth', authController)
 app.use('/', router);
+
+// error handling middleware
+// chamar next(err) nos error handling individuais em cada rota pra cair nesse error handler genérico aqui
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).json(err);
+});
