@@ -9,7 +9,7 @@ const localidades = new pq(sql.caronas.select_localidades);
 module.exports = {
     searchViagemDataHoraLocal: (d, h, l) => {
         
-        db.one(viagem1, [d, h, l])
+        db.any(viagem1, [d, h, l])
         .then(v => {
             console.log(v.id_viagem)
         })
@@ -18,7 +18,7 @@ module.exports = {
         });
     },
     searchViagemDataHora: (d, h) => {
-        db.one(viagem2, [d, h])
+        db.any(viagem2, [d, h])
         .then(v => {
             console.log(v.id_viagem)
         })
@@ -28,7 +28,7 @@ module.exports = {
     },
     selectLocalidadeDescricao: () => {
         
-        db.one(localidades)
+        db.any(localidades)
         .then(l => {
             console.log(l)
         })
