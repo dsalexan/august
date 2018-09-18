@@ -19,6 +19,14 @@ module.exports = {
     test: {
         get: sql('queries/test/get.sql')
     },
+    users: {
+        insert: sql('queries/users/insert.sql')
+    },
+    caronas: {
+        srch_viagemDataHoraLocal: sql('queries/carona/search_viagem_data_hora_local.sql'),
+        srch_viagemDataHora: sql('queries/carona/search_viagem_data_hora.sql'),
+        select_localidades: sql('queries/carona/select_localidade_descricao.sql')
+    }
     // // external queries for Users:
     // users: {
     //     add: sql('queries/users/create.sql'),
