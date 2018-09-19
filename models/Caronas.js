@@ -2,14 +2,30 @@ const db = require('../db')
 const sql = require('./sql')
 const pq = require('pg-promise').ParameterizedQuery;
 
-const viagem1 = new pq(sql.caronas.srch_viagemDataHoraLocal);
-const viagem2 = new pq(sql.caronas.srch_viagemDataHora);
-const localidades = new pq(sql.caronas.select_localidades);
-
 module.exports = {
+    deleteViagem: (id) => {
+        const viagem = new pq(sql.caronas.del_viagem);
+        db.any(viagem, [d])
+        .then(v => {
+            console.log(v)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    insertViagem: (id_motorista, id_origem, id_destino, dia, hora, preco, qtd_vagas, descricao) => {
+        const viagem = new pq(sql.caronas.ins_viagem);
+        db.none(viagem, [id_motorista, id_origem, id_destino, dia, hora, preco, qtd_vagas, descricao])
+        .then(v => {
+            console.log(v)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
     searchViagemDataHoraLocal: (d, h, l) => {
-        
-        db.any(viagem1, [d, h, l])
+        const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
+        db.any(viagem, [d, h, l])
         .then(v => {
             console.log(v.id_viagem)
         })
@@ -18,7 +34,28 @@ module.exports = {
         });
     },
     searchViagemDataHora: (d, h) => {
-        db.any(viagem2, [d, h])
+        const viagem = new pq(sql.caronas.srch_viagemDataHora);
+        db.any(viagem, [d, h])
+        .then(v => {
+            console.log(v.id_viagem)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    searchViagemMotorista: (id) => {
+        const viagem = new pq(sql.caronas.srch_viagemMotorista);
+        db.any(viagem, [id])
+        .then(v => {
+            console.log(v.id_viagem)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    searchViagemPassageiro: (id) => {
+        const viagem = new pq(sql.caronas.srch_viagemPassageiro);
+        db.any(viagem, [id])
         .then(v => {
             console.log(v.id_viagem)
         })
@@ -27,10 +64,40 @@ module.exports = {
         });
     },
     selectLocalidadeDescricao: () => {
-        
+        const localidades = new pq(sql.caronas.select_localidadesDescricao);
         db.any(localidades)
         .then(l => {
             console.log(l)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    selectLocalidadedID: (descricao) => {
+        const viagem = new pq(sql.caronas.select_localidadesID);
+        db.oneOrNone(viagem, [descricao])
+        .then(v => {
+            console.log(v.id_viagem)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    updateDiaViagem: (antigo, novo) => {
+        const viagem = new pq(sql.caronas.update_viagemDia);
+        db.none(viagem, [antigo, novo])
+        .then(v => {
+            console.log(v)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    updateHorarioViagem: (antigo, novo) => {
+        const viagem = new pq(sql.caronas.update_viagemHorario);
+        db.none(viagem, [antigo, novo])
+        .then(v => {
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
