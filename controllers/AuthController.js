@@ -12,12 +12,18 @@ var UnifespController = require('./UnifespController')
 
 var Users = require('../models/Users')
 
+var jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
+var config = require('../config');
+
 // TODO: add winston logging to this
 router.post('/login', function(req, res){
     var username = req.body.username
     var password = req.body.password // TODO: encriptar o password no outro lado da chamada usando um metodo 
                                      // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                                      // nao vao interceptar as credenciais do usuario
+
+    // var hashedPassword = bcrypt.hashSync(password, 8);
 
     if(username == undefined || password == undefined){
         res.status(400).send({
@@ -30,6 +36,10 @@ router.post('/login', function(req, res){
     const sendResult = function(user){
         var token = auth.token(user) // TODO: invalidar o token assim que o usuário executar logout no app? 
         // ou talvez colocar uma data de expiração e refazer o token a cada X dias?
+
+        // var token = jwt.sign({username: username, password: hashedPassword}, config.secret, {
+        //     expiresIn: 86400 // expires in 24 hours
+        // });
 
         console.log(`Login successful for ${user.username_unifesp} with token: ${token}`)
         res.status(200).send({
@@ -67,6 +77,14 @@ router.post('/login', function(req, res){
 
 router.get('/me', auth.auth, function (req, res) {
     res.status(200).send(req.user)
+    // var token = req.headers['x-access-token'];
+    // if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+    
+    // jwt.verify(token, config.secret, function(err, decoded) {
+    //     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      
+    //     res.status(200).send(decoded);
+    // });
 })
 
 
