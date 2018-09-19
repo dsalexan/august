@@ -27,7 +27,7 @@ module.exports = {
         const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
         db.any(viagem, [d, h, l])
         .then(v => {
-            console.log(v.id_viagem)
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
@@ -37,7 +37,7 @@ module.exports = {
         const viagem = new pq(sql.caronas.srch_viagemDataHora);
         db.any(viagem, [d, h])
         .then(v => {
-            console.log(v.id_viagem)
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
@@ -47,7 +47,7 @@ module.exports = {
         const viagem = new pq(sql.caronas.srch_viagemMotorista);
         db.any(viagem, [id])
         .then(v => {
-            console.log(v.id_viagem)
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
@@ -57,7 +57,7 @@ module.exports = {
         const viagem = new pq(sql.caronas.srch_viagemPassageiro);
         db.any(viagem, [id])
         .then(v => {
-            console.log(v.id_viagem)
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
@@ -73,19 +73,9 @@ module.exports = {
             console.log(error)
         });
     },
-    selectLocalidadedID: (descricao) => {
-        const viagem = new pq(sql.caronas.select_localidadesID);
+    selectLocalidade: (descricao) => {
+        const viagem = new pq(sql.caronas.select_localidade);
         db.oneOrNone(viagem, [descricao])
-        .then(v => {
-            console.log(v.id_viagem)
-        })
-        .catch(error => {
-            console.log(error)
-        });
-    },
-    updateDiaViagem: (antigo, novo) => {
-        const viagem = new pq(sql.caronas.update_viagemDia);
-        db.none(viagem, [antigo, novo])
         .then(v => {
             console.log(v)
         })
@@ -93,9 +83,19 @@ module.exports = {
             console.log(error)
         });
     },
-    updateHorarioViagem: (antigo, novo) => {
+    updateDiaViagem: (novo, id) => {
+        const viagem = new pq(sql.caronas.update_viagemDia);
+        db.none(viagem, [novo, id])
+        .then(v => {
+            console.log(v)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    updateHorarioViagem: (novo, id) => {
         const viagem = new pq(sql.caronas.update_viagemHorario);
-        db.none(viagem, [antigo, novo])
+        db.none(viagem, [novo, id])
         .then(v => {
             console.log(v)
         })

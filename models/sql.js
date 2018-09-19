@@ -30,7 +30,7 @@ module.exports = {
         srch_viagemMotorista: sql('queries/carona/search_viagem_motorista.sql'),
         srch_viagemPassageiro: sql('queries/carona/search_viagem_passageiro.sql'),
         select_localidadesDescricao: sql('queries/carona/select_localidade_descricao.sql'),
-        select_localidadesID: sql('queries/carona/select_localidade_id.sql'),
+        select_localidade: sql('queries/carona/select_localidade.sql'),
         update_viagemDia: sql('queries/carona/update_dia.sql'),
         update_viagemHorario: sql('queries/carona/update_horario.sql')
 
