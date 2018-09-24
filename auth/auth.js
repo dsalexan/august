@@ -1,6 +1,8 @@
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken')
 
 const Users = require('../models/Users')
+
+var bcrypt = require('bcryptjs')
 
 // para uma requisição para a api passar na autenticação é necessário:
 // PRIMEIRO - fazer uma chamada com o username e o password da intranet, e guardar o token resultado
@@ -39,8 +41,12 @@ module.exports.auth = function(req, res, next){
 
 module.exports.token = function(user){
     var token = jwt.sign({
-        id: user.id
-    }, process.env.SECRET)
+        username: user.usuario,
+        password: user.senha // Cripto.encrypt(user.senha)
+    }, process.env.SECRET);
+    // {
+    //     expiresIn: 86400 // expires in 24 hours
+    // })
 
     return token
 }

@@ -12,18 +12,12 @@ var UnifespController = require('./UnifespController')
 
 var Users = require('../models/Users')
 
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-var config = require('../config');
-
 // TODO: add winston logging to this
 router.post('/login', function(req, res){
-    var username = req.body.username
-    var password = req.body.password // TODO: encriptar o password no outro lado da chamada usando um metodo 
+    var usuario = req.body.username
+    var senha = req.body.password // TODO: encriptar o password no outro lado da chamada usando um metodo 
                                      // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                                      // nao vao interceptar as credenciais do usuario
-
-    // var hashedPassword = bcrypt.hashSync(password, 8);
 
     if(username == undefined || password == undefined){
         res.status(400).send({
@@ -41,7 +35,7 @@ router.post('/login', function(req, res){
         //     expiresIn: 86400 // expires in 24 hours
         // });
 
-        console.log(`Login successful for ${user.username_unifesp} with token: ${token}`)
+        console.log(`Login successful for ${user.usuario} with token: ${token}`)
         res.status(200).send({
             auth: true,
             token: token
@@ -49,28 +43,37 @@ router.post('/login', function(req, res){
     }
 
     // auth/login vai funcionar como registro se nao houver conta de usuario com essas credenciais (válidas) ou como entrar caso contrario
-    console.log(`Authenticating for ${username}...`)
-    UnifespController.authenticateProxy(username, password, result => {
-        if(result.auth){
-            Users.findByUsernameUnifesp(username).then(user => {
-                if(user == null){ // register user
-                    console.log(`Registering ${username}...`)
-                    Users.registerUnifesp(username).then(user => {
-                        sendResult(user) // enviar resultado
-                    }).catch(err => {
-                        return next(err)
-                    })
-                }else{ // login user
-                    sendResult(user) // enviar resultado
+    console.log(`Authenticating for ${usuario}...`)
+    UnifespController.authenticateProxy(usuario, senha,
+    result => { // Tentar fazer login no intranet
+        if (result.auth) { // Achou o usuario no intranet e a senha esta correta
+            Users.findByUsernameUnifesp(usuario)
+            .then(
+                user => { // Procurar usuario no nosso banco
+                    if (user == null) { // Nao achou, registrar novo usuario e fazer login
+                        console.log(`Registering ${usuario}...`)
+                        Users.registerUnifesp(usuario, senha)
+                        .then(
+                            user => {
+                                sendResult({usuario: user.usuario, senha: user.senha}) // Enviar os dados do usuario para fazer login
+                            }
+                        )
+                        .catch(err => {return next(err)})
+                    }
+                    else { // Achou no nosso banco, fazer login
+                        sendResult({usuario: user.usuario, senha: user.senha}) // Enviar os dados do usuario para fazer login
+                    }
                 }
-            })
-        }else{
+            )
+        }
+        else { // Nao deu certo no intranet
             res.status(401).send({
                 auth: false,
                 message: 'Incorrect credentials'
             })
         }
-    }, err => {
+    },
+    err => {
         return next(err)
     })
 })

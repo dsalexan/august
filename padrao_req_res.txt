@@ -1,0 +1,42 @@
+Usar tipos de requisição para especificar a função:
+GET - Select
+POST - Insert
+PUT - Update
+Delete - Delete
+
+Exemplos:
+GET .../alunos - Retorna a lista de alunos (SELECT * FROM alunos WHERE ...)
+Post .../alunos - Cria um novo aluno (INSERT INTO alunos ...)
+
+Sempre usar substantivos, sempre no plural
+Exemplos:
+.../alunos, .../caronas, ...
+
+Exemplos de como fazer requisições relacionadas a uma instancia específcica:
+GET .../alunos/112344/email
+GET .../alunos/112344/caronas
+
+Especificar campos:
+GET .../alunos?fields=ra,nome
+
+Filtrar resultados:
+GET .../alunos?ra>=110000,ra<120000
+
+Ordenar resultados:
+GET .../alunos?sort=+nome (nome crescente)
+
+Especificar versão da API:
+GET /api/v1/alunos...
+
+Usar status code de HTTP nas respostas do servidor:
+200 OK
+201 Created
+204 No Content
+304 Not Modified
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+409 Conflict
+500 Internal Server Error
+... (https://www.restapitutorial.com/httpstatuscodes.html)
