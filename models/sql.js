@@ -23,9 +23,17 @@ module.exports = {
         insert: sql('queries/users/insert.sql')
     },
     caronas: {
+        del_viagem: sql('queries/carona/delete_viagem.sql'),
+        ins_viagem: sql('queries/carona/insert_viagem.sql'),
         srch_viagemDataHoraLocal: sql('queries/carona/search_viagem_data_hora_local.sql'),
         srch_viagemDataHora: sql('queries/carona/search_viagem_data_hora.sql'),
-        select_localidades: sql('queries/carona/select_localidade_descricao.sql')
+        srch_viagemMotorista: sql('queries/carona/search_viagem_motorista.sql'),
+        srch_viagemPassageiro: sql('queries/carona/search_viagem_passageiro.sql'),
+        select_localidadesDescricao: sql('queries/carona/select_localidade_descricao.sql'),
+        select_localidade: sql('queries/carona/select_localidade.sql'),
+        update_viagemDia: sql('queries/carona/update_dia.sql'),
+        update_viagemHorario: sql('queries/carona/update_horario.sql')
+
     }
     // // external queries for Users:
     // users: {
