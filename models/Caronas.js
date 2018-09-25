@@ -11,7 +11,7 @@ module.exports = {
         
         db.any(viagem1, [d, h, l])
         .then(v => {
-            console.log(v.id_viagem)
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
@@ -20,7 +20,7 @@ module.exports = {
     searchViagemDataHora: (d, h) => {
         db.any(viagem2, [d, h])
         .then(v => {
-            console.log(v.id_viagem)
+            console.log(v)
         })
         .catch(error => {
             console.log(error)
