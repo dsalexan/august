@@ -22,7 +22,7 @@ router.use(function(req, res, next) {
 })
 
 // 
-router.get('/unifesp/aluno/:info', Alunos.checkIfExists)
+router.get('/aluno/buscar/:nome/:senha', Alunos.getAluno)
 
 // sa
 router.get('/teste/:id', Carona.getAllCaronas)

@@ -34,7 +34,9 @@ module.exports = {
         select_localidade: sql('queries/carona/select_localidade.sql'),
         update_viagemDia: sql('queries/carona/update_dia.sql'),
         update_viagemHorario: sql('queries/carona/update_horario.sql')
-
+    },
+    aluno: {
+        consultar_por_nome: sql('queries/aluno/consulta_aluno_nome.sql'),
     }
     // // external queries for Users:
     // users: {

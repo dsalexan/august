@@ -3,11 +3,17 @@ const sql = require('./sql')
 const pq = require('pg-promise').ParameterizedQuery;
 
 module.exports = {
-    checkUser: (id) => {
-        const viagem = new pq(sql.caronas.del_viagem);
-        db.any(viagem, [id])
-        .then(v => {
-            console.log(v)
+    getAluno: (req, res, next) => {
+        var nome = req.params.nome
+        var senha = req.params.senha
+
+        var aluno = new pq(sql.aluno.consultar_por_nome);
+        db.any(aluno, [nome, senha])
+        .then(a => {
+            res.status(200).json({
+                status: 'success',
+                data: a
+            });
         })
         .catch(error => {
             console.log(error)
