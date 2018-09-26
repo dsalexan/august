@@ -23,14 +23,21 @@ module.exports = {
             console.log(error)
         });
     },
-    searchViagemDataHoraLocal: (d, h, l) => {
+    searchViagemDataHoraLocal: (d, h, l, res, next) => {
         const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
         db.any(viagem, [d, h, l])
         .then(v => {
-            console.log(v)
+            // console.log(v)
+            res.status(200).json({
+                data: v,
+                success: true
+            })
         })
         .catch(error => {
-            console.log(error)
+            //console.log(error)
+            res.status(200).json({
+                success: false
+            })
         });
     },
     searchViagemDataHora: (d, h) => {
@@ -98,6 +105,22 @@ module.exports = {
         db.none(viagem, [novo, id])
         .then(v => {
             console.log(v)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+    getAllCaronas: (req, res, next) => {
+        var id = req.params.id
+        console.log('ID',req.params.id)
+        const viagem = new pq(sql.caronas.get_all);
+        db.any(viagem, [id])
+        .then(v => {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: v
+                });
         })
         .catch(error => {
             console.log(error)

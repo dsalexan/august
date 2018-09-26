@@ -23,6 +23,7 @@ module.exports = {
         insert: sql('queries/users/insert.sql')
     },
     caronas: {
+        get_all: sql('queries/carona/get_all.sql'),
         del_viagem: sql('queries/carona/delete_viagem.sql'),
         ins_viagem: sql('queries/carona/insert_viagem.sql'),
         srch_viagemDataHoraLocal: sql('queries/carona/search_viagem_data_hora_local.sql'),

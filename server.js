@@ -11,6 +11,7 @@ var server = app.listen(port, () => {
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
+var Carona = require('./models/Caronas');
 
 // log request middleware
 router.use(function(req, res, next) {
@@ -18,6 +19,8 @@ router.use(function(req, res, next) {
 
     next()
 })
+
+router.get('/teste/:id', Carona.getAllCaronas)
 
 app.use('/api/auth', authController)
 app.use('/', router);
