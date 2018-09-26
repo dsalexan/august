@@ -1,3 +1,3 @@
 UPDATE aluno
-SET email = $email
-WHERE ra_aluno = $ra_aluno;
+SET email = $1
+WHERE ra_aluno = $2;

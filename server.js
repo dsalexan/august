@@ -20,6 +20,10 @@ router.use(function(req, res, next) {
 })
 
 app.use('/api/auth', authController)
+app.use('/monica', function(req, res){
+    const Alunos = require('./models/Alunos')
+    Alunos.alteracao_email_aluno('000000', 'novoemail@bol.com')
+})
 app.use('/', router);
 
 // error handling middleware

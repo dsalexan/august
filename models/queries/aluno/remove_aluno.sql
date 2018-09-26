@@ -1,1 +1,1 @@
-DELETE FROM aluno WHERE ra_aluno = $ra_aluno;
+DELETE FROM aluno WHERE ra_aluno = $1;
