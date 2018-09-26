@@ -12,6 +12,7 @@ var server = app.listen(port, () => {
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
 var Carona = require('./models/Caronas');
+var Alunos = require('./models/Alunos');
 
 // log request middleware
 router.use(function(req, res, next) {
@@ -20,7 +21,12 @@ router.use(function(req, res, next) {
     next()
 })
 
+// 
+router.get('/unifesp/aluno/:info', Alunos.checkIfExists)
+
+// sa
 router.get('/teste/:id', Carona.getAllCaronas)
+router.get('/utilidades/saldo/id')
 
 app.use('/api/auth', authController)
 app.use('/', router);
