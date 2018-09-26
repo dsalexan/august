@@ -4,6 +4,7 @@ var express = require('express')
 var app = express()
 var port = process.env.PORT || 3000
 var router = express.Router()
+ || 13
 
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
@@ -50,11 +51,12 @@ app.use('/api/auth', authController)
 app.use('/monica', function(req, res){
     const Alunos = require('./models/Alunos')
     Alunos.alteracao_email_aluno('000000', 'novoemail@bol.com')
+    console.log(req.body.carlos)
 })
 app.use('/', router);
 
 // error handling middleware
-// chamar next(err) nos error handling individuais em cada rota pra cair nesse error handler genérico aqui
+// chamar next(err) nos erro0r handling individuais em cada rota pra cair nesse error handler genérico aqui
 app.use(function(err, req, res, next) {
     console.error(err.stack);
     res.status(500).json(err);
