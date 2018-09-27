@@ -23,31 +23,41 @@ module.exports = {
             console.log(error)
         });
     },
-    searchViagemDataHoraLocal: (d, h, l, res, next) => {
+    searchViagemDataHoraLocal: (req, res, next) => {
+        var data = req.query.data
+        var hora = req.query.hora
+        var local = req.query.local
+
+        dados = [data, hora, local]
+        
         const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
-        db.any(viagem, [d, h, l])
+        db.any(viagem, dados)
         .then(v => {
-            // console.log(v)
             res.status(200).json({
                 data: v,
                 success: true
             })
         })
         .catch(error => {
-            //console.log(error)
-            res.status(200).json({
-                success: false
-            })
+            return next(error);
         });
     },
-    searchViagemDataHora: (d, h) => {
+    searchViagemDataHora: (req, res, next) => {
+        var data = req.query.data
+        var hora = req.query.hora
+
+        dados = [data, hora]
+        
         const viagem = new pq(sql.caronas.srch_viagemDataHora);
-        db.any(viagem, [d, h])
+        db.any(viagem, dados)
         .then(v => {
-            console.log(v)
+            res.status(200).json({
+                data: v,
+                success: true
+            })
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     },
     searchViagemMotorista: (id) => {
@@ -127,17 +137,3 @@ module.exports = {
         });
     },
 }
-
-
-
-
-//module.exports = {
-    //searchViagemDataHoraLocal: (d, h, l) => db.any(sql.caronas.srch_viagemDataHoraLocal, [d, h, l]),
-    //addUser: (name, age) => db.none(sql.users.add, [name, age]),
-    //findUser: name => db.any(sql.users.search, name)
-
-    //registerUnifesp: (username_unifesp, password_unifesp) => db.one("SELECT 9 AS id FROM test LIMIT 1"),
-
-    //findById: (id) => db.one("SELECT 9 AS id, 'dsalexandre' AS username_unifesp FROM test LIMIT 1"),
-    //findByUsernameUnifesp: (username_unifesp) => db.oneOrNone("SELECT 9 AS id, 'dsalexandre' AS username_unifesp FROM test WHERE id = -2 LIMIT 1")
-//}

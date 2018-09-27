@@ -21,12 +21,16 @@ router.use(function(req, res, next) {
     next()
 })
 
-// 
-router.get('/aluno/buscar/:nome/:senha', Alunos.getAluno)
+// Aluno
+router.get('/aluno/buscar/:login/:senha', Alunos.getAluno)
 
-// sa
-router.get('/teste/:id', Carona.getAllCaronas)
-router.get('/utilidades/saldo/id')
+// Carona
+router.get('/api/caronas/busca/datahora', Carona.searchViagemDataHora)
+router.get('/api/caronas/busca/datahora/local', Carona.searchViagemDataHoraLocal)
+
+// router.get('/carona/excluir/:id', Carona.deleteViagem)
+// router.get('/carona/inserir/:motorista/:origem/:id_destino, dia, hora, preco, qtd_vagas, descricao', Carona.deleteViagem)
+// router.get('/carona/buscar/datahora/local/:data/:hora/:local', Carona.searchViagemDataHoraLocal)
 
 app.use('/api/auth', authController)
 app.use('/', router);
