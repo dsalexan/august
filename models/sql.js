@@ -37,7 +37,9 @@ module.exports = {
     },
     aluno: {
         consultar_por_nome: sql('queries/aluno/consulta_aluno_nome.sql'),
+        alteracao_email_aluno: sql('queries/aluno/alteracao_email_aluno.sql')
     }
+    
     // // external queries for Users:
     // users: {
     //     add: sql('queries/users/create.sql'),

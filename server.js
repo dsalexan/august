@@ -33,6 +33,10 @@ router.get('/api/caronas/busca/datahora/local', Carona.searchViagemDataHoraLocal
 // router.get('/carona/buscar/datahora/local/:data/:hora/:local', Carona.searchViagemDataHoraLocal)
 
 app.use('/api/auth', authController)
+app.use('/monica', function(req, res){
+    const Alunos = require('./models/Alunos')
+    Alunos.alteracao_email_aluno('000000', 'novoemail@bol.com')
+})
 app.use('/', router);
 
 // error handling middleware

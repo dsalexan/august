@@ -18,5 +18,16 @@ module.exports = {
         .catch(error => {
             console.log(error)
         });
+    },
+    alteracao_email_aluno: (ra_aluno, email) => {
+        const cleber = new pq(sql.aluno.alteracao_email_aluno);
+        console.log(cleber)
+        db.none(cleber, {email: email, ra_aluno: ra_aluno})
+        .then(() =>{
+            console.log(`Alteracao de email concluida para o aluno ${ra_aluno}`)
+        })
+        .catch(error => {
+            console.log(error)
+        });
     }
 }

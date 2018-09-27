@@ -1,3 +1,3 @@
 UPDATE aluno
-SET login_intranet = $login_intranet
-WHERE ra_aluno = $ra_aluno;
+SET login_intranet = $1
+WHERE ra_aluno = $2;
