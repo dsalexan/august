@@ -19,47 +19,82 @@ module.exports = {
             console.log(error)
         });
     },
-    alteracao_email_aluno: (ra_aluno, email) => {
-        const alteremail = new pq(sql.alunos.alteracao_email_aluno);
+
+    alteracao_email_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+        var email = req.query.email
+        
+        dados = [email, ra_aluno]
+
+        const alteremail = new pq(sql.aluno.alteracao_email_aluno);
         console.log(alteremail)
-        db.none(alteremail, {email: email, ra_aluno: ra_aluno})
-        .then(() =>{
-            console.log(`Alteracao de email concluida para o aluno ${ra_aluno}.`)
+        db.any(alteremail, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+            //console.log(`Alteracao de email concluida para o aluno ${email}.`)
         })
         .catch(error => {
             console.log(error)
         });
     },
 
-    alteracao_nome_aluno: (ra_aluno, nome) => {
-        const alternome = new pq(sql.alunos.alteracao_nome_aluno);
+    alteracao_nome_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+        var nome = req.query.nome
+        
+        dados = [nome, ra_aluno]
+
+        const alternome = new pq(sql.aluno.alteracao_nome_aluno);
         console.log(alternome)
-        db.any(alternome, {nome: nome, ra_aluno: ra_aluno})
-        .then(() => {
-            console.log(`Alteracao de nome concluida para o aluno ${nome}`)
-        })
-        .catch(error => {
-            console.log(error)
-        });
-    },
-
-    consulta_aluno: (ra_aluno) => {
-        const consaluno = new pq(sql.alunos.consulta_aluno);
-        console.log(consaluno)
-        db.any(consaluno, {ra_aluno: ra_aluno})
+        db.any(alternome, dados)
         .then(v => {
-            console.log(v)
+            res.status(200).json({
+                data: v,
+                success: true
+            })
         })
         .catch(error => {
             console.log(error)
         });
     },
 
-    insert_aluno: (ra_aluno, nome, login_intranet, email) => {
+    consulta_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+        dados = [ra_aluno]
+
+        const consaluno = new pq(sql.aluno.consulta_aluno);
+        console.log(consaluno)
+        db.any(consaluno, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    },
+
+    insert_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+        var nome = req.query.nome
+        var login_intranet = req.query.login_intranet
+        var email = req.query.email
+        
+        dados = [ra_aluno, nome, login_intranet, email]
+
         const inseraluno = new pq(sql.alunos.insert_aluno);
         console.log(inseraluno)
-        db.any(inseraluno, {ra_aluno: ra_aluno, nome:nome, login_intranet:login_intranet, email:email})
+        db.none(inseraluno, dados)
         .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
             console.log(`Insercao do aluno ${nome} realizada com sucesso.`)
         })
         .catch(error => {
@@ -67,11 +102,19 @@ module.exports = {
         });
     },
 
-    remove_aluno: (ra_aluno) => {
-        const removaluno = new pq(sql.alunos.remove_aluno);
+    remove_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+
+        dados = [ra_aluno]
+
+        const removaluno = new pq(sql.aluno.remove_aluno);
         console.log(removaluno)
-        db.any(removaluno, {ra_aluno: ra_aluno})
+        db.any(removaluno, dados)
         .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
             console.log(v)
         })
         .catch(error => {
