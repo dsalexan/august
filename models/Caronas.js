@@ -4,7 +4,8 @@ const pq = require('pg-promise').ParameterizedQuery;
 
 module.exports = {
     deleteViagem: (req, res, next) => {
-        dados = [req.query.id]
+        var id = req.query.id
+        dados = [id]
 
         const viagem = new pq(sql.caronas.del_viagem);
         
@@ -20,7 +21,16 @@ module.exports = {
         });
     },    
     insertViagem: (req, res, next) => {
-        dados = [req.query.id_motorista, req.query.id_origem, req.query.id_destino, req.query.dia, req.query.hora, req.query.preco, req.query.qtd_vagas, req.query.descricao]
+        var id_motorista = req.query.id_motorista
+        var id_origem = req.query.id_origem
+        var id_destino = req.query.id_destino
+        var dia = req.query.dia
+        var hora = req.query.hora
+        var preco = req.query.preco
+        var qtd_vagas = req.query.qtd_vagas
+        var descricao = req.query.descricao
+        
+        dados = [id_motorista, id_origem, id_destino, dia, hora, preco, qtd_vagas, descricao]
 
         const viagem = new pq(sql.caronas.ins_viagem);
         db.none(viagem, dados)
@@ -35,7 +45,10 @@ module.exports = {
         });
     },
     searchViagemDataHora: (req, res, next) => {
-        dados = [req.query.data, req.query.hora]
+        var data = req.query.data
+        var hora = req.query.hora
+
+        dados = [data, hora]
         
         const viagem = new pq(sql.caronas.srch_viagemDataHora);
         db.any(viagem, dados)
