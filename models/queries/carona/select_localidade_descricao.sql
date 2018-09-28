@@ -1,2 +1,2 @@
-SELECT descricao FROM localidade
+SELECT * FROM localidade
 ORDER BY localidade.descricao ASC

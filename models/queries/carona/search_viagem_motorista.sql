@@ -1,2 +1,2 @@
-SELECT id_motorista FROM viagem
+SELECT * FROM viagem
 where viagem.id_motorista = $1

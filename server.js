@@ -25,12 +25,19 @@ router.use(function(req, res, next) {
 router.get('/aluno/buscar/:login/:senha', Alunos.getAluno)
 
 // Carona
-router.get('/api/caronas/busca/datahora', Carona.searchViagemDataHora)
-router.get('/api/caronas/busca/datahora/local', Carona.searchViagemDataHoraLocal)
+router.get('/api/caronas/delete/viagem', Carona.deleteViagem)
+router.get('/api/caronas/post/viagem', Carona.insertViagem)
+router.get('/api/caronas/get/viagem/datahora', Carona.searchViagemDataHora)
+router.get('/api/caronas/get/viagem/datahora/local', Carona.searchViagemDataHoraLocal)
+router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
+router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro) //erro
+router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao), //essa n tem apos ?
+router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
+router.get('/api/caronas/put/viagem/hora', Carona.updateDiaViagem)
+router.get('/api/caronas/get/viagens', Carona.getAllCaronas)
 
-// router.get('/carona/excluir/:id', Carona.deleteViagem)
-// router.get('/carona/inserir/:motorista/:origem/:id_destino, dia, hora, preco, qtd_vagas, descricao', Carona.deleteViagem)
-// router.get('/carona/buscar/datahora/local/:data/:hora/:local', Carona.searchViagemDataHoraLocal)
+
+// loucuras abaixo:
 
 app.use('/api/auth', authController)
 app.use('/monica', function(req, res){

@@ -1,2 +1,5 @@
-SELECT id_viagem FROM reserva
-where viagem.passageiro = $2
+SELECT *
+FROM viagem
+WHERE id_viagem = (
+    SELECT id_viagem FROM reserva
+    WHERE id_passageiro = $1)
