@@ -27,7 +27,7 @@ module.exports = {
         dados = [email, ra_aluno]
 
         const alteremail = new pq(sql.aluno.alteracao_email_aluno);
-        console.log(alteremail)
+       
         db.any(alteremail, dados)
         .then(v =>{
             res.status(200).json({
@@ -48,7 +48,7 @@ module.exports = {
         dados = [nome, ra_aluno]
 
         const alternome = new pq(sql.aluno.alteracao_nome_aluno);
-        console.log(alternome)
+       
         db.any(alternome, dados)
         .then(v => {
             res.status(200).json({
@@ -66,7 +66,7 @@ module.exports = {
         dados = [ra_aluno]
 
         const consaluno = new pq(sql.aluno.consulta_aluno);
-        console.log(consaluno)
+        
         db.any(consaluno, dados)
         .then(v => {
             res.status(200).json({
@@ -83,12 +83,12 @@ module.exports = {
         var ra_aluno = req.query.ra_aluno
         var nome = req.query.nome
         var login_intranet = req.query.login_intranet
+        var senha_intranet = req.query.senha_intranet
         var email = req.query.email
         
-        dados = [ra_aluno, nome, login_intranet, email]
+        dados = [ra_aluno, nome, login_intranet, senha_intranet, email]
 
-        const inseraluno = new pq(sql.alunos.insert_aluno);
-        console.log(inseraluno)
+        const inseraluno = new pq(sql.aluno.insert_aluno);
         db.none(inseraluno, dados)
         .then(v => {
             res.status(200).json({
@@ -108,8 +108,7 @@ module.exports = {
         dados = [ra_aluno]
 
         const removaluno = new pq(sql.aluno.remove_aluno);
-        console.log(removaluno)
-        db.any(removaluno, dados)
+        db.none(removaluno, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
