@@ -22,7 +22,14 @@ router.use(function(req, res, next) {
 })
 
 // Aluno
-router.get('/aluno/buscar/:login/:senha', Alunos.getAluno)
+router.get('/api/alunos/get/senha', Alunos.getAluno)
+router.get('/api/alunos/put/email', Alunos.alteracao_email_aluno)
+router.get('/api/alunos/put/nome', Alunos.alteracao_nome_aluno)
+router.get('/api/alunos/get/aluno', Alunos.consulta_aluno)
+router.get('/api/alunos/post/aluno', Alunos.insert_aluno)
+router.get('/api/alunos/delete/email', Alunos.remove_aluno)
+
+
 
 // Carona
 router.get('/api/caronas/busca/datahora', Carona.searchViagemDataHora)
