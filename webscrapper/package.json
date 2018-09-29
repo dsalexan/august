@@ -1,0 +1,17 @@
+{
+  "name": "echo-scrapper",
+  "version": "1.0.0",
+  "description": "teste de webscraper",
+  "main": "index.js",
+  "scripts": {
+    "test": "teste"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "puppeteer": "^1.8.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
