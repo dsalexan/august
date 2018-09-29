@@ -12,6 +12,13 @@ var UnifespController = require('./UnifespController')
 
 var Users = require('../models/Users')
 
+// Pedro testando
+router.get('/teste', function(req, res) {
+    const Grade = require('../models/Grade');
+    Grade.teste();
+})
+//
+
 // TODO: add winston logging to this
 router.post('/login', function(req, res){
     var usuario = req.body.username

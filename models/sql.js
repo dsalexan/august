@@ -12,7 +12,7 @@ const path = require('path');
 // Helper for linking to external query files:
 function sql(file) {
     const fullPath = path.join(__dirname, file); // generating full path;
-    return new QueryFile(fullPath, {minify: true});
+    return (new QueryFile(fullPath, {minify: true});
 }
 
 module.exports = {
@@ -42,6 +42,27 @@ module.exports = {
         consulta_aluno: sql('queries/aluno/consulta_aluno.sql'),
         insert_aluno: sql('queries/aluno/insert_aluno.sql'),
         remove_aluno: sql('queries/aluno/remove_aluno.sql')
+    },
+    grade: {
+        insert_aluno_turma: sql('queries/grade/insert_aluno_turma.sql'),
+        insert_evento_turma: sql('queries/grade/insert_evento_turma.sql'),
+        insert_horario_turma: sql('queries/grade/insert_horario_turma.sql'),
+        insert_horario: sql('queries/grade/insert_horario.sql'),
+        insert_pre_req: sql('queries/grade/insert_pre_req.sql'),
+        insert_professor: sql('queries/grade/insert_professor.sql'),
+        insert_turma: sql('queries/grade/insert_turma.sql'),
+        insert_uc: sql('queries/grade/insert_uc.sql'),
+        select_alunos_turma_tq_idturma: sql('queries/grade/select_alunos_turma_tq_idturma.sql'),
+        select_eventos_aluno_tq_idaluno: sql('queries/grade/select_eventos_aluno_tq_idaluno.sql'),
+        select_eventos_turma_tq_idturma: sql('queries/grade/select_eventos_turma_tq_idturma.sql'),
+        select_grade_aluno_tq_idaluno: sql('queries/grade/select_grade_aluno_tq_idaluno.sql'),
+        select_horarios_turma_tq_idturma: sql('queries/grade/select_horarios_turma_tq_idturma.sql'),
+        select_horarios: sql('queries/grade/select_horarios.sql'),
+        select_info_professor_tq_idprofessor: sql('queries/grade/select_info_professor_tq_idprofessor.sql'),
+        select_info_turma_tq_idturma: sql('queries/grade/select_info_turma_tq_idturma.sql'),
+        select_info_uc_tq_iduc: sql('queries/grade/select_info_uc_tq_iduc.sql'),
+        select_prereqs_uc_tq_iduc: sql('queries/grade/select_prereqs_uc_tq_iduc.sql'),
+        select_turmas_aluno_tq_idaluno: sql('queries/grade/select_turmas_aluno_tq_idaluno.sql')
     }
     
     // // external queries for Users:
