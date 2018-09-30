@@ -29,8 +29,6 @@ router.get('/api/alunos/get/aluno', Alunos.consulta_aluno)
 router.get('/api/alunos/post/aluno', Alunos.insert_aluno)
 router.get('/api/alunos/delete/aluno', Alunos.remove_aluno)
 
-
-
 // Carona
 router.get('/api/caronas/delete/viagem', Carona.deleteViagem)
 router.get('/api/caronas/post/viagem', Carona.insertViagem)
@@ -43,9 +41,7 @@ router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 router.get('/api/caronas/put/viagem/hora', Carona.updateDiaViagem)
 router.get('/api/caronas/get/viagens', Carona.getAllCaronas)
 
-
 // loucuras abaixo:
-
 app.use('/api/auth', authController)
 app.use('/monica', function(req, res){
     const Alunos = require('./models/Alunos')
