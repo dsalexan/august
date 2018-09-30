@@ -9,10 +9,10 @@ var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
 })
 
-var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
-var Carona = require('./models/Caronas');
 var Alunos = require('./models/Alunos');
+var Carona = require('./models/Caronas');
+var Utilidades = require('./models/Utilidades');
 
 // log request middleware
 router.use(function(req, res, next) {
@@ -40,6 +40,12 @@ router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao) //e
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 router.get('/api/caronas/put/viagem/hora', Carona.updateDiaViagem)
 router.get('/api/caronas/get/viagens', Carona.getAllCaronas)
+
+// Utilidades
+router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)
+router.get('/api/utilidades/get/matricula', Utilidades.getMatricula)
+router.get('/api/utilidades/get/cardapio', Utilidades.getCardapio)
+router.get('/api/utilidades/get/historico', Utilidades.getHistorico)
 
 // loucuras abaixo:
 app.use('/api/auth', authController)
