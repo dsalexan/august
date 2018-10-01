@@ -332,12 +332,12 @@ module.exports = {
             return next(error);
         });
     },
-    select_eventos_turma_tq_id_turma: (req, res, next) => {
+    select_eventos_turma_tq_idturma: (req, res, next) => {
         var id_turma = req.query.id_turma
 
         dados = {id_turma: id_turma}
 
-        const query = new pq(sql.grade.select_eventos_turma_tq_id_turma)
+        const query = new pq(sql.grade.select_eventos_turma_tq_idturma)
         db.any(query, dados)
         .then(q => {
             res.status(200).json({
@@ -387,7 +387,7 @@ module.exports = {
         dados = {}
 
         const query = new pq(sql.grade.select_horarios)
-        db.any(query, dados)
+        db.any(query)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -504,7 +504,7 @@ module.exports = {
         dados = {}
 
         const query = new pq(sql.grade.select_ucs)
-        db.any(query, dados)
+        db.any(query)
         .then(q => {
             res.status(200).json({
                 data: q,
