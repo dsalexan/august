@@ -28,7 +28,7 @@ module.exports = {
         dados = {ra_aluno: ra_aluno}
 
         const query = new pq(sql.grade.delete_aluno_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -44,7 +44,7 @@ module.exports = {
         dados = {id_evento: id_evento}
 
         const query = new pq(sql.grade.delete_evento_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -61,7 +61,7 @@ module.exports = {
         dados = {id_horario: id_horario, id_turma: id_turma}
 
         const query = new pq(sql.grade.delete_horario_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -77,7 +77,7 @@ module.exports = {
         dados = {id_horario}
 
         const query = new pq(sql.grade.delete_horario)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -94,7 +94,7 @@ module.exports = {
         dados = {id_uc: id_uc, id_pre_req: id_pre_req}
 
         const query = new pq(sql.grade.delete_pre_req)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -110,7 +110,7 @@ module.exports = {
         dados = {id_professor: id_professor}
 
         const query = new pq(sql.grade.delete_professor)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -126,7 +126,7 @@ module.exports = {
         dados = {id_turma: id_turma}
 
         const query = new pq(sql.grade.delete_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -142,7 +142,7 @@ module.exports = {
         dados = {id_uc: id_uc}
 
         const query = new pq(sql.grade.delete_uc)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -160,7 +160,7 @@ module.exports = {
         dados = {ra_aluno: ra_aluno, id_turma: id_turma, faltas: faltas}
 
         const query = new pq(sql.grade.insert_aluno_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -181,7 +181,7 @@ module.exports = {
         dados = {id_evento: id_evento, id_turma: id_turma, ra_aluno: ra_aluno, data: data, sala: sala, descricao: descricao}
 
         const query = new pq(sql.grade.insert_evento_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -199,7 +199,7 @@ module.exports = {
         dados = {id_turma: id_turma, id_horario: id_horario, sala: sala}
 
         const query = new pq(sql.grade.insert_horario_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -216,7 +216,7 @@ module.exports = {
         dados = {dia_semana: dia_semana, hora: hora}
 
         const query = new pq(sql.grade.insert_horario)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -233,7 +233,7 @@ module.exports = {
         dados = {id_uc: id_uc, id_pre_req: id_pre_req}
 
         const query = new pq(sql.grade.insert_pre_req)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -253,7 +253,7 @@ module.exports = {
         dados = {nome: nome, sala: sala, lattes: lattes, email1: email1, email2: email2}
 
         const query = new pq(sql.grade.insert_professor)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -271,7 +271,7 @@ module.exports = {
         dados = {id_uc: id_uc, id_professor: id_professor, nome: nome}
 
         const query = new pq(sql.grade.insert_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -288,7 +288,7 @@ module.exports = {
         dados = {nome: nome, creditos: creditos}
 
         const query = new pq(sql.grade.insert_uc)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -304,7 +304,7 @@ module.exports = {
         dados = {id_turma: id_turma}
 
         const query = new pq(sql.grade.select_alunos_turma_tq_idturma)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -321,7 +321,7 @@ module.exports = {
         dados = {ra_aluno: ra_aluno}
 
         const query = new pq(sql.grade.select_eventos_aluno_tq_raaluno)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -338,7 +338,7 @@ module.exports = {
         dados = {id_turma: id_turma}
 
         const query = new pq(sql.grade.select_eventos_turma_tq_idturma)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -355,8 +355,9 @@ module.exports = {
         dados = {ra_aluno: ra_aluno}
 
         const query = new pq(sql.grade.select_grade_aluno_tq_raaluno)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
+            console.log(q)
             res.status(200).json({
                 data: q,
                 success: true
@@ -372,7 +373,7 @@ module.exports = {
         dados = {id_turma: id_turma}
 
         const query = new pq(sql.grade.select_horarios_turma_tq_idturma)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -387,7 +388,7 @@ module.exports = {
         dados = {}
 
         const query = new pq(sql.grade.select_horarios)
-        db.any(query)
+        db.any(query.text)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -404,7 +405,7 @@ module.exports = {
         dados = {id_professor: id_professor}
 
         const query = new pq(sql.grade.select_info_professor_tq_idprofessor)
-        db.one(query, dados)
+        db.one(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -421,7 +422,7 @@ module.exports = {
         dados = {id_turma: id_turma}
 
         const query = new pq(sql.grade.select_info_turma_tq_idturma)
-        db.one(query, dados)
+        db.one(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -438,7 +439,7 @@ module.exports = {
         dados = {id_uc: id_uc}
 
         const query = new pq(sql.grade.select_info_uc_tq_iduc)
-        db.one(query, dados)
+        db.one(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -455,7 +456,7 @@ module.exports = {
         dados = {id_uc: id_uc}
 
         const query = new pq(sql.grade.select_prereqs_uc_tq_iduc)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -472,7 +473,7 @@ module.exports = {
         dados = {ra_aluno: ra_aluno}
 
         const query = new pq(sql.grade.select_turmas_aluno_tq_raaluno)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -489,7 +490,7 @@ module.exports = {
         dados = {id_uc: id_uc}
 
         const query = new pq(sql.grade.select_turmas_uc_tq_iduc)
-        db.any(query, dados)
+        db.any(query.text, dados)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -504,7 +505,7 @@ module.exports = {
         dados = {}
 
         const query = new pq(sql.grade.select_ucs)
-        db.any(query)
+        db.any(query.text)
         .then(q => {
             res.status(200).json({
                 data: q,
@@ -523,7 +524,7 @@ module.exports = {
         dados = {ra_aluno: ra_aluno, id_turma: id_turma, faltas: faltas}
 
         const query = new pq(sql.grade.update_aluno_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -544,7 +545,7 @@ module.exports = {
         dados = {id_evento: id_evento, id_turma: id_turma, ra_aluno: ra_aluno, data: data, sala: sala, descricao: descricao}
 
         const query = new pq(sql.grade.update_evento_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -562,7 +563,7 @@ module.exports = {
         dados = {id_turma: id_turma, id_horario: id_horario, sala: sala}
 
         const query = new pq(sql.grade.update_horario_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -580,7 +581,7 @@ module.exports = {
         dados = {dia_semana: dia_semana, hora: hora, id_horario: id_horario}
 
         const query = new pq(sql.grade.update_horario)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -597,7 +598,7 @@ module.exports = {
         dados = {id_uc: id_uc, id_pre_req: id_pre_req}
 
         const query = new pq(sql.grade.update_pre_req)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -618,7 +619,7 @@ module.exports = {
         dados = {nome: nome, sala: sala, lattes: lattes, email1: email1, email2: email2, id_professor: id_professor}
 
         const query = new pq(sql.grade.update_professor)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -637,7 +638,7 @@ module.exports = {
         dados = {id_uc: id_uc, id_professor: id_professor, nome: nome, id_turma: id_turma}
 
         const query = new pq(sql.grade.update_turma)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -655,7 +656,7 @@ module.exports = {
         dados = {nome: nome, creditos: creditos, id_uc: id_uc}
 
         const query = new pq(sql.grade.update_uc)
-        db.none(query, dados)
+        db.none(query.text, dados)
         .then(() => {
             res.status(200).json({
                 success: true
