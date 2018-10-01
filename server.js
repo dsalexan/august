@@ -80,6 +80,13 @@ router.get('/api/grades/put/professor', Grade.update_professor)
 router.get('/api/grades/put/turma', Grade.update_turma)
 router.get('/api/grades/put/uc', Grade.update_uc)
 
+// Headers
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
+
 // loucuras abaixo:
 app.use('/api/auth', authController)
 app.use('/monica', function(req, res){
