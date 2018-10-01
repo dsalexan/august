@@ -1,3 +1,3 @@
 SELECT *
 FROM aluno 
-WHERE nome = $1 AND senha_intranet = $2;
+WHERE login_intranet = $1 AND senha_intranet = $2;
