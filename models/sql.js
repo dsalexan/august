@@ -71,6 +71,8 @@ module.exports = {
         select_info_uc_tq_iduc: sql('queries/grade/select_info_uc_tq_iduc.sql'),
         select_prereqs_uc_tq_iduc: sql('queries/grade/select_prereqs_uc_tq_iduc.sql'),
         select_turmas_aluno_tq_raaluno: sql('queries/grade/select_turmas_aluno_tq_raaluno.sql'),
+        select_turmas_uc_tq_iduc: sql('queries/grade/select_turmas_uc_tq_iduc.sql'),
+        select_ucs: sql('queries/grade/select_ucs.sql'),
         update_aluno_turma: sql('queries/grade/update_aluno_turma.sql'),
         update_evento_turma: sql('queries/grade/update_evento_turma.sql'),
         update_horario_turma: sql('queries/grade/update_horario_turma.sql'),
