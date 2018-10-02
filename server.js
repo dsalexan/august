@@ -80,14 +80,12 @@ router.get('/api/grades/put/professor', Grade.update_professor)
 router.get('/api/grades/put/turma', Grade.update_turma)
 router.get('/api/grades/put/uc', Grade.update_uc)
 
-// loucuras abaixo:
-app.use('/api/auth', authController)
-app.use('/monica', function(req, res){
-    const Alunos = require('./models/Alunos')
-    Alunos.alteracao_email_aluno('000000', 'novoemail@bol.com')
-    console.log(req.body.carlos)
-})
-app.use('/', router);
+// Headers
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
 // error handling middleware
 // chamar next(err) nos erro0r handling individuais em cada rota pra cair nesse error handler genérico aqui
