@@ -4,8 +4,8 @@ const pq = require('pg-promise').ParameterizedQuery;
 
 module.exports = {
     getAluno: (req, res, next) => {
-        var login = req.params.login
-        var senha = req.params.senha
+        var login = req.query.login
+        var senha = req.query.senha
 
         var aluno = new pq(sql.aluno.consultar_por_nome);
         db.any(aluno, [login, senha])

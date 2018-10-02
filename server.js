@@ -87,6 +87,9 @@ app.use(function(req, res, next) {
     next();
 });
 
+// Router
+app.use('/', router);
+
 // error handling middleware
 // chamar next(err) nos erro0r handling individuais em cada rota pra cair nesse error handler genérico aqui
 app.use(function(err, req, res, next) {
