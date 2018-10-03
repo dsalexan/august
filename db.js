@@ -5,7 +5,8 @@ var options = {
 
 var pgp = require('pg-promise')(options)
 // ELEPHANTSQL_URL=postgres://postgres:AchillesDying@localhost:5432/echo
-var conString = process.env.ELEPHANTSQL_URL || "postgres://usuario:AchillesDying@localhost:5432/echo";
+var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:AchillesDying@localhost:5432/echo";
+// var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:AchillesDying@localhost:5432/echo";
 var db = pgp(conString)
 
 module.exports = db

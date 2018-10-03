@@ -4,8 +4,8 @@ const pq = require('pg-promise').ParameterizedQuery;
 
 module.exports = {
     getAluno: (req, res, next) => {
-        var login = req.params.login
-        var senha = req.params.senha
+        var login = req.query.login
+        var senha = req.query.senha
 
         var aluno = new pq(sql.aluno.consultar_por_nome);
         db.any(aluno, [login, senha])
@@ -16,7 +16,7 @@ module.exports = {
             });
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     },
 
@@ -34,10 +34,9 @@ module.exports = {
                 data: v,
                 success: true
             })
-            //console.log(`Alteracao de email concluida para o aluno ${email}.`)
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     },
 
@@ -57,7 +56,7 @@ module.exports = {
             })
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     },
 
@@ -75,7 +74,7 @@ module.exports = {
             })
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     },
 
@@ -95,10 +94,9 @@ module.exports = {
                 data: v,
                 success: true
             })
-            console.log(`Insercao do aluno ${nome} realizada com sucesso.`)
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     },
 
@@ -114,10 +112,9 @@ module.exports = {
                 data: v,
                 success: true
             })
-            console.log(v)
         })
         .catch(error => {
-            console.log(error)
+            return next(error);
         });
     }
 }

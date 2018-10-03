@@ -44,6 +44,14 @@ module.exports = {
         remove_aluno: sql('queries/aluno/remove_aluno.sql')
     },
     grade: {
+        delete_aluno_turma: sql('queries/grade/delete_aluno_turma.sql'),
+        delete_evento_turma: sql('queries/grade/delete_evento_turma.sql'),
+        delete_horario_turma: sql('queries/grade/delete_horario_turma.sql'),
+        delete_horario: sql('queries/grade/delete_horario.sql'),
+        delete_pre_req: sql('queries/grade/delete_pre_req.sql'),
+        delete_professor: sql('queries/grade/delete_professor.sql'),
+        delete_turma: sql('queries/grade/delete_turma.sql'),
+        delete_uc: sql('queries/grade/delete_uc.sql'),
         insert_aluno_turma: sql('queries/grade/insert_aluno_turma.sql'),
         insert_evento_turma: sql('queries/grade/insert_evento_turma.sql'),
         insert_horario_turma: sql('queries/grade/insert_horario_turma.sql'),
@@ -53,16 +61,26 @@ module.exports = {
         insert_turma: sql('queries/grade/insert_turma.sql'),
         insert_uc: sql('queries/grade/insert_uc.sql'),
         select_alunos_turma_tq_idturma: sql('queries/grade/select_alunos_turma_tq_idturma.sql'),
-        select_eventos_aluno_tq_idaluno: sql('queries/grade/select_eventos_aluno_tq_idaluno.sql'),
+        select_eventos_aluno_tq_raaluno: sql('queries/grade/select_eventos_aluno_tq_raaluno.sql'),
         select_eventos_turma_tq_idturma: sql('queries/grade/select_eventos_turma_tq_idturma.sql'),
-        select_grade_aluno_tq_idaluno: sql('queries/grade/select_grade_aluno_tq_idaluno.sql'),
+        select_grade_aluno_tq_raaluno: sql('queries/grade/select_grade_aluno_tq_raaluno.sql'),
         select_horarios_turma_tq_idturma: sql('queries/grade/select_horarios_turma_tq_idturma.sql'),
         select_horarios: sql('queries/grade/select_horarios.sql'),
         select_info_professor_tq_idprofessor: sql('queries/grade/select_info_professor_tq_idprofessor.sql'),
         select_info_turma_tq_idturma: sql('queries/grade/select_info_turma_tq_idturma.sql'),
         select_info_uc_tq_iduc: sql('queries/grade/select_info_uc_tq_iduc.sql'),
         select_prereqs_uc_tq_iduc: sql('queries/grade/select_prereqs_uc_tq_iduc.sql'),
-        select_turmas_aluno_tq_idaluno: sql('queries/grade/select_turmas_aluno_tq_idaluno.sql')
+        select_turmas_aluno_tq_raaluno: sql('queries/grade/select_turmas_aluno_tq_raaluno.sql'),
+        select_turmas_uc_tq_iduc: sql('queries/grade/select_turmas_uc_tq_iduc.sql'),
+        select_ucs: sql('queries/grade/select_ucs.sql'),
+        update_aluno_turma: sql('queries/grade/update_aluno_turma.sql'),
+        update_evento_turma: sql('queries/grade/update_evento_turma.sql'),
+        update_horario_turma: sql('queries/grade/update_horario_turma.sql'),
+        update_horario: sql('queries/grade/update_horario.sql'),
+        update_pre_req: sql('queries/grade/update_pre_req.sql'),
+        update_professor: sql('queries/grade/update_professor.sql'),
+        update_turma: sql('queries/grade/update_turma.sql'),
+        update_uc: sql('queries/grade/update_uc.sql')
     }
     
     // // external queries for Users:
