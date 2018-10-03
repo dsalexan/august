@@ -14,6 +14,7 @@ var authController = require('./controllers/AuthController')
 var Carona = require('./models/Caronas');
 var Alunos = require('./models/Alunos');
 var Grade = require('./models/Grade');
+var Utilidades = require('./models/Utilidades');
 
 // log request middleware
 router.use(function(req, res, next) {
