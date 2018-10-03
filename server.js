@@ -42,6 +42,12 @@ router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 router.get('/api/caronas/put/viagem/hora', Carona.updateDiaViagem)
 router.get('/api/caronas/get/viagens', Carona.getAllCaronas)
 
+// Utilidades
+router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)
+router.get('/api/utilidades/get/matricula', Utilidades.getMatricula)
+router.get('/api/utilidades/get/cardapio', Utilidades.getCardapio)
+router.get('/api/utilidades/get/historico', Utilidades.getHistorico)
+
 // Grade
 router.get('/api/grades/delete/aluno_turma', Grade.delete_aluno_turma)
 router.get('/api/grades/delete/evento_turma', Grade.delete_evento_turma)
