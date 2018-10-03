@@ -1,4 +1,4 @@
-SELECT UC.nome, T.nome, H.dia_semana, H.hora, HT.sala
+SELECT UC.nome AS nome_uc, T.nome AS turma, H.dia_semana, H.hora, HT.sala
 FROM uc AS UC
     INNER JOIN turma AS T
         ON UC.id_uc = T.id_uc
