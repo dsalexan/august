@@ -65,9 +65,10 @@ module.exports = {
     searchViagemDataHoraLocal: (req, res, next) => {
         var data = req.query.data
         var hora = req.query.hora
-        var local = req.query.local
-
-        dados = [data, hora, local]
+        var origem = req.query.origem
+        var destino = req.query.destino
+        
+        dados = [data, hora, origem, destino]
         
         const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
         db.any(viagem, dados)
@@ -116,6 +117,24 @@ module.exports = {
     selectLocalidadeDescricao: (req, res, next) => {
         const localidades = new pq(sql.caronas.select_localidades);
         db.any(localidades)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    solicitarReserva: (res, res, next) => {
+        var id_viagem = req.query.idviagem
+        var id_passageiro = req.query.id_passageiro
+        var status_reserva = req.query.status_reserva
+        dados = [id_viagem, id_passageiro, status_reserva]
+
+        const viagem = new pq(sql.caronas.solic_reserva);
+        db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
