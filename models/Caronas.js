@@ -127,7 +127,7 @@ module.exports = {
             return next(error);
         });
     },
-    solicitarReserva: (res, res, next) => {
+    solicitarReserva: (req, res, next) => {
         var id_viagem = req.query.idviagem
         var id_passageiro = req.query.id_passageiro
         var status_reserva = req.query.status_reserva
