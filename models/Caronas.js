@@ -71,8 +71,9 @@ module.exports = {
         dados = [data, hora, origem, destino]
         
         const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
-        console.log(viagem.toString)
-        db.any(viagem.text, dados)
+        console.log(viagem)
+        console.log(dados)
+        db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
