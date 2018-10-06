@@ -22,15 +22,49 @@ module.exports = {
     },    
     insertViagem: (req, res, next) => {
         var id_motorista = req.query.id_motorista
-        var id_origem = req.query.id_origem
-        var id_destino = req.query.id_destino
         var dia = req.query.dia
         var hora = req.query.hora
         var preco = req.query.preco
         var qtd_vagas = req.query.qtd_vagas
         var descricao = req.query.descricao
         
-        dados = [id_motorista, id_origem, id_destino, dia, hora, preco, qtd_vagas, descricao]
+        dados = [id_motorista, dia, hora, preco, qtd_vagas, descricao]
+
+        const viagem = new pq(sql.caronas.ins_viagem);
+        db.one(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v.id,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    insertOrigemViagem: (req, res, next) => {
+        var id_viagem = req.query.id_viagem
+        var id_origem = req.query.id_origem
+        
+        dados = [id_viagem, id_origem]
+
+        const viagem = new pq(sql.caronas.ins_viagem);
+        db.none(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    insertDestinoViagem: (req, res, next) => {
+        var id_viagem = req.query.id_viagem
+        var id_destino = req.query.id_destino
+        
+        dados = [id_viagem, id_destino]
 
         const viagem = new pq(sql.caronas.ins_viagem);
         db.none(viagem, dados)
