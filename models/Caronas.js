@@ -71,6 +71,8 @@ module.exports = {
         dados = [data, hora, origem, destino]
         
         const viagem = new pq(sql.caronas.srch_viagemDataHoraLocal);
+        console.log(viagem)
+        console.log(dados)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -128,7 +130,7 @@ module.exports = {
         });
     },
     solicitarReserva: (req, res, next) => {
-        var id_viagem = req.query.idviagem
+        var id_viagem = req.query.id_viagem
         var id_passageiro = req.query.id_passageiro
         var status_reserva = req.query.status_reserva
         dados = [id_viagem, id_passageiro, status_reserva]
