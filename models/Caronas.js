@@ -130,7 +130,7 @@ module.exports = {
         });
     },
     solicitarReserva: (req, res, next) => {
-        var id_viagem = req.query.idviagem
+        var id_viagem = req.query.id_viagem
         var id_passageiro = req.query.id_passageiro
         var status_reserva = req.query.status_reserva
         dados = [id_viagem, id_passageiro, status_reserva]
