@@ -315,6 +315,25 @@ module.exports = {
             return next(error);
         });
     },
+    select_compromissos_compromisso_tq_raaluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+        var dt_inicio = req.query.dt_inicio
+        var dt_fim = req.query.dt_fim
+
+        dados = {ra_aluno: ra_aluno, dt_inicio: dt_inicio, dt_fim: dt_fim}
+
+        const query = new pq(sql.grade.select_compromissos_compromisso_tq_raaluno)
+        db.any(query.text, dados)
+        .then(q => {
+            res.status(200).json({
+                data: q,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
     select_eventos_aluno_tq_raaluno: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno
 
