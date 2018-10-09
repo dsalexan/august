@@ -11,10 +11,12 @@ var server = app.listen(port, () => {
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
-var Carona = require('./models/Caronas')
-var Alunos = require('./models/Alunos')
-var Grade = require('./models/Grade')
-var Utilidades = require('./models/Utilidades')
+
+var Carona = require('./models/Caronas');
+var Alunos = require('./models/Alunos');
+var Grade = require('./models/Grade');
+var Utilidades = require('./models/Utilidades');
+var Divulgacao = require('./models/Divulgacao');
 
 // log request middleware
 router.use(function(req, res, next) {
@@ -61,6 +63,19 @@ router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 //router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
+
+// Divulgacao
+router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
+router.get('/api/divulgacao/post/divulgacao', Divulgacao.insert_divulgacao)
+router.get('/api/divulgacao/get/divulgacao/diahora', Divulgacao.busca_divulgacao_dia_hora)
+router.get('/api/divulgacao/get/divulgacao/dia', Divulgacao.busca_divulgacao_dia)
+router.get('/api/divulgacao/get/divulgacao/hora', Divulgacao.busca_divulgacao_hora)
+router.get('/api/divulgacao/get/divulgacao/tipodiahora', Divulgacao.busca_divulgacao_tipo_dia_hora) 
+router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
+router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
+router.get('/api/divulgacao/put/dia', Divulgacao.alteracao_divulgacao_dia)
+router.get('/api/divulgacao/put/hora', Divulgacao.alteracao_divulgacao_hora)
+
 
 // Utilidades
 router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)
