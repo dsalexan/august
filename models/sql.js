@@ -26,6 +26,8 @@ module.exports = {
         get_all: sql('queries/carona/get_all.sql'),
         del_viagem: sql('queries/carona/delete_viagem.sql'),
         ins_viagem: sql('queries/carona/insert_viagem.sql'),
+        ins_viagem_origem: sql('queries/carona/insert_viagem_origem.sql'),
+        ins_viagem_destino: sql('queries/carona/insert_viagem_destino.sql'),
         srch_viagemDataHoraLocal: sql('queries/carona/search_viagem_data_hora_origem_destino.sql'),
         srch_viagemDataHora: sql('queries/carona/search_viagem_data_hora.sql'),
         srch_viagemMotorista: sql('queries/carona/search_viagem_motorista.sql'),

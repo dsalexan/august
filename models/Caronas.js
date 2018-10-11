@@ -44,11 +44,12 @@ module.exports = {
     },
     insertOrigemViagem: (req, res, next) => {
         var id_viagem = req.query.id_viagem
-        var id_origem = req.query.id_origem
+        var origem = req.query.origem
+        var hora = req.query.hora
         
-        dados = [id_viagem, id_origem]
+        dados = [id_viagem, id_origem, hora]
 
-        const viagem = new pq(sql.caronas.ins_viagem);
+        const viagem = new pq(sql.caronas.ins_viagem_origem);
         db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -62,11 +63,11 @@ module.exports = {
     },
     insertDestinoViagem: (req, res, next) => {
         var id_viagem = req.query.id_viagem
-        var id_destino = req.query.id_destino
+        var destino = req.query.destino
         
-        dados = [id_viagem, id_destino]
+        dados = [id_viagem, destino]
 
-        const viagem = new pq(sql.caronas.ins_viagem);
+        const viagem = new pq(sql.caronas.ins_viagem_destino);
         db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
