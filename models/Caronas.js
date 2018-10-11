@@ -33,7 +33,7 @@ module.exports = {
         db.one(viagem, dados)
         .then(v => {
             res.status(200).json({
-                data: v.id,
+                data: v,
                 success: true
             })
         })
