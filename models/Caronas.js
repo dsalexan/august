@@ -43,10 +43,10 @@ module.exports = {
     },
     insertOrigemViagem: (req, res, next) => {
         var id_viagem = req.query.id_viagem
-        var origem = req.query.origem
         var hora = req.query.hora
+        var origem = req.query.origem
         
-        dados = [id_viagem, id_origem, hora]
+        dados = [id_viagem, origem, hora]
 
         const viagem = new pq(sql.caronas.ins_viagem_origem);
         db.none(viagem, dados)
