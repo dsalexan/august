@@ -23,12 +23,11 @@ module.exports = {
     insertViagem: (req, res, next) => {
         var id_motorista = req.query.id_motorista
         var dia = req.query.dia
-        var hora = req.query.hora
         var preco = req.query.preco
         var qtd_vagas = req.query.qtd_vagas
         var descricao = req.query.descricao
         
-        dados = [id_motorista, dia, hora, preco, qtd_vagas, descricao]
+        dados = [id_motorista, dia, preco, qtd_vagas, descricao]
 
         const viagem = new pq(sql.caronas.ins_viagem);
         db.one(viagem, dados)
