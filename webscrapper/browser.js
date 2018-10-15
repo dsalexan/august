@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 
-const usuario = 'andrew.campos';
+const usuario = 'usuario';
 const senha = 'senha.intranet';
 const ru = String('https://phpu.unifesp.br/ru_consulta/index.php');
 const intranet = String ('https://intranet.unifesp.br/');
@@ -31,7 +31,6 @@ async function getPic() { // screeshot da tela requisitada
   await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
   await page.waitFor(500);
-console.log('agora vai');
 
   let content = await page.content();
   var $ = cheerio.load(content); // pega o corpo do html da página7
