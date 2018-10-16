@@ -32,6 +32,7 @@ router.get('/api/alunos/post/aluno', Alunos.insert_aluno)
 router.get('/api/alunos/delete/aluno', Alunos.remove_aluno)
 
 // Carona
+router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
 router.get('/api/caronas/delete/viagem', Carona.deleteViagem)
 router.get('/api/caronas/post/viagem/reserva', Carona.solicitarReserva)
 router.get('/api/caronas/post/viagem/origem', Carona.insertOrigemViagem)
@@ -53,9 +54,11 @@ router.get('/api/caronas/get/viagem/data', Carona.searchViagemData)
 router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
 router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro) 
 router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
+router.get('/api/caronas/get/reserva', Carona.searchReserva) 
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
-router.get('/api/caronas/put/viagem/hora', Carona.updateDiaViagem)
+//router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
+router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
 
 // Utilidades
 router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)

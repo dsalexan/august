@@ -3,6 +3,23 @@ const sql = require('./sql')
 const pq = require('pg-promise').ParameterizedQuery;
 
 module.exports = {
+    deleteReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.del_reserva);
+        
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },   
     deleteViagem: (req, res, next) => {
         var id = req.query.id
         dados = [id]
@@ -355,6 +372,22 @@ module.exports = {
         .catch(error => {
             return next(error);
         });
+    },
+    searchReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.srch_reserva);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
     },   
     selectLocalidadeDescricao: (req, res, next) => {
         const localidades = new pq(sql.caronas.select_localidades);
@@ -406,10 +439,26 @@ module.exports = {
     },   
     updateHorarioViagem: (req, res, next) => {
         var hora = req.query.hora
-        var id = req.query.hora 
-        dados = [dia, hora]
+        var id = req.query.id 
+        dados = [hora, id]
 
         const viagem = new pq(sql.caronas.update_viagemHorario);
+        db.none(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    updateStatusReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = ['true', id]
+
+        const viagem = new pq(sql.caronas.update_statusReserva);
         db.none(viagem, dados)
         .then(v => {
             res.status(200).json({

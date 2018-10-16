@@ -23,6 +23,7 @@ module.exports = {
         insert: sql('queries/users/insert.sql')
     },
     caronas: {
+        del_reserva: sql('queries/carona/delete_reserva.sql'),
         del_viagem: sql('queries/carona/delete_viagem.sql'),
         get_all: sql('queries/carona/get_all.sql'),
         solic_reserva: sql('queries/carona/insert_reserva.sql'),
@@ -44,9 +45,11 @@ module.exports = {
         srch_viagemData: sql('queries/carona/search_viagem_data.sql'),
         srch_viagemMotorista: sql('queries/carona/search_viagem_motorista.sql'),
         srch_viagemPassageiro: sql('queries/carona/search_viagem_passageiro.sql'),
+        srch_reserva: sql('queries/carona/search_reserva.sql'),
         select_localidades: sql('queries/carona/select_localidade_descricao.sql'),
         update_viagemDia: sql('queries/carona/update_dia.sql'),
-        update_viagemHorario: sql('queries/carona/update_horario.sql')
+        update_viagemHorario: sql('queries/carona/update_horario.sql'),
+        update_statusReserva: sql('queries/carona/update_status_reserva.sql')
     },
     aluno: {
         consultar_por_nome: sql('queries/aluno/consulta_aluno_nome.sql'),

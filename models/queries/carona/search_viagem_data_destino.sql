@@ -1,6 +1,3 @@
-SELECT * FROM viagem
-where dia = $1
-AND id_viagem IN (
-    SELECT id_viagem FROM destino
-        WHERE id_destino = $2
-)
+SELECT * FROM viagem NATURAL JOIN origem NATURAL JOIN destino
+    WHERE dia = $1
+    AND id_destino = $2

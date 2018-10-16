@@ -1,2 +1,2 @@
-SELECT * FROM viagem
-where viagem.dia = $1
+SELECT * FROM viagem NATURAL JOIN origem NATURAL JOIN destino
+	WHERE viagem.dia = $1
