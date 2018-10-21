@@ -1,6 +1,6 @@
-const db = require('../db')
-const sql = require('./sql')
-const pq = require('pg-promise').ParameterizedQuery;
+const db = require("../db");
+const sql = require("./sql");
+const pq = require("pg-promise").ParameterizedQuery;
 
 module.exports = {
     deleteReserva: (req, res, next) => {
@@ -21,8 +21,8 @@ module.exports = {
         });
     },   
     deleteViagem: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
+        var id = req.query.id;
+        dados = [id];
 
         const viagem = new pq(sql.caronas.del_viagem);
         
@@ -31,7 +31,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -89,17 +89,17 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     },
     searchViagemDataHora: (req, res, next) => {
-        var data = req.query.data
-        var hora = req.query.hora
+        var data = req.query.data;
+        var hora = req.query.hora;
 
-        dados = [data, hora]
+        dados = [data, hora];
         
         const viagem = new pq(sql.caronas.srch_viagemDataHora);
         db.any(viagem, dados)
@@ -107,7 +107,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -335,15 +335,15 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     },
     searchViagemMotorista: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
+        var id = req.query.id;
+        dados = [id];
         
         const viagem = new pq(sql.caronas.srch_viagemMotorista);
         db.any(viagem, dados)
@@ -351,15 +351,15 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     },   
     searchViagemPassageiro: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
+        var id = req.query.id;
+        dados = [id];
 
         const viagem = new pq(sql.caronas.srch_viagemPassageiro);
         db.any(viagem, dados)
@@ -367,7 +367,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -396,17 +396,17 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     },
     solicitarReserva: (req, res, next) => {
-        var id_viagem = req.query.id_viagem
-        var id_passageiro = req.query.id_passageiro
-        var status_reserva = req.query.status_reserva
-        dados = [id_viagem, id_passageiro, status_reserva]
+        var id_viagem = req.query.id_viagem;
+        var id_passageiro = req.query.id_passageiro;
+        var status_reserva = req.query.status_reserva;
+        dados = [id_viagem, id_passageiro, status_reserva];
 
         const viagem = new pq(sql.caronas.solic_reserva);
         db.none(viagem, dados)
@@ -414,16 +414,16 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     },
     updateDiaViagem: (req, res, next) => {
-        var dia = req.query.dia
-        var id = req.query.id  
-        dados = [dia, id]
+        var dia = req.query.dia;
+        var id = req.query.id;  
+        dados = [dia, id];
 
         const viagem = new pq(sql.caronas.update_viagemDia);
         db.none(viagem, dados)
@@ -431,7 +431,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -448,7 +448,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -471,18 +471,18 @@ module.exports = {
         });
     },   
     getAllCaronas: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
+        var id = req.query.id;
+        dados = [id];
         const viagem = new pq(sql.caronas.get_all);
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     }
-}
+};

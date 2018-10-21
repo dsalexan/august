@@ -1,17 +1,17 @@
-const db = require('../db')
-const sql = require('./sql')
-const pq = require('pg-promise').ParameterizedQuery;
+const db = require("../db");
+const sql = require("./sql");
+const pq = require("pg-promise").ParameterizedQuery;
 
 module.exports = {
     getAluno: (req, res, next) => {
-        var login = req.query.login
-        var senha = req.query.senha
+        var login = req.query.login;
+        var senha = req.query.senha;
 
         var aluno = new pq(sql.aluno.consultar_por_nome);
         db.any(aluno, [login, senha])
         .then(a => {
             res.status(200).json({
-                status: 'success',
+                status: "success",
                 data: a
             });
         })
@@ -21,10 +21,10 @@ module.exports = {
     },
 
     alteracao_email_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var email = req.query.email
+        var ra_aluno = req.query.ra_aluno;
+        var email = req.query.email;
         
-        dados = [email, ra_aluno]
+        dados = [email, ra_aluno];
 
         const alteremail = new pq(sql.aluno.alteracao_email_aluno);
        
@@ -33,7 +33,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -41,10 +41,10 @@ module.exports = {
     },
 
     alteracao_nome_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var nome = req.query.nome
+        var ra_aluno = req.query.ra_aluno;
+        var nome = req.query.nome;
         
-        dados = [nome, ra_aluno]
+        dados = [nome, ra_aluno];
 
         const alternome = new pq(sql.aluno.alteracao_nome_aluno);
        
@@ -53,7 +53,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -61,8 +61,8 @@ module.exports = {
     },
 
     consulta_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        dados = [ra_aluno]
+        var ra_aluno = req.query.ra_aluno;
+        dados = [ra_aluno];
 
         const consaluno = new pq(sql.aluno.consulta_aluno);
         
@@ -71,7 +71,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -79,13 +79,13 @@ module.exports = {
     },
 
     insert_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var nome = req.query.nome
-        var login_intranet = req.query.login_intranet
-        var senha_intranet = req.query.senha_intranet
-        var email = req.query.email
+        var ra_aluno = req.query.ra_aluno;
+        var nome = req.query.nome;
+        var login_intranet = req.query.login_intranet;
+        var senha_intranet = req.query.senha_intranet;
+        var email = req.query.email;
         
-        dados = [ra_aluno, nome, login_intranet, senha_intranet, email]
+        dados = [ra_aluno, nome, login_intranet, senha_intranet, email];
 
         const inseraluno = new pq(sql.aluno.insert_aluno);
         db.none(inseraluno, dados)
@@ -93,7 +93,7 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
@@ -101,9 +101,9 @@ module.exports = {
     },
 
     remove_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
+        var ra_aluno = req.query.ra_aluno;
 
-        dados = [ra_aluno]
+        dados = [ra_aluno];
 
         const removaluno = new pq(sql.aluno.remove_aluno);
         db.none(removaluno, dados)
@@ -111,10 +111,10 @@ module.exports = {
             res.status(200).json({
                 data: v,
                 success: true
-            })
+            });
         })
         .catch(error => {
             return next(error);
         });
     }
-}
+};

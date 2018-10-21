@@ -1,35 +1,37 @@
-require('dotenv').config();
+require("dotenv").config();
 
-var express = require('express')
-var app = express()
-var port = process.env.PORT || 3000
-var router = express.Router()
+var express = require("express");
+var app = express();
+var port = process.env.PORT || 3000;
+var router = express.Router();
 
 var server = app.listen(port, () => {
-    console.log(`server listening at port ${port}`)
-})
+    console.log(`server listening at port ${port}`);
+});
 
-var Test = require('./models/Test')
-var authController = require('./controllers/AuthController')
-var Carona = require('./models/Caronas');
-var Alunos = require('./models/Alunos');
-var Grade = require('./models/Grade');
-var Utilidades = require('./models/Utilidades');
+var Test = require("./models/Test");
+var authController = require("./controllers/AuthController");
+var Carona = require("./models/Caronas");
+var Alunos = require("./models/Alunos");
+var Grade = require("./models/Grade");
+var Utilidades = require("./models/Utilidades");
 
 // log request middleware
 router.use(function(req, res, next) {
-    console.log(req.method, req.url)
+    console.log(req.method, req.url);
 
-    next()
-})
+    next();
+});
+
+router.use("/api/auth", authController);
 
 // Aluno
-router.get('/api/alunos/get/senha', Alunos.getAluno)
-router.get('/api/alunos/put/email', Alunos.alteracao_email_aluno)
-router.get('/api/alunos/put/nome', Alunos.alteracao_nome_aluno)
-router.get('/api/alunos/get/aluno', Alunos.consulta_aluno)
-router.get('/api/alunos/post/aluno', Alunos.insert_aluno)
-router.get('/api/alunos/delete/aluno', Alunos.remove_aluno)
+router.get("/api/alunos/get/senha", Alunos.getAluno);
+router.get("/api/alunos/put/email", Alunos.alteracao_email_aluno);
+router.get("/api/alunos/put/nome", Alunos.alteracao_nome_aluno);
+router.get("/api/alunos/get/aluno", Alunos.consulta_aluno);
+router.get("/api/alunos/post/aluno", Alunos.insert_aluno);
+router.get("/api/alunos/delete/aluno", Alunos.remove_aluno);
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
@@ -61,10 +63,10 @@ router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
 
 // Utilidades
-router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)
-router.get('/api/utilidades/get/matricula', Utilidades.getMatricula)
-router.get('/api/utilidades/get/cardapio', Utilidades.getCardapio)
-router.get('/api/utilidades/get/historico', Utilidades.getHistorico)
+router.get("/api/utilidades/get/saldo", Utilidades.getSaldo);
+router.get("/api/utilidades/get/matricula", Utilidades.getMatricula);
+router.get("/api/utilidades/get/cardapio", Utilidades.getCardapio);
+router.get("/api/utilidades/get/historico", Utilidades.getHistorico);
 
 // Grade
 router.get('/api/grades/delete/aluno_turma', Grade.delete_aluno_turma)
@@ -107,13 +109,13 @@ router.get('/api/grades/put/uc', Grade.update_uc)
 
 // Headers
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
 // Router
-app.use('/', router);
+app.use("/", router);
 
 // error handling middleware
 // chamar next(err) nos erro0r handling individuais em cada rota pra cair nesse error handler genérico aqui
