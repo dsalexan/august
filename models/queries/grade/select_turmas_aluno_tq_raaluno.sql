@@ -1,4 +1,4 @@
-SELECT UC.nome, T.nome, ATu.faltas
+SELECT T.id_turma, UC.nome AS nome_uc, T.nome AS nome_turma, ATu.faltas
 FROM aluno_turma AS ATu
     INNER JOIN turma AS T
         ON ATu.id_turma =T.id_turma
