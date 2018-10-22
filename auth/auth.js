@@ -1,8 +1,8 @@
-var jwt = require("jsonwebtoken");
+var jwt = require('jsonwebtoken')
 
-const Users = require("../models/Users");
+const Users = require('../models/Users')
 
-var bcrypt = require("bcryptjs");
+var bcrypt = require('bcryptjs')
 
 // para uma requisição para a api passar na autenticação é necessário:
 // PRIMEIRO - fazer uma chamada com o username e o password da intranet, e guardar o token resultado
@@ -12,41 +12,41 @@ var bcrypt = require("bcryptjs");
 // eu uso o POSTMAN pra testar essas coisas, tem prints disso no trello
 
 module.exports.auth = function(req, res, next){
-    var token = req.headers["x-access-token"];
+    var token = req.headers['x-access-token']
 
     if (!token) return res.status(401).send({
         auth: false,
-        message: "No token provided."
-    });
+        message: 'No token provided.'
+    })
     
     
     jwt.verify(token, process.env.SECRET, function (err, decoded) {
         if (err) { // invalid token
             res.status(401).send({
                 auth: false,
-                message: "Invalid token provided."
-            });
+                message: 'Invalid token provided.'
+            })
         }
         else{
             Users.findById(decoded.id).then(user =>{
-                req.user = user;
-                next();
+                req.user = user
+                next()
             }).catch(err => {
-                next(err);
-            });
+                next(err)
+            })
         }
-    });
+    })
     
-};
+}
 
 module.exports.token = function(user){
     var token = jwt.sign({
         username: user.usuario,
         password: user.senha // Cripto.encrypt(user.senha)
-    }, process.env.SECRET);
+    }, process.env.SECRET)
     // {
     //     expiresIn: 86400 // expires in 24 hours
     // })
 
-    return token;
-};
+    return token
+}

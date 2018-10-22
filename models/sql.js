@@ -6,21 +6,21 @@
 // - have all sql files for Products in ./sql/products
 // - have your sql provider module as ./sql/index.js
 
-const QueryFile = require("pg-promise").QueryFile;
-const path = require("path");
+const QueryFile = require('pg-promise').QueryFile
+const path = require('path')
 
 // Helper for linking to external query files:
 function sql(file) {
-    const fullPath = path.join(__dirname, file); // generating full path;
-    return (new QueryFile(fullPath, {minify: true}));
+    const fullPath = path.join(__dirname, file) // generating full path;
+    return (new QueryFile(fullPath, {minify: true}))
 }
 
 module.exports = {
     test: {
-        get: sql("queries/test/get.sql")
+        get: sql('queries/test/get.sql')
     },
     users: {
-        insert: sql("queries/users/insert.sql")
+        insert: sql('queries/users/insert.sql')
     },
     caronas: {
         del_reserva: sql('queries/carona/delete_reserva.sql'),
@@ -52,13 +52,13 @@ module.exports = {
         update_statusReserva: sql('queries/carona/update_status_reserva.sql')
     },
     aluno: {
-        consultar_por_nome: sql("queries/aluno/consulta_aluno_nome.sql"),
-        alteracao_email_aluno: sql("queries/aluno/alteracao_email_aluno.sql"),
-        alteracao_login_intranet_aluno: sql("queries/aluno/alteracao_login_intranet_aluno.sql"),
-        alteracao_nome_aluno: sql("queries/aluno/alteracao_nome_aluno.sql"),
-        consulta_aluno: sql("queries/aluno/consulta_aluno.sql"),
-        insert_aluno: sql("queries/aluno/insert_aluno.sql"),
-        remove_aluno: sql("queries/aluno/remove_aluno.sql")
+        consultar_por_nome: sql('queries/aluno/consulta_aluno_nome.sql'),
+        alteracao_email_aluno: sql('queries/aluno/alteracao_email_aluno.sql'),
+        alteracao_login_intranet_aluno: sql('queries/aluno/alteracao_login_intranet_aluno.sql'),
+        alteracao_nome_aluno: sql('queries/aluno/alteracao_nome_aluno.sql'),
+        consulta_aluno: sql('queries/aluno/consulta_aluno.sql'),
+        insert_aluno: sql('queries/aluno/insert_aluno.sql'),
+        remove_aluno: sql('queries/aluno/remove_aluno.sql')
     },
     grade: {
         delete_aluno_turma: sql('queries/grade/delete_aluno_turma.sql'),
@@ -113,4 +113,4 @@ module.exports = {
     //     quote: sql('queries/products/quote.sql'),
     //     search: sql('products/search.sql'),
     // }
-};
+}

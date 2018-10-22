@@ -1,15 +1,15 @@
-var promise = require("bluebird");
+var promise = require('bluebird')
 var options = {
   promiseLib: promise,
-};
+}
 
-var pgp = require("pg-promise")(options);
+var pgp = require('pg-promise')(options)
 // ELEPHANTSQL_URL=postgres://postgres:AchillesDying@localhost:5432/echo
-var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:AchillesDying@localhost:5432/echo";
+var conString = process.env.ELEPHANTSQL_URL || 'postgres://postgres:AchillesDying@localhost:5432/echo'
 // var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:AchillesDying@localhost:5432/echo";
-var db = pgp(conString);
+var db = pgp(conString)
 
-module.exports = db;
+module.exports = db
 
 
 // var client = new pg.Client(conString);
