@@ -1,2 +1,3 @@
 SELECT * FROM viagem NATURAL JOIN origem NATURAL JOIN destino
-    where viagem.id_motorista = $1
+	WHERE viagem.dia = $1
+	AND origem.id_origem = $2
