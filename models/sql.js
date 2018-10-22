@@ -63,6 +63,7 @@ module.exports = {
         insert_uc: sql('queries/grade/insert_uc.sql'),
         select_alunos_turma_tq_idturma: sql('queries/grade/select_alunos_turma_tq_idturma.sql'),
         select_compromissos_compromisso_tq_raaluno: sql('queries/grade/select_compromissos_compromisso_tq_raaluno.sql'),
+        select_eventos: sql('queries/grade/select_eventos.sql'),
         select_eventos_aluno_tq_raaluno: sql('queries/grade/select_eventos_aluno_tq_raaluno.sql'),
         select_eventos_turma_tq_idturma: sql('queries/grade/select_eventos_turma_tq_idturma.sql'),
         select_grade_aluno_tq_raaluno: sql('queries/grade/select_grade_aluno_tq_raaluno.sql'),

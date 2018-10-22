@@ -175,10 +175,13 @@ module.exports = {
         var id_turma = req.query.id_turma
         var ra_aluno = req.query.ra_aluno
         var data = req.query.data
+        var hora = req.query.hora
         var sala = req.query.sala
         var descricao = req.query.descricao
 
-        dados = {id_evento: id_evento, id_turma: id_turma, ra_aluno: ra_aluno, data: data, sala: sala, descricao: descricao}
+        dados = {id_evento: id_evento, id_turma: id_turma, ra_aluno: ra_aluno, data: data, hora: hora, sala: sala, descricao: descricao}
+
+        console.log(dados)
 
         const query = new pq(sql.grade.insert_evento_turma)
         db.none(query.text, dados)
@@ -324,6 +327,19 @@ module.exports = {
 
         const query = new pq(sql.grade.select_compromissos_compromisso_tq_raaluno)
         db.any(query.text, dados)
+        .then(q => {
+            res.status(200).json({
+                data: q,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    select_eventos: (req, res, next) => {
+        const query = new pq(sql.grade.select_eventos)
+        db.any(query.text)
         .then(q => {
             res.status(200).json({
                 data: q,
