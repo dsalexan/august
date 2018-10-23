@@ -19,12 +19,81 @@ module.exports = {
         .catch(error => {
             return next(error);
         });
-    },   
+    },
     deleteViagem: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
         const viagem = new pq(sql.caronas.del_viagem);
+
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    deleteViagemDestino: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.del_viagemDestino);
+
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    deleteViagemOrigem: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.del_viagemOrigem);
+
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    deleteViagemReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.del_viagemReserva);
+
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    deletePassageiros: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        console.log(id)
+        const viagem = new pq(sql.caronas.del_passageiros);
         
         db.any(viagem, dados)
         .then(v => {
@@ -36,7 +105,7 @@ module.exports = {
         .catch(error => {
             return next(error);
         });
-    },    
+    },  
     insertViagem: (req, res, next) => {
         var id_motorista = req.query.id_motorista
         var dia = req.query.dia
