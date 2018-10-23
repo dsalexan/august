@@ -25,6 +25,10 @@ module.exports = {
     caronas: {
         del_reserva: sql('queries/carona/delete_reserva.sql'),
         del_viagem: sql('queries/carona/delete_viagem.sql'),
+        del_viagemReserva: sql('queries/carona/delete_viagemReserva.sql'),
+        del_viagemDestino: sql('queries/carona/delete_viagemDestino.sql'),
+        del_viagemOrigem: sql('queries/carona/delete_viagemOrigem.sql'),
+        del_passageiros: sql('queries/carona/search_reservas_before_delete.sql'),
         get_all: sql('queries/carona/get_all.sql'),
         solic_reserva: sql('queries/carona/insert_reserva.sql'),
         ins_viagem_destino: sql('queries/carona/insert_viagem_destino.sql'),
