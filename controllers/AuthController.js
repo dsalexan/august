@@ -36,20 +36,21 @@ router.post('/teste', function(req, res) {
 // TODO: add winston logging to this
 router.get('/login', function(req, res){
     performance.mark('Begin Login Authentication')
-    var usuario = req.query.username
-    var senha = req.query.password // TODO: encriptar o password no outro lado da chamada usando um metodo 
+    var usuario = req.query.login
+    var senha = req.query.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
                                      // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                                      // nao vao interceptar as credenciais do usuario
 
     if(usuario == undefined || senha == undefined){
         res.status(400).send({
             auth: false,
+            data: undefined,
             message: 'Missing credentials.'
         })
     }
 
     // fixar metodo para enviar dados já que ele é chamado em dois lugares
-    const sendResult = function(user){
+    const sendResult = function(user) {
         var token = auth.token(user) // TODO: invalidar o token assim que o usuário executar logout no app? 
         // ou talvez colocar uma data de expiração e refazer o token a cada X dias?
 
@@ -60,6 +61,7 @@ router.get('/login', function(req, res){
         console.log(`Login successful for ${user.usuario || user.username} with token: ${token}`)
         res.status(200).send({
             auth: true,
+            data: user.data,
             token: token
         })
 
@@ -75,22 +77,18 @@ router.get('/login', function(req, res){
         console.log('AUTH', result.auth)
         if (result.auth) { // Achou o usuario no intranet e a senha esta correta
             Users.findByUsernameUnifesp(usuario).then(user => { // Procurar usuario no nosso banco
-                    console.log('USER', user.exists)
-                    if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
-                        console.log(`Registering ${usuario}...`)
-                        Users.registerUnifesp(usuario, senha).then(() => {
-                                sendResult({usuario: usuario, senha: senha}) // Enviar os dados do usuario para fazer login
-                            }
-                        )
-                        .catch(err => {
-                            console.log(err)    
-                        })
-                    }
-                    else { // Achou no nosso banco, fazer login
-                        sendResult({usuario: user.usuario, senha: user.senha}) // Enviar os dados do usuario para fazer login
-                    }
+                console.log('USER', user.exists)
+                if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
+                    console.log(`Registering ${usuario}...`)
+                    Users.registerUnifesp(usuario, senha).then((user) => {
+                        sendResult(user) // Enviar os dados do usuario para fazer login
+                    }).catch(err => {
+                        console.log(err)    
+                    })
+                } else { // Achou no nosso banco, fazer login
+                    sendResult(user) // Enviar os dados do usuario para fazer login
                 }
-            )
+            })
         }
         else { // Nao deu certo no intranet
             res.status(401).send({

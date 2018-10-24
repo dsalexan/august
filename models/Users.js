@@ -10,7 +10,10 @@ module.exports = {
         var aluno = new pq(sql.aluno.insert_aluno, dados)
         return new Promise((resolve, reject) => {
             db.none(aluno, dados).then(result => {
-                resolve({created: true})
+                var aluno = new pq(sql.aluno.consultar_por_nome)
+                db.any(aluno, [username_unifesp, password_unifesp]).then(a => {
+                    resolve({exists: true, data: a})
+                }).catch(err => reject(err))
             }).catch(err => reject(err))
         })
     },
@@ -20,7 +23,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             db.any(aluno, [username_unifesp]).then(result => {
                 if(result.length > 0) {
-                    resolve({exists: true})
+                    resolve({exists: true, data: result})
                 } else {
                     resolve({exists: false})
                 }
