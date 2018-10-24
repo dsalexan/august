@@ -34,10 +34,10 @@ router.post('/teste', function(req, res) {
 //
 
 // TODO: add winston logging to this
-router.post('/login', function(req, res){
+router.get('/login', function(req, res){
     performance.mark('Begin Login Authentication')
-    var usuario = req.body.username
-    var senha = req.body.password // TODO: encriptar o password no outro lado da chamada usando um metodo 
+    var usuario = req.query.username
+    var senha = req.query.password // TODO: encriptar o password no outro lado da chamada usando um metodo 
                                      // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                                      // nao vao interceptar as credenciais do usuario
 
@@ -72,19 +72,19 @@ router.post('/login', function(req, res){
     // auth/login vai funcionar como registro se nao houver conta de usuario com essas credenciais (válidas) ou como entrar caso contrario
     console.log(`Authenticating for ${usuario}...`)
     UnifespController.authenticateProxy(usuario, senha).then(result => { // Tentar fazer login no intranet
+        console.log('AUTH', result.auth)
         if (result.auth) { // Achou o usuario no intranet e a senha esta correta
-            Users.findByUsernameUnifesp(usuario)
-            .then(
-                user => { // Procurar usuario no nosso banco
-                    if (user == null) { // Nao achou, registrar novo usuario e fazer login
+            Users.findByUsernameUnifesp(usuario).then(user => { // Procurar usuario no nosso banco
+                    console.log('USER', user.exists)
+                    if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                         console.log(`Registering ${usuario}...`)
-                        Users.registerUnifesp(usuario, senha)
-                        .then(
-                            user => {
-                                sendResult({usuario: user.usuario, senha: user.senha}) // Enviar os dados do usuario para fazer login
+                        Users.registerUnifesp(usuario, senha).then(() => {
+                                sendResult({usuario: usuario, senha: senha}) // Enviar os dados do usuario para fazer login
                             }
                         )
-                        .catch(err => {return next(err)})
+                        .catch(err => {
+                            console.log(err)    
+                        })
                     }
                     else { // Achou no nosso banco, fazer login
                         sendResult({usuario: user.usuario, senha: user.senha}) // Enviar os dados do usuario para fazer login
@@ -99,7 +99,7 @@ router.post('/login', function(req, res){
             })
         }
     }).catch(err => {
-        return next(err)
+        console.log(err)
     })
 })
 
