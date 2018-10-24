@@ -4,20 +4,34 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "eslint . --fix",
+    "prettier": "prettier **/*.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "follow-redirects": "^1.5.8",
+    "https": "^1.0.0",
     "jsonwebtoken": "^8.3.0",
     "pg": "^7.4.3",
-    "pg-promise": "^8.4.6"
+    "pg-promise": "^8.4.6",
+    "puppeteer": "^1.9.0",
+    "request": "^2.88.0",
+    "ssl-root-cas": "^1.2.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "prettier": "^1.14.3"
   }
 }

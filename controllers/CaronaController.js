@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+var express = require('express')
+var router = express.Router()
+var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
     extended: false
-}));
-router.use(bodyParser.json());
+}))
+router.use(bodyParser.json())
 
 const auth = require('../auth/auth')
 
@@ -22,7 +22,7 @@ router.post('/login', function(req, res){
     if(username == undefined || password == undefined){
         res.status(400).send({
             auth: false,
-            message: "Missing credentials."
+            message: 'Missing credentials.'
         })
     }
 

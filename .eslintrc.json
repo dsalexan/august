@@ -1,0 +1,23 @@
+{
+    "extends": "eslint:recommended",
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "semi": ["error", "never"],
+        "quotes": ["error", "single"],
+        "no-unused-vars": ["warn"],
+        "no-undef": ["warn"],
+        "no-console": ["off"],
+        "func-style": ["off"],
+        "no-unexpected-multiline": ["off"]
+    }
+}

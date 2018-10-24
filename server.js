@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 
 var express = require('express')
 var app = express()
@@ -23,6 +23,8 @@ router.use(function(req, res, next) {
 
     next()
 })
+
+router.use('/api/auth', authController)
 
 // Aluno
 router.get('/api/alunos/get/senha', Alunos.getAluno)
@@ -126,17 +128,17 @@ router.get('/api/grades/put/uc', Grade.update_uc)
 
 // Headers
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+})
 
 // Router
-app.use('/', router);
+app.use('/', router)
 
 // error handling middleware
 // chamar next(err) nos erro0r handling individuais em cada rota pra cair nesse error handler genérico aqui
 app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).json(err);
-});
+    console.error(err.stack)
+    res.status(500).json(err)
+})

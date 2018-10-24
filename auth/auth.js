@@ -43,7 +43,7 @@ module.exports.token = function(user){
     var token = jwt.sign({
         username: user.usuario,
         password: user.senha // Cripto.encrypt(user.senha)
-    }, process.env.SECRET);
+    }, process.env.SECRET)
     // {
     //     expiresIn: 86400 // expires in 24 hours
     // })

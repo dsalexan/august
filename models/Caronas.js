@@ -1,6 +1,6 @@
 const db = require('../db')
 const sql = require('./sql')
-const pq = require('pg-promise').ParameterizedQuery;
+const pq = require('pg-promise').ParameterizedQuery
 
 module.exports = {
     deleteReserva: (req, res, next) => {
@@ -161,8 +161,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     searchViagemDataHora: (req, res, next) => {
         var data = req.query.data
@@ -170,7 +170,7 @@ module.exports = {
 
         dados = [data, hora]
         
-        const viagem = new pq(sql.caronas.srch_viagemDataHora);
+        const viagem = new pq(sql.caronas.srch_viagemDataHora)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -179,8 +179,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },   
     searchViagemDataHoraOrigemDestinoVagas: (req, res, next) => {
         var data = req.query.data
@@ -407,14 +407,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     searchViagemMotorista: (req, res, next) => {
         var id = req.query.id
         dados = [id]
         
-        const viagem = new pq(sql.caronas.srch_viagemMotorista);
+        const viagem = new pq(sql.caronas.srch_viagemMotorista)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -423,14 +423,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },   
     searchViagemPassageiro: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.srch_viagemPassageiro);
+        const viagem = new pq(sql.caronas.srch_viagemPassageiro)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -459,7 +459,7 @@ module.exports = {
         });
     },   
     selectLocalidadeDescricao: (req, res, next) => {
-        const localidades = new pq(sql.caronas.select_localidades);
+        const localidades = new pq(sql.caronas.select_localidades)
         db.any(localidades)
         .then(v => {
             res.status(200).json({
@@ -468,8 +468,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     solicitarReserva: (req, res, next) => {
         var id_viagem = req.query.id_viagem
@@ -477,7 +477,7 @@ module.exports = {
         var status_reserva = req.query.status_reserva
         dados = [id_viagem, id_passageiro, status_reserva]
 
-        const viagem = new pq(sql.caronas.solic_reserva);
+        const viagem = new pq(sql.caronas.solic_reserva)
         db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -486,15 +486,15 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     updateDiaViagem: (req, res, next) => {
         var dia = req.query.dia
         var id = req.query.id  
         dados = [dia, id]
 
-        const viagem = new pq(sql.caronas.update_viagemDia);
+        const viagem = new pq(sql.caronas.update_viagemDia)
         db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -503,15 +503,15 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },   
     updateHorarioViagem: (req, res, next) => {
         var hora = req.query.hora
         var id = req.query.id 
         dados = [hora, id]
 
-        const viagem = new pq(sql.caronas.update_viagemHorario);
+        const viagem = new pq(sql.caronas.update_viagemHorario)
         db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -542,7 +542,7 @@ module.exports = {
     getAllCaronas: (req, res, next) => {
         var id = req.query.id
         dados = [id]
-        const viagem = new pq(sql.caronas.get_all);
+        const viagem = new pq(sql.caronas.get_all)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -551,7 +551,7 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     }
 }

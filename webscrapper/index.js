@@ -12,12 +12,12 @@ const options = {
 rp(options)
 .then(($) => {
   $('.tableau_gris_centrer').each((i, item) => {
-    texto = $(item).find('a').text() + " "
+    let texto = $(item).find('a').text() + ' '
     console.log(texto)
   })
 })
 .catch((err) => {
-  console.log(err);
+  console.log(err)
 })
 
   //fonte http://www.luiztools.com.br/post/webscrapping-com-node-js/?gclid=EAIaIQobChMIsI7V9crC3QIViIaRCh1HawkgEAAYASAAEgIMg_D_BwE

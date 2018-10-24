@@ -1,13 +1,13 @@
 const db = require('../db')
 const sql = require('./sql')
-const pq = require('pg-promise').ParameterizedQuery;
+const pq = require('pg-promise').ParameterizedQuery
 
 module.exports = {
     teste: (req, res, next) => {
         var raTeste = '111111'
         dados = {ra_aluno: raTeste}
 
-        const teste = new pq(sql.grade.select_grade_aluno_tq_raaluno);
+        const teste = new pq(sql.grade.select_grade_aluno_tq_raaluno)
         console.log(teste)
         
         db.any(teste.text, dados)
@@ -35,8 +35,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_evento_turma: (req, res, next) => {
         var id_evento = req.query.id_evento
@@ -51,8 +51,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_horario_turma: (req, res, next) => {
         var id_horario = req.query.id_horario
@@ -68,8 +68,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_horario: (req, res, next) => {
         var id_horario = req.query.id_horario
@@ -84,8 +84,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_pre_req: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -101,8 +101,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_professor: (req, res, next) => {
         var id_professor = req.query.id_professor
@@ -117,8 +117,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_turma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -133,8 +133,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     delete_uc: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -149,8 +149,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_aluno_turma: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno
@@ -167,8 +167,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_evento_turma: (req, res, next) => {
         var id_evento = req.query.id_evento
@@ -191,8 +191,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_horario_turma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -209,8 +209,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_horario: (req, res, next) => {
         var dia_semana = req.query.dia_semana
@@ -226,8 +226,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_pre_req: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -243,8 +243,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_professor: (req, res, next) => {
         var nome = req.query.nome
@@ -263,8 +263,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_turma: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -281,8 +281,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     insert_uc: (req, res, next) => {
         var nome = req.query.nome
@@ -298,8 +298,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_alunos_turma_tq_idturma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -315,8 +315,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_compromissos_compromisso_tq_raaluno: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno
@@ -364,8 +364,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_eventos_turma_tq_idturma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -381,8 +381,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_grade_aluno_tq_raaluno: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno
@@ -399,8 +399,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_horarios_turma_tq_idturma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -416,8 +416,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_horarios: (req, res, next) => {
         dados = {}
@@ -431,8 +431,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_info_professor_tq_idprofessor: (req, res, next) => {
         var id_professor = req.query.id_professor
@@ -448,8 +448,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_info_turma_tq_idturma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -465,8 +465,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_info_uc_tq_iduc: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -482,8 +482,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_prereqs_uc_tq_iduc: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -499,8 +499,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_turmas_aluno_tq_raaluno: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno
@@ -516,8 +516,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_turmas_uc_tq_iduc: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -533,8 +533,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_ucs: (req, res, next) => {
         dados = {}
@@ -548,8 +548,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_aluno_turma: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno
@@ -566,8 +566,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_evento_turma: (req, res, next) => {
         var id_evento = req.query.id_evento
@@ -587,8 +587,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_horario_turma: (req, res, next) => {
         var id_turma = req.query.id_turma
@@ -605,8 +605,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_horario: (req, res, next) => {
         var dia_semana = req.query.dia_semana
@@ -623,8 +623,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_pre_req: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -640,8 +640,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_professor: (req, res, next) => {
         var nome = req.query.nome
@@ -661,8 +661,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_turma: (req, res, next) => {
         var id_uc = req.query.id_uc
@@ -680,8 +680,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     update_uc: (req, res, next) => {
         var nome = req.query.nome
@@ -698,7 +698,7 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     }
 }
