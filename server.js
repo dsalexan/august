@@ -13,10 +13,16 @@ var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
 
 var Carona = require('./models/Caronas');
-var Alunos = require('./models/Alunos');
 var Grade = require('./models/Grade');
 var Utilidades = require('./models/Utilidades');
 var Divulgacao = require('./models/Divulgacao');
+
+
+var bodyParser = require('body-parser')
+router.use(bodyParser.urlencoded({
+    extended: false
+}))
+router.use(bodyParser.json())
 
 // log request middleware
 router.use(function(req, res, next) {
@@ -28,12 +34,7 @@ router.use(function(req, res, next) {
 router.use('/api/auth', authController)
 
 // Aluno
-router.get('/api/alunos/get/senha', Alunos.getAluno)
-router.get('/api/alunos/put/email', Alunos.alteracao_email_aluno)
-router.get('/api/alunos/put/nome', Alunos.alteracao_nome_aluno)
-router.get('/api/alunos/get/aluno', Alunos.consulta_aluno)
-router.get('/api/alunos/post/aluno', Alunos.insert_aluno)
-router.get('/api/alunos/delete/aluno', Alunos.remove_aluno)
+router.use('/api', require('./controllers/AlunoController'))
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)

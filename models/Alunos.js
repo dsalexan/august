@@ -1,120 +1,20 @@
 const db = require('../db')
-const sql = require('./sql')
+const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery
+const pgp = require('pg-promise')
+
 
 module.exports = {
-    getAluno: (req, res, next) => {
-        var login = req.query.login
-        var senha = req.query.senha
+    select_aluno_ra: (ra) => db.oneOrNone(sql.aluno.select_aluno_ra, {ra_aluno: ra}),
+    select_alunos: () => db.any(sql.aluno.select_alunos),
+    select_aluno_credenciais: (credenciais) => db.oneOrNone(sql.aluno.select_aluno_credenciais, credenciais),
 
-        var aluno = new pq(sql.aluno.consultar_por_nome)
-        db.any(aluno, [login, senha])
-        .then(a => {
-            res.status(200).json({
-                status: 'success',
-                data: a
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
+    insert_aluno: (aluno) => db.none(sql.aluno.insert_aluno, aluno),
 
-    alteracao_email_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var email = req.query.email
-        
-        dados = [email, ra_aluno]
+    // db.result para acessar numero de linhas alteradas
+    update_email_aluno: (aluno) => db.result(sql.aluno.update_email_ra, aluno, r => r.rowCount),
+    update_nome_aluno: (aluno) => db.result(sql.aluno.update_nome_ra, aluno, r => r.rowCount),
+    update_credenciais_aluno: (aluno) => db.result(sql.aluno.update_credenciais_ra, aluno, r => r.rowCount),
 
-        const alteremail = new pq(sql.aluno.alteracao_email_aluno)
-       
-        db.any(alteremail, dados)
-        .then(v =>{
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-
-    alteracao_nome_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var nome = req.query.nome
-        
-        dados = [nome, ra_aluno]
-
-        const alternome = new pq(sql.aluno.alteracao_nome_aluno)
-       
-        db.any(alternome, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-
-    consulta_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        dados = [ra_aluno]
-
-        const consaluno = new pq(sql.aluno.consulta_aluno)
-        
-        db.any(consaluno, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-
-    insert_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var nome = req.query.nome
-        var login_intranet = req.query.login_intranet
-        var senha_intranet = req.query.senha_intranet
-        var email = req.query.email
-        
-        dados = [ra_aluno, nome, login_intranet, senha_intranet, email]
-
-        const inseraluno = new pq(sql.aluno.insert_aluno)
-        db.none(inseraluno, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-
-    remove_aluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-
-        dados = [ra_aluno]
-
-        const removaluno = new pq(sql.aluno.remove_aluno)
-        db.none(removaluno, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    }
+    delete_aluno: (ra_aluno) => db.result(sql.aluno.delete_aluno, [ra_aluno], r => r.rowCount)
 }

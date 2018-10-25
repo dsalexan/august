@@ -34,10 +34,10 @@ router.post('/teste', function(req, res) {
 //
 
 // TODO: add winston logging to this
-router.get('/login', function(req, res){
+router.post('/login', function(req, res){
     performance.mark('Begin Login Authentication')
-    var usuario = req.query.login
-    var senha = req.query.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
+    var usuario = req.body.login
+    var senha = req.body.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
                                      // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                                      // nao vao interceptar as credenciais do usuario
 

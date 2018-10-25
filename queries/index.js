@@ -6,6 +6,7 @@
 // - have all sql files for Products in ./sql/products
 // - have your sql provider module as ./sql/index.js
 
+const pq = require('pg-promise').ParameterizedQuery
 const QueryFile = require('pg-promise').QueryFile
 const path = require('path')
 const fs = require('fs')
@@ -20,11 +21,28 @@ function sql(file) {
     else{
         let map = {}
         fs.readdirSync(fullPath).forEach(file => {
-            map[file.replace('.sql', '')] = new QueryFile(path.join(fullPath, file))
+            map[file.replace('.sql', '')] = (new QueryFile(path.join(fullPath, file)))
         })
         return map
     }            
 }
+
+// Seguindo o padrão
+//  select_alunos
+//      -> seleciona alunos
+//  select_aluno_ra
+//      -> seleciona aluno com base no ra
+//  select_aluno_credenciais
+//      -> seleciona aluno com basae nas credenciais (login e senha intranet)
+//  insert_aluno
+//      -> insere aluno
+//  update_email_ra
+//      -> atualiza email com base no ra
+//  
+// FUNCAO_OBJETOS_CRITERIOS
+//  funcao = select, insert, update, delete
+//  objetos = o que a funcao está (no caso) selecionando
+//  criterios = os criterios que a funcao tem que cumprir, basicamente os dados relevantes no WHERE
 
 module.exports = {
     test: {
@@ -67,13 +85,14 @@ module.exports = {
         update_statusReserva: sql('carona/update_status_reserva.sql')
     },
     aluno: {
-        consultar_por_nome: sql('aluno/consulta_aluno_nome.sql'),
-        alteracao_email_aluno: sql('aluno/alteracao_email_aluno.sql'),
-        alteracao_login_intranet_aluno: sql('aluno/alteracao_login_intranet_aluno.sql'),
-        alteracao_nome_aluno: sql('aluno/alteracao_nome_aluno.sql'),
-        consulta_aluno: sql('aluno/consulta_aluno.sql'),
+        select_alunos: sql('aluno/select_alunos.sql'),
+        select_aluno_ra: sql('aluno/select_aluno_ra.sql'),
+        select_aluno_credenciais: sql('aluno/select_aluno_credenciais.sql'),
         insert_aluno: sql('aluno/insert_aluno.sql'),
-        remove_aluno: sql('aluno/remove_aluno.sql')
+        update_email_ra: sql('aluno/update_email_ra.sql'),
+        update_credenciais_ra: sql('aluno/update_credenciais_ra.sql'),
+        update_nome_ra: sql('aluno/update_nome_ra.sql'),
+        delete_aluno: sql('aluno/delete_aluno.sql')
     },
     grade: {
         delete_aluno_turma: sql('grade/delete_aluno_turma.sql'),

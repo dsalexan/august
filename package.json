@@ -23,6 +23,7 @@
     "follow-redirects": "^1.5.8",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.11",
     "pg": "^7.4.3",
     "pg-promise": "^8.4.6",
     "puppeteer": "^1.9.0",

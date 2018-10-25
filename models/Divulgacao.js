@@ -1,5 +1,5 @@
 const db = require('../db')
-const sql = require('./sql')
+const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery;
 
 module.exports = {
