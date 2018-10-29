@@ -4,8 +4,8 @@ var router = express.Router()
 const { performance } = require('perf_hooks')
 const _ = require('lodash')
 
-const auth = require('../auth/auth')
-var Alunos = require('../models/Alunos');
+const auth = require('../../auth/auth')
+var Alunos = require('../../models/Alunos');
 
 // GET api/alunos/<ra_aluno> <- retorna um aluno especifico
 // GET api/alunos <- retorna todos os alunos OR alunos que passem nos parametros especificos
@@ -14,28 +14,7 @@ var Alunos = require('../models/Alunos');
 // PUT api/alunos/<ra_aluno> <- atualiza as informações de um aluno
 // DELETE api/alunos/<ra_aluno> <- remove um aluno especifico do banco
 
-router.get('/alunos/:ra_aluno', (req, res, next) => {
-    var ra_aluno = req.params.ra_aluno
-
-    Alunos.select_aluno_ra(ra_aluno)
-    .then(v => {
-        if(v != null){
-            res.status(200).json({ // retornando estato 200 OK para objeto encontrado
-                data: v,
-                success: true
-            })
-        }else{
-            res.status(404).json({ // retornando estado 404 NOT FOUND para objeto nao encontrado
-                message: "Not Found",
-                success: false
-            })
-        }
-    })
-    .catch(error => {
-        return next(error)
-    })
-})
-
+// GET 
 router.get('/alunos/', (req, res, next) => {
     var search = {
         login_intranet: req.query.login_intranet,
@@ -66,6 +45,29 @@ router.get('/alunos/', (req, res, next) => {
     })
 })
 
+router.get('/alunos/:ra_aluno', (req, res, next) => {
+    var ra_aluno = req.params.ra_aluno
+
+    Alunos.select_aluno_ra(ra_aluno)
+    .then(v => {
+        if(v != null){
+            res.status(200).json({ // retornando estato 200 OK para objeto encontrado
+                data: v,
+                success: true
+            })
+        }else{
+            res.status(404).json({ // retornando estado 404 NOT FOUND para objeto nao encontrado
+                message: "Not Found",
+                success: false
+            })
+        }
+    })
+    .catch(error => {
+        return next(error)
+    })
+})
+
+// POST
 router.post('/alunos', (req, res, next) => {
     var aluno = {
         ra_aluno: req.body.ra_aluno,
@@ -87,6 +89,7 @@ router.post('/alunos', (req, res, next) => {
     })
 })
 
+// PUT
 router.put('/alunos/:ra_aluno', (req, res, next) => {
     var aluno = {
         ra_aluno: req.params.ra_aluno,
@@ -113,6 +116,7 @@ router.put('/alunos/:ra_aluno', (req, res, next) => {
     })
 })
 
+// DELETE
 router.delete('/alunos/:ra_aluno', (req, res, next) => {
     var ra_aluno = req.params.ra_aluno
 

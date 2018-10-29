@@ -34,6 +34,8 @@ function sql(file) {
 //      -> seleciona aluno com base no ra
 //  select_aluno_credenciais
 //      -> seleciona aluno com basae nas credenciais (login e senha intranet)
+//  select_viagem_motorista
+//      -> seleciona uma viagem com base no motorista
 //  insert_aluno
 //      -> insere aluno
 //  update_email_ra
@@ -52,13 +54,21 @@ module.exports = {
         insert: sql('users/insert.sql')
     },
     caronas: {
+        select_viagens: sql('carona/select_viagens.sql'),
+        // select_viagem_id: sql('caronas/select_viagem_id'),
+
+        select_viagem_motorista: sql('carona/select_viagem_motorista.sql'),
+        select_viagem_passageiro: sql('carona/select_viagem_passageiro.sql'),
+        select_reservas_id: sql('carona/select_reservas_id.sql'),
+
+        srch_viagemData: sql('carona/search_viagem_data.sql'),
+
         del_reserva: sql('carona/delete_reserva.sql'),
         del_viagem: sql('carona/delete_viagem.sql'),
         del_viagemReserva: sql('carona/delete_viagemReserva.sql'),
         del_viagemDestino: sql('carona/delete_viagemDestino.sql'),
         del_viagemOrigem: sql('carona/delete_viagemOrigem.sql'),
         del_passageiros: sql('carona/search_reservas_before_delete.sql'),
-        get_all: sql('carona/get_all.sql'),
         solic_reserva: sql('carona/insert_reserva.sql'),
         ins_viagem_destino: sql('carona/insert_viagem_destino.sql'),
         ins_viagem_origem: sql('carona/insert_viagem_origem.sql'),
@@ -75,10 +85,6 @@ module.exports = {
         srch_viagemDataHoraVagas: sql('carona/search_viagem_data_hora_vagas.sql'),
         srch_viagemDataVagas: sql('carona/search_viagem_data_vagas.sql'),
         srch_viagemDataHora: sql('carona/search_viagem_data_hora.sql'),
-        srch_viagemData: sql('carona/search_viagem_data.sql'),
-        srch_viagemMotorista: sql('carona/search_viagem_motorista.sql'),
-        srch_viagemPassageiro: sql('carona/search_viagem_passageiro.sql'),
-        srch_reserva: sql('carona/search_reserva.sql'),
         select_localidades: sql('carona/select_localidade_descricao.sql'),
         update_viagemDia: sql('carona/update_dia.sql'),
         update_viagemHorario: sql('carona/update_horario.sql'),

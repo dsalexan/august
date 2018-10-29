@@ -42,7 +42,7 @@ router.post('/login', function(req, res){
                                      // nao vao interceptar as credenciais do usuario
 
     if(usuario == undefined || senha == undefined){
-        res.status(400).send({
+        return res.status(400).send({
             auth: false,
             data: undefined,
             message: 'Missing credentials.'
@@ -76,19 +76,19 @@ router.post('/login', function(req, res){
     UnifespController.authenticateProxy(usuario, senha).then(result => { // Tentar fazer login no intranet
         console.log('AUTH', result.auth)
         if (result.auth) { // Achou o usuario no intranet e a senha esta correta
-            Users.findByUsernameUnifesp(usuario).then(user => { // Procurar usuario no nosso banco
-                console.log('USER', user.exists)
-                if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
-                    console.log(`Registering ${usuario}...`)
-                    Users.registerUnifesp(usuario, senha).then((user) => {
-                        sendResult(user) // Enviar os dados do usuario para fazer login
-                    }).catch(err => {
-                        console.log(err)    
-                    })
-                } else { // Achou no nosso banco, fazer login
-                    sendResult(user) // Enviar os dados do usuario para fazer login
-                }
-            })
+            // Users.findByUsernameUnifesp(usuario).then(user => { // Procurar usuario no nosso banco
+            //     console.log('USER', user.exists)
+            //     if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
+            //         console.log(`Registering ${usuario}...`)
+            //         Users.registerUnifesp(usuario, senha).then((user) => {
+            //             sendResult(user) // Enviar os dados do usuario para fazer login
+            //         }).catch(err => {
+            //             console.log(err)    
+            //         })
+            //     } else { // Achou no nosso banco, fazer login
+            //         sendResult(user) // Enviar os dados do usuario para fazer login
+            //     }
+            // })
         }
         else { // Nao deu certo no intranet
             res.status(401).send({

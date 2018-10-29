@@ -8,7 +8,7 @@ const usuario = 'usuario';
 const senha = 'senha';
 const ru = String('https://phpu.unifesp.br/ru_consulta/index.php');
 const intranet = String ('https://intranet.unifesp.br/');
-const historico = String ('https://www3.unifesp.br/prograd/app_prograd/he_novo/he_novo_blank_inicial/he_novo_blank_inicial.php?SID=fd0951e41ca63dc625082027e912ed9a&INapli=');
+const historico = String ('https://www3.unifesp.br/prograd/app_prograd/he_novo/he_aluno_cns_lista_cursos/he_aluno_cns_lista_cursos.php');
 const atestado = String ('https://www3.unifesp.br/prograd/app/atestados?SID=dd4f5be9a9614483f802422e739d9593&INapli=');
 const op = parseInt(1);
 

@@ -3,6 +3,31 @@ const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery
 
 module.exports = {
+    select_viagens: () => db.any(sql.caronas.select_viagens),
+    select_viagem_id: (id_viagem) => db.oneOrNone(sql.caronas.select_viagem_id, [id_viagem]),
+
+    select_motorista_id: (id_motorista) => db.any(sql.caronas.select_motorista_id),   
+    select_passageiro_id: (id_passageiro) => db.any(sql.caronas.select_passageiro_id),
+    select_reservas_id: (id_viagem) => db.any(sql.caronas.select_reservas_id),   
+
+    searchViagemData: (req, res, next) => {
+        var data = req.query.data
+        
+        dados = [data]
+        const viagem = new pq(sql.caronas.srch_viagemData);
+
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+    
     deleteReserva: (req, res, next) => {
         var id = req.query.id
         dados = [id]
@@ -393,71 +418,6 @@ module.exports = {
             return next(error);
         });
     },
-    searchViagemData: (req, res, next) => {
-        var data = req.query.data
-        
-        dados = [data]
-        const viagem = new pq(sql.caronas.srch_viagemData);
-
-        db.any(viagem, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-    searchViagemMotorista: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
-        
-        const viagem = new pq(sql.caronas.srch_viagemMotorista)
-        db.any(viagem, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },   
-    searchViagemPassageiro: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
-
-        const viagem = new pq(sql.caronas.srch_viagemPassageiro)
-        db.any(viagem, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error);
-        });
-    },
-    searchReserva: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
-
-        const viagem = new pq(sql.caronas.srch_reserva);
-        db.any(viagem, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error);
-        });
-    },   
     selectLocalidadeDescricao: (req, res, next) => {
         const localidades = new pq(sql.caronas.select_localidades)
         db.any(localidades)
@@ -539,19 +499,4 @@ module.exports = {
             return next(error);
         });
     },   
-    getAllCaronas: (req, res, next) => {
-        var id = req.query.id
-        dados = [id]
-        const viagem = new pq(sql.caronas.get_all)
-        db.any(viagem, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    }
 }
