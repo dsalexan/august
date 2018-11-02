@@ -94,6 +94,7 @@ module.exports = {
         select_alunos: sql('aluno/select_alunos.sql'),
         select_aluno_ra: sql('aluno/select_aluno_ra.sql'),
         select_aluno_credenciais: sql('aluno/select_aluno_credenciais.sql'),
+        select_aluno_login: sql('aluno/select_aluno_login.sql'),
         insert_aluno: sql('aluno/insert_aluno.sql'),
         update_email_ra: sql('aluno/update_email_ra.sql'),
         update_credenciais_ra: sql('aluno/update_credenciais_ra.sql'),

@@ -26,8 +26,10 @@ var Caronas = require('../../models/Caronas');
 router.get('/api/caronas', (req, res, next) => {
     var search = {
         id_motorista: req.query.id_motorista,
-        id_passageiro: req.query.id_passageiro
+        id_passageiro: req.query.id_passageiro,
+        quantidade_vagas: req.query.quantidade_vagas
     }
+
     var fn = Caronas.select_viagens
     if(search.id_motorista) fn = Caronas.select_motorista_id
     if(search.id_passageiro) fn = Caronas.select_passageiro_id
