@@ -459,6 +459,7 @@ module.exports = {
         const query = new pq(sql.grade.select_info_turma_tq_idturma)
         db.one(query.text, dados)
         .then(q => {
+            console.log(q)
             res.status(200).json({
                 data: q,
                 success: true
