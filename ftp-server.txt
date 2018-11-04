@@ -1,0 +1,14 @@
+servidor: service vsftpd start
+
+Abrir WinSCP
+Protocolo de arquivo: FTP
+Criptografia: Sem criptografia
+Host: 103.248.9.4
+Porta: 21
+Usuário: echo
+Senha: AchillesDying
+> Login
+
+Fazer o que quiser
+
+servidor: service vsftpd stop
