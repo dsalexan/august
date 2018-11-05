@@ -15,21 +15,25 @@ var Users = require('../models/Users')
 const { performance } = require('perf_hooks')
 
 // Pedro testando
+var Professores = require('../libraries/unifesp/professores')
 router.post('/teste', function(req, res) {
-    performance.mark('Begin Login Authentication')
-    UnifespController.authenticateProxy(req.body.username, req.body.password).then(response => {
-        res.status(200).send(response)
-    }, err => {
-        res.status(500).send({
-            auth: false,
-            error: err
-        })
-    }).finnaly(() => {
-        performance.mark('End Login Authentication')
-        performance.measure('Login Authentication', 'Begin Login Authentication', 'End Login Authentication')
-        console.log('performance')
-        console.log(performance.getEntriesByType('measure')[0])
-    })
+
+    console.log(Professores.read())
+
+    // performance.mark('Begin Login Authentication')
+    // UnifespController.authenticateProxy(req.body.username, req.body.password).then(response => {
+    //     res.status(200).send(response)
+    // }, err => {
+    //     res.status(500).send({
+    //         auth: false,
+    //         error: err
+    //     })
+    // }).finnaly(() => {
+    //     performance.mark('End Login Authentication')
+    //     performance.measure('Login Authentication', 'Begin Login Authentication', 'End Login Authentication')
+    //     console.log('performance')
+    //     console.log(performance.getEntriesByType('measure')[0])
+    // })
 })
 //
 
