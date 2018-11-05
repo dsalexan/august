@@ -1,5 +1,5 @@
 const db = require('../db')
-const sql = require('./sql')
+const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery
 
 module.exports = {
@@ -334,8 +334,21 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
+    },
+    select_eventos: (req, res, next) => {
+        const query = new pq(sql.grade.select_eventos)
+        db.any(query.text)
+        .then(q => {
+            res.status(200).json({
+                data: q,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
     },
     select_eventos: (req, res, next) => {
         const query = new pq(sql.grade.select_eventos)
