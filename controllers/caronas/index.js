@@ -5,7 +5,7 @@ const { performance } = require('perf_hooks')
 const _ = require('lodash')
 
 const auth = require('../../auth/auth')
-var Caronas = require('../../models/Caronas');
+var Caronas = require('../../models/Caronas')
 
 // sub-diretorios
 // caronas/
@@ -81,8 +81,8 @@ router.get('/api/caronas/:id_viagem/reservas', (req, res, next) => {
         })
     })
     .catch(error => {
-        return next(error);
-    });
+        return next(error)
+    })
 }) 
 
 // router.get('/api/caronas/viagem/data', Caronas.searchViagemData)

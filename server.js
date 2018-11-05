@@ -12,10 +12,10 @@ var server = app.listen(port, () => {
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
 
-var Carona = require('./models/Caronas');
-var Grade = require('./models/Grade');
-var Utilidades = require('./models/Utilidades');
-var Divulgacao = require('./models/Divulgacao');
+var Carona = require('./models/Caronas')
+var Grade = require('./models/Grade')
+var Utilidades = require('./models/Utilidades')
+var Divulgacao = require('./models/Divulgacao')
 
 
 var bodyParser = require('body-parser')

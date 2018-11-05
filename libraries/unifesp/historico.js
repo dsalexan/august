@@ -1,6 +1,6 @@
 const { DateTime } = require('luxon')
 const cheerio = require('cheerio')
-const fs = require('fs');
+const fs = require('fs')
 
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
 const UNIFESP_HISTORICO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(6) a'

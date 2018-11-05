@@ -18,12 +18,12 @@ var Alunos = require('../models/Alunos')
 const { performance } = require('perf_hooks')
 
 // Pedro testando
-router.post('/teste', function(req, res) {
-    var fs = require('fs');
+router.get('/teste', function(req, res) {
+    var fs = require('fs')
  
-    var html = fs.readFileSync('atestado.html', 'utf8')
+    var html = fs.readFileSync('historico.html', 'utf8')
     
-    atestado.compile(html).then(result => {
+    historico.compile(html).then(result => {
         res.status(200).send(result)
     })
 })

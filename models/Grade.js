@@ -334,8 +334,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_eventos: (req, res, next) => {
         const query = new pq(sql.grade.select_eventos)
@@ -347,8 +347,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     select_eventos_aluno_tq_raaluno: (req, res, next) => {
         var ra_aluno = req.query.ra_aluno

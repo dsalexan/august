@@ -1,7 +1,7 @@
 const { DateTime } = require('luxon')
 const cheerio = require('cheerio')
-const fs = require('fs');
-const G = require('generatorics');
+const fs = require('fs')
+const G = require('generatorics')
 
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
 const UNIFESP_ATESTADO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(5) a'
@@ -66,8 +66,8 @@ var compile_atestado = function(html){
             .replace(/(,)+/g, ' ')
             .replace(/(-)+/g, ' ')
             .replace(/(\.)+/g, ' ')
-            .replace(/(   )/g, ' ')
-            .replace(/(  )/g, ' ')
+            .replace(/( {3})/g, ' ')
+            .replace(/( {2})/g, ' ')
             .split(' ')
 
         let size = 5
@@ -75,7 +75,7 @@ var compile_atestado = function(html){
         for(let i = 0; i <= paragraph.length - size; i++){
             perm.push(paragraph.slice(i, i + size).join(' '))
         }
-        perm = perm.map(t => [t, DateTime.fromString(t, "dd 'de' MMMM 'de' yyyy", {locale:'pt-BR'})]) //.filter(dt => dt.isValid)
+        perm = perm.map(t => [t, DateTime.fromString(t, 'dd \'de\' MMMM \'de\' yyyy', {locale:'pt-BR'})]) //.filter(dt => dt.isValid)
         let para  = true
 
         resolve()

@@ -78,9 +78,9 @@ var authenticatePuppeteer = function(page, user){
 
     return new Promise(async (resolve, reject) => {
         await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
-        await page.waitForSelector(INPUT_USERNAME_SELECTOR);
-        await page.waitForSelector(INPUT_PASSWORD_SELECTOR);
-        await page.waitForSelector(BUTTON_SUBMIT_SELECTOR);
+        await page.waitForSelector(INPUT_USERNAME_SELECTOR)
+        await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
+        await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
 
         page.on('response', response => {
             if(response.url().indexOf('index3.php') != -1){

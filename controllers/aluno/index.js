@@ -5,7 +5,7 @@ const { performance } = require('perf_hooks')
 const _ = require('lodash')
 
 const auth = require('../../auth/auth')
-var Alunos = require('../../models/Alunos');
+var Alunos = require('../../models/Alunos')
 
 // GET api/alunos/<ra_aluno> <- retorna um aluno especifico
 // GET api/alunos <- retorna todos os alunos OR alunos que passem nos parametros especificos
@@ -35,7 +35,7 @@ router.get('/alunos/', (req, res, next) => {
             })
         }else{
             res.status(404).json({
-                message: "Not Found",
+                message: 'Not Found',
                 success: false
             })
         }
@@ -57,7 +57,7 @@ router.get('/alunos/:ra_aluno', (req, res, next) => {
             })
         }else{
             res.status(404).json({ // retornando estado 404 NOT FOUND para objeto nao encontrado
-                message: "Not Found",
+                message: 'Not Found',
                 success: false
             })
         }

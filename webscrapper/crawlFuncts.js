@@ -1,12 +1,12 @@
 // EXEMPLO PARA WEB CRAWLER
 
 
-var request = require('request');
-var cheerio = require('cheerio');
-var URL = require('url-parse');
+var request = require('request')
+var cheerio = require('cheerio')
+var URL = require('url-parse')
 var START_URL = 'https://www1.folha.uol.com.br/poder/2018/10/suplicy-oscila-a-25-e-mara-gabrilli-alcanca-21-ao-senado-em-sp.shtml' // url inicial
 var SEARCH_WORD = 'Eliana Ferreira' // palavra a ser buscada;
-var MAX_PAGES_TO_VISIT = 50;
+var MAX_PAGES_TO_VISIT = 50
 
 var pagesVisited = {}
 var numPagesVisited = 0
