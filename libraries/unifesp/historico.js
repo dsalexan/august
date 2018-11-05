@@ -134,6 +134,7 @@ var compile_historico = function(html){
 
 var save_historico = function(data){
     return new Promise(async resolve => {
+        // TODO: implementar salvar historico
         console.log('save historico')
         resolve(true)
     })

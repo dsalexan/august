@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer')
 const _ = require('lodash')
 
 const historico = require('./historico')
+const atestado = require('./atestado')
 
 // GENERALIZING PUPPETEER PERSISTENCE AND DESTRUCTION
 class Puppet {
@@ -171,9 +172,10 @@ UNIFESP.authenticateProxyAndRegister = function(username, password){
     })
 }
 
-UNIFESP.fetch = function(what, options){
+UNIFESP.fetch = function(what, user, options){
     return new Promise((resolve, reject) => {
         buildPuppet(options).then(async puppet => {
+            options = puppet.defaults(options)
             var fn
 
             if(!options.authenticated){
@@ -187,6 +189,8 @@ UNIFESP.fetch = function(what, options){
 
             if(what == 'historico'){
                 fn = historico.fetch
+            }else if(what == 'atestado'){
+                fn = atestado.fetch
             }
 
             if(fn){

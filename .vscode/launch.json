@@ -9,7 +9,10 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}\\server.js",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "args": [
+                "--icu-data-dir=node_modules\\full-icu"
+            ]
         }
     ]
 }

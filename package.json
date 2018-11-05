@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretest": "eslint . --fix",
-    "prettier": "prettier **/*.js"
+    "prettier": "prettier **/*.js",
+    "start":"node --icu-data-dir=node_modules\\full-icu server.js"
   },
   "author": "",
   "license": "MIT",
@@ -21,7 +22,10 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "follow-redirects": "^1.5.8",
+    "full-icu": "^1.2.1",
+    "generatorics": "^1.1.0",
     "https": "^1.0.0",
+    "js-combinatorics": "^0.5.3",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
     "luxon": "^1.4.5",

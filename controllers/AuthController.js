@@ -10,6 +10,7 @@ const auth = require('../auth/auth')
 
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
+const atestado = require('../libraries/unifesp/atestado')
 
 var Users = require('../models/Users')
 var Alunos = require('../models/Alunos')
@@ -20,9 +21,9 @@ const { performance } = require('perf_hooks')
 router.post('/teste', function(req, res) {
     var fs = require('fs');
  
-    var html = fs.readFileSync('historico.html', 'utf8')
+    var html = fs.readFileSync('atestado.html', 'utf8')
     
-    historico.compile(html).then(result => {
+    atestado.compile(html).then(result => {
         res.status(200).send(result)
     })
 })
@@ -58,7 +59,7 @@ router.post('/login', function(req, res){
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
 
-                    unifesp.fetch('historico', {
+                    unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
                         authenticated: true
                     }).then(historico => {
