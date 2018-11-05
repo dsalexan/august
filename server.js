@@ -36,6 +36,9 @@ router.use('/api/auth', authController)
 // Aluno
 router.use('/api', require('./controllers/aluno'))
 
+// Cardapio
+router.use('/api/carapio', require('./controllers/cardapio'))
+
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
 router.get('/api/caronas/delete/viagem_reserva', Carona.deleteViagemReserva)
@@ -60,10 +63,10 @@ router.get('/api/caronas/get/viagem/data_hora_vagas', Carona.searchViagemDataHor
 router.get('/api/caronas/get/viagem/data_vagas', Carona.searchViagemDataVagas)
 router.get('/api/caronas/get/viagem/data_hora', Carona.searchViagemDataHora)
 router.get('/api/caronas/get/viagem/data', Carona.searchViagemData)
-router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
-router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro) 
-router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
-router.get('/api/caronas/get/reserva', Carona.searchReserva) 
+//router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
+//router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro) 
+//router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
+//router.get('/api/caronas/get/reserva', Carona.searchReserva) 
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 //router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)

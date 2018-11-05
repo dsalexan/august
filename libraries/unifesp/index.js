@@ -172,7 +172,39 @@ UNIFESP.authenticateProxyAndRegister = function(username, password){
     })
 }
 
-UNIFESP.fetch = function(what, user, options){
+UNIFESP.readCardapio = function(what, user, options){
+    return new Promise((resolve, reject) => {
+        buildPuppet(options).then(async puppet => {
+            options = puppet.defaults(options)
+            var fn
+
+            if(!options.authenticated){
+                var attempt = await authenticatePuppeteer(puppet.page, user)
+                if(!attempt.auth){
+                    return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+                }
+            }
+            options.puppeteerObject = puppet
+
+
+            if(what == 'historico'){
+                fn = historico.fetch
+            }else if(what == 'atestado'){
+                fn = atestado.fetch
+            }
+
+            if(fn){
+                fn(puppet.browser, puppet.page, options).then(result => {
+                    resolve(result)
+                })
+            }else{
+                reject(new Error('UNIFESP - Fetching for "' + what + '" not implemented'))
+            }
+        })
+    })
+}
+
+UNIFESP.insertCardapio = function(what, user, options){
     return new Promise((resolve, reject) => {
         buildPuppet(options).then(async puppet => {
             options = puppet.defaults(options)
