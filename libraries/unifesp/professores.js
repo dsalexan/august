@@ -13,7 +13,7 @@ const CORPO_DOCENTE = 'section.entry-content'
 
 // const CONTENT_ATESTADO_SELECTOR = '#content p.texto:nth-of-type(3)'
 
-var read_professores = function(browser, page, options){
+var read_professores = function(){
     return new Promise(async resolve => {
         // clicar em Menu>Unifesp
         // await page.waitForSelector(MENU_UNIFESP_SELECTOR)
@@ -29,11 +29,24 @@ var read_professores = function(browser, page, options){
         // let iframe = $(IFRAME_CONSULTA_SELECTOR).attr('src')
         // await page.goto(iframe)
 
-        await page.waitForSelector(CORPO_DOCENTE)
-        $ = cheerio.load(await page.content())
-        let teste = $(CORPO_DOCENTE)
+        // await page.waitForSelector(CORPO_DOCENTE)
+        let $ = cheerio.load('../../professores.html')
 
-        console.log(teste)
+        console.log($('title'))
+
+        // var tiposProfessores = [];
+
+        // $('.entry-content h3').each(function(index, element){
+        //     tiposProfessores[index]['nome'] = $(element).text
+        // })
+
+        // $('#titulouniversidade').each(function(index, element){
+        //     console.log(element)
+        //     // professoresList[index] = $(element).text
+        // });
+        // let teste = $(CORPO_DOCENTE)
+
+        // console.log(professoresList)
 
         // await page.waitForSelector(PARAGRAPH_ATESTADO_SELECTOR)
         // $ = cheerio.load(await page.content())
@@ -52,10 +65,10 @@ var read_professores = function(browser, page, options){
 
         // let bodyHTML = await page.evaluate(() => document.body.innerHTML)
 
-        fs.writeFileSync('professores.html', teste)
+        // fs.writeFileSync('professores.html', teste)
 
         resolve({
-            html: teste
+            // html: tiposProfessores
         })
     })
 }

@@ -16,8 +16,11 @@ const { performance } = require('perf_hooks')
 
 // Pedro testando
 var Professores = require('../libraries/unifesp/professores')
-router.post('/teste', function(req, res) {
+router.get('/teste', function(req, res) {
 
+    // res.status(200).send({
+    //     a: Professores.read('http://www.unifesp.br/campus/sjc/corpodocente.html')
+    // })
     console.log(Professores.read())
 
     // performance.mark('Begin Login Authentication')
