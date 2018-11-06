@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretest": "eslint . --fix",
     "prettier": "prettier **/*.js",
-    "start": "node --icu-data-dir=node_modules\\full-icu server.js"
+    "start": "node --icu-data-dir=node_modules\\full-icu server.js",
+    "debug": "node --icu-data-dir=./node_modules/full-icu --nolazy --debug-brk=5858 myProgram.js"
   },
   "author": "",
   "license": "MIT",
