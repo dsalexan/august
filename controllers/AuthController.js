@@ -11,6 +11,7 @@ const auth = require('../auth/auth')
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
 const atestado = require('../libraries/unifesp/atestado')
+const agenda = require('../libraries/unifesp/agenda')
 
 var Users = require('../models/Users')
 var Alunos = require('../models/Alunos')
@@ -18,13 +19,37 @@ var Alunos = require('../models/Alunos')
 const { performance } = require('perf_hooks')
 
 // Pedro testando
-router.get('/teste', function(req, res) {
-    var fs = require('fs')
- 
-    var html = fs.readFileSync('historico.html', 'utf8')
-    
-    historico.compile(html).then(result => {
+router.post('/teste/historico', function(req, res) {    
+    unifesp.fetch('historico', {
+        username: req.body.username,
+        password: req.body.password
+    }).then(result => {
         res.status(200).send(result)
+    }).catch(err => {
+        res.send(500).send({
+            error: err
+        })
+    })
+})
+router.post('/teste/atestado', function(req, res) { 
+    unifesp.fetch('atestado', {
+        username: req.body.username,
+        password: req.body.password
+    }).then(result => {
+        res.status(200).send(result)
+    }).catch(err => {
+        res.send(500).send({
+            error: err
+        })
+    })
+})
+router.post('/teste/agenda', function(req, res) {
+    unifesp.fetch('agenda', req.body.date).then(result => {
+        res.status(200).send(result)
+    }).catch(err => {
+        res.send(500).send({
+            error: err
+        })
     })
 })
 //

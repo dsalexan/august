@@ -35,17 +35,17 @@ var read_atestado = function(browser, page, options){
     return new Promise(async resolve => {
         // clicar em Menu>Unifesp
         await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR)
+        await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         // clicar em Atestado de Matrícula On Line (Visualizar no Google Chrome ou IE)
         await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
-        await page.click(UNIFESP_ATESTADO_SELECTOR)
+        await page.click(UNIFESP_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         // segue o link no iframe
         await page.waitForSelector(IFRAME_CONSULTA_SELECTOR)
         let $  = cheerio.load(await page.content())
         let iframe = $(IFRAME_CONSULTA_SELECTOR).attr('src')
-        await page.goto(iframe)
+        await page.goto(iframe, {waitUntil: 'domcontentloaded'})
 
         await page.waitForSelector(PARAGRAPH_ATESTADO_SELECTOR)
         $ = cheerio.load(await page.content())
@@ -58,7 +58,7 @@ var read_atestado = function(browser, page, options){
             .map(word => DateTime.fromFormat(word, 'dd/MM/yyyy', {locale: 'pr-br'}))
             .filter(dt => dt.isValid)[0]
 
-        await page.click(LINK_ATESTADO_SELECTOR)
+        await page.click(LINK_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         await page.waitForSelector(CONTENT_ATESTADO_SELECTOR)
 
@@ -168,8 +168,13 @@ var fetch_atestado = function(browser, page, options){
         let atestado = await read_atestado(browser, page)
         options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
         
-        atestado = await compile_atestado(atestado.html)
+        let compilado = await compile_atestado(atestado.html)
         browserPersistence.puppeteer && (atestado.puppeteer = browserPersistence.puppeteer)
+
+        atestado = {
+            date: atestado.date,
+            ...compilado
+        }
 
         await save_atestado(atestado)
 
