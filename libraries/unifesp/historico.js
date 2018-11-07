@@ -41,16 +41,16 @@ const TR_BODY_SELECTOR = 'tr[class^="scGridField"]'
 var read_historico = function(browser, page, options){
     return new Promise(async resolve => {
         await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR)
+        await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
         await page.waitForSelector(UNIFESP_HISTORICO_SELECTOR)
-        await page.click(UNIFESP_HISTORICO_SELECTOR)
+        await page.click(UNIFESP_HISTORICO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         await page.waitForSelector(IFRAME_CONSULTA_SELECTOR)
         let $  = cheerio.load(await page.content())
         let iframe = $(IFRAME_CONSULTA_SELECTOR).attr('src')
-        await page.goto(iframe)
+        await page.goto(iframe, {waitUntil: 'domcontentloaded'})
         await page.waitForSelector(LINK_CONSULTA_SELECTOR)
-        await page.click(LINK_CONSULTA_SELECTOR)
+        await page.click(LINK_CONSULTA_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         await page.waitForSelector('table tbody td')
         let bodyHTML = await page.evaluate(() => document.body.innerHTML)
@@ -112,7 +112,16 @@ var compile_historico = function(html){
             let entry  = {}
             let list = $(node).find('td').toArray().map(td => $(td).text().trim(0))
             for(let i = 0; i < list.length; i++){
-                entry[column_names[i]] = list[i]
+                let info = list[i]
+                let name = column_names[i]
+
+                if(name == 'uc'){
+                    info = info.replace(' - ', '-').split('-')
+                    entry['codigo'] = info[0]
+                    info = info[1]
+                }
+
+                entry[column_names[i]] = info
             }
 
             // fix entries
@@ -148,8 +157,13 @@ var fetch_historico = function(browser, page, options){
         let historico = await read_historico(browser, page)
         options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
         
-        historico = await compile_historico(historico.html)
+        let compilado = await compile_historico(historico.html)
         browserPersistence.puppeteer && (historico.puppeteer = browserPersistence.puppeteer)
+
+        historico = {
+            date: historico.date,
+            ...compilado
+        }
 
         await save_historico(historico)
 

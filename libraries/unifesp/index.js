@@ -11,6 +11,7 @@ const historico = require('./historico')
 const atestado = require('./atestado')
 const professores = require('./professores')
 const saldo_ru = require('./saldo_ru')
+const agenda = require('./agenda')
 
 // GENERALIZING PUPPETEER PERSISTENCE AND DESTRUCTION
 class Puppet {
@@ -386,28 +387,40 @@ UNIFESP.readCardapio = function(date) {
 }
 
 UNIFESP.insertCardapio = function(what, user, options){
+    // TODO: Como assim isso ta vazio??
+}
+UNIFESP.fetch = function(what, data, options){
     return new Promise((resolve, reject) => {
+
+        puppet = [false]
+        if(what == 'historico' || what == 'atestado'){
+
+        }
         buildPuppet(options).then(async puppet => {
             options = puppet.defaults(options)
             var fn
 
-            if(!options.authenticated){
-                var attempt = await authenticatePuppeteer(puppet.page, user)
-                if(!attempt.auth){
-                    return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+            if(what == 'historico' || what == 'atestado'){
+                if(!options.authenticated){
+                    var attempt = await authenticatePuppeteer(puppet.page, data) // data == user
+                    if(!attempt.auth){
+                        return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+                    }
                 }
+                options.puppeteerObject = puppet
             }
-            options.puppeteerObject = puppet
 
 
             if(what == 'historico'){
-                fn = historico.fetch
+                fn = () => historico.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'atestado'){
-                fn = atestado.fetch
+                fn = () => atestado.fetch(puppet.browser, puppet.page, options)
+            }else if(what == 'agenda'){
+                fn = () => agenda.fetch(data, options) // data == reference date
             }
 
             if(fn){
-                fn(puppet.browser, puppet.page, options).then(result => {
+                fn().then(result => {
                     resolve(result)
                 })
             }else{

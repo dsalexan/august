@@ -14,6 +14,7 @@ const historico = require('../libraries/unifesp/historico')
 const atestado = require('../libraries/unifesp/atestado')
 const saldo_ru = require('../libraries/unifesp/saldo_ru')
 const index = require('../libraries/unifesp/index')
+const agenda = require('../libraries/unifesp/agenda')
 
 var Users = require('../models/Users')
 var Alunos = require('../models/Alunos')
