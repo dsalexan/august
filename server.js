@@ -4,6 +4,9 @@ var express = require('express')
 var app = express()
 var port = process.env.PORT || 3000
 var router = express.Router()
+var path = require('path')
+
+global.root_path = path.resolve(__dirname)
 
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)

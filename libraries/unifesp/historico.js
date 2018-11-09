@@ -158,13 +158,13 @@ var fetch_historico = function(browser, page, options){
         options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
         
         let compilado = await compile_historico(historico.html)
-        browserPersistence.puppeteer && (historico.puppeteer = browserPersistence.puppeteer)
 
         historico = {
             date: historico.date,
             ...compilado
         }
-
+        browserPersistence.puppeteer && (historico.puppeteer = browserPersistence.puppeteer)
+        
         await save_historico(historico)
 
         resolve(historico)

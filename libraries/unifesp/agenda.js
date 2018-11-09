@@ -131,8 +131,8 @@ var compile_agenda = function(html){
 
 var save_agenda = function(data){
     return new Promise(async resolve => {
-        // TODO: implementar salvar atestado
-        console.log('save atestado')
+        // TODO: implementar salvar agenda
+        console.log('save agenda')
         resolve(true)
     })
 }

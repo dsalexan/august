@@ -7,6 +7,7 @@ const _ = require('lodash')
 const historico = require('./historico')
 const atestado = require('./atestado')
 const agenda = require('./agenda')
+const ementas = require('./ementas')
 
 // GENERALIZING PUPPETEER PERSISTENCE AND DESTRUCTION
 class Puppet {
@@ -30,7 +31,7 @@ class Puppet {
             if(options.puppeteer == undefined){
                 puppeteer.launch({
                     args: ['--deterministic-fetch'],
-                    headless: true,
+                    headless: false,
                 }).then(browser => {
                     this.browser = browser
                     browser.newPage().then(page => {
@@ -191,8 +192,8 @@ UNIFESP.fetch = function(what, data, options){
                         return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
                     }
                 }
-                options.puppeteerObject = puppet
             }
+            options.puppeteerObject = puppet
 
 
             if(what == 'historico'){
@@ -201,6 +202,8 @@ UNIFESP.fetch = function(what, data, options){
                 fn = () => atestado.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'agenda'){
                 fn = () => agenda.fetch(data, options) // data == reference date
+            }else if(what == 'ementas'){
+                fn = () => ementas.fetch(puppet.browser, puppet.page, data.path, data.download, options)
             }
 
             if(fn){

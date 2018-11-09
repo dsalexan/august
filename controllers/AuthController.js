@@ -1,3 +1,4 @@
+const path = require('path')
 var express = require('express')
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -45,6 +46,19 @@ router.post('/teste/atestado', function(req, res) {
 })
 router.post('/teste/agenda', function(req, res) {
     unifesp.fetch('agenda', req.body.date).then(result => {
+        res.status(200).send(result)
+    }).catch(err => {
+        res.send(500).send({
+            error: err
+        })
+    })
+})
+router.get('/teste/ementas', function(req, res) {
+    process.setMaxListeners(100)
+    unifesp.fetch('ementas', {
+        path: path.join(global.root_path, 'res/ementas'),
+        download: false
+    }).then(result => {
         res.status(200).send(result)
     }).catch(err => {
         res.send(500).send({

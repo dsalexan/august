@@ -169,12 +169,12 @@ var fetch_atestado = function(browser, page, options){
         options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
         
         let compilado = await compile_atestado(atestado.html)
-        browserPersistence.puppeteer && (atestado.puppeteer = browserPersistence.puppeteer)
 
         atestado = {
             date: atestado.date,
             ...compilado
         }
+        browserPersistence.puppeteer && (atestado.puppeteer = browserPersistence.puppeteer)
 
         await save_atestado(atestado)
 

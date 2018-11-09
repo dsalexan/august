@@ -1,3 +1,6 @@
+res/ementas
+res/ementas/*
+
 # Logs
 logs
 *.log
