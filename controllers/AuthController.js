@@ -1,3 +1,4 @@
+const path = require('path')
 var express = require('express')
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -41,6 +42,19 @@ router.get('/teste', function(req, res) {
     }).then(saldo => {
         console.log(saldo)
         res.status(200).send(saldo)
+    })
+})
+router.get('/teste/ementas', function(req, res) {
+    process.setMaxListeners(100)
+    unifesp.fetch('ementas', {
+        path: path.join(global.root_path, 'res/ementas'),
+        download: false
+    }).then(result => {
+        res.status(200).send(result)
+    }).catch(err => {
+        res.send(500).send({
+            error: err
+        })
     })
 })
 //
