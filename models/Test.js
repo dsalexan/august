@@ -1,5 +1,5 @@
 const db = require('../db')
-const sql = require('./sql')
+const sql = require('../queries')
 
 module.exports = {
     getTest: () => db.one(sql.test.get),

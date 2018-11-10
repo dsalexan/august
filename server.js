@@ -11,11 +11,18 @@ var server = app.listen(port, () => {
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
-var Carona = require('./models/Caronas');
-var Alunos = require('./models/Alunos');
-var Grade = require('./models/Grade');
-var Utilidades = require('./models/Utilidades');
-var Divulgacao = require('./models/Divulgacao');
+
+var Carona = require('./models/Caronas')
+var Grade = require('./models/Grade')
+var Utilidades = require('./models/Utilidades')
+var Divulgacao = require('./models/Divulgacao')
+
+
+var bodyParser = require('body-parser')
+router.use(bodyParser.urlencoded({
+    extended: false
+}))
+router.use(bodyParser.json())
 
 // log request middleware
 router.use(function(req, res, next) {
@@ -27,12 +34,7 @@ router.use(function(req, res, next) {
 router.use('/api/auth', authController)
 
 // Aluno
-router.get('/api/alunos/get/senha', Alunos.getAluno)
-router.get('/api/alunos/put/email', Alunos.alteracao_email_aluno)
-router.get('/api/alunos/put/nome', Alunos.alteracao_nome_aluno)
-router.get('/api/alunos/get/aluno', Alunos.consulta_aluno)
-router.get('/api/alunos/post/aluno', Alunos.insert_aluno)
-router.get('/api/alunos/delete/aluno', Alunos.remove_aluno)
+router.use('/api', require('./controllers/aluno'))
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
@@ -66,6 +68,7 @@ router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 //router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
+router.use('/api', require('./controllers/caronas'))
 
 // Divulgacao
 router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
@@ -78,7 +81,6 @@ router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
 router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
 router.get('/api/divulgacao/put/dia', Divulgacao.alteracao_divulgacao_dia)
 router.get('/api/divulgacao/put/hora', Divulgacao.alteracao_divulgacao_hora)
-
 
 // Utilidades
 router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)

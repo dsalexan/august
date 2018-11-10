@@ -1,6 +1,6 @@
 const db = require('../db')
-const sql = require('./sql')
-const pq = require('pg-promise').ParameterizedQuery;
+const sql = require('../queries')
+const pq = require('pg-promise').ParameterizedQuery
 
 module.exports = {
 
@@ -10,7 +10,7 @@ module.exports = {
         
         dados = [dia, id_divulgacao]
 
-        const alteradia = new pq(sql.divulgacao.alteracao_divulgacao_dia);
+        const alteradia = new pq(sql.divulgacao.alteracao_divulgacao_dia)
        
         db.any(alteradia, dados)
         .then(v =>{
@@ -20,8 +20,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     alteracao_divulgacao_hora: (req, res, next) => {
@@ -31,7 +31,7 @@ module.exports = {
         
         dados = [hora_inicio, hora_fim, id_divulgacao]
 
-        const alterahora = new pq(sql.divulgacao.alteracao_divulgacao_hora);
+        const alterahora = new pq(sql.divulgacao.alteracao_divulgacao_hora)
        
         db.any(alterahora, dados)
         .then(v =>{
@@ -41,8 +41,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     busca_divulgacao_dia_hora: (req, res, next) => {
@@ -51,7 +51,7 @@ module.exports = {
         
         dados = [dia, hora_inicio]
 
-        const buscadiahora = new pq(sql.divulgacao.busca_divulgacao_dia_hora);
+        const buscadiahora = new pq(sql.divulgacao.busca_divulgacao_dia_hora)
        
         db.any(buscadiahora, dados)
         .then(v =>{
@@ -61,8 +61,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     busca_divulgacao_dia: (req, res, next) => {
@@ -70,7 +70,7 @@ module.exports = {
         
         dados = [dia]
 
-        const buscadia = new pq(sql.divulgacao.busca_divulgacao_dia);
+        const buscadia = new pq(sql.divulgacao.busca_divulgacao_dia)
        
         db.any(buscadia, dados)
         .then(v => {
@@ -80,15 +80,15 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     busca_divulgacao_hora: (req, res, next) => {
         var hora_inicio = req.query.ra_divulgacao
         dados = [hora_inicio]
 
-        const buscahora = new pq(sql.divulgacao.busca_divulgacao_hora);
+        const buscahora = new pq(sql.divulgacao.busca_divulgacao_hora)
         
         db.any(buscahora, dados)
         .then(v => {
@@ -98,8 +98,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     busca_divulgacao_tipo_dia_hora: (req, res, next) => {
@@ -109,7 +109,7 @@ module.exports = {
 
         dados = [id_tipo, dia, hora_inicio]
 
-        const buscatipodiahora = new pq(sql.divulgacao.busca_divulgacao_tipo_dia_hora);
+        const buscatipodiahora = new pq(sql.divulgacao.busca_divulgacao_tipo_dia_hora)
         
         db.any(buscatipodiahora, dados)
         .then(v => {
@@ -119,8 +119,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     busca_divulgacao_tipo_dia: (req, res, next) => {
@@ -129,7 +129,7 @@ module.exports = {
 
         dados = [id_tipo, dia]
 
-        const buscatipodia = new pq(sql.divulgacao.busca_divulgacao_tipo_dia);
+        const buscatipodia = new pq(sql.divulgacao.busca_divulgacao_tipo_dia)
         
         db.any(buscatipodiahora, dados)
         .then(v => {
@@ -139,8 +139,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     busca_divulgacao_tipo: (req, res, next) => {
@@ -148,7 +148,7 @@ module.exports = {
 
         dados = [id_tipo]
 
-        const buscatipo = new pq(sql.divulgacao.busca_divulgacao_tipo);
+        const buscatipo = new pq(sql.divulgacao.busca_divulgacao_tipo)
         
         db.any(buscatipo, dados)
         .then(v => {
@@ -158,8 +158,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     insert_divulgacao: (req, res, next) => {
@@ -175,7 +175,7 @@ module.exports = {
         
         dados = [ra_aluno, id_tipo, valor, dia, hora_inicio, hora_fim, descricao, quantidade, reserva_automatica]
 
-        const insertdivulgacao = new pq(sql.divulgacao.insert_divulgacao);
+        const insertdivulgacao = new pq(sql.divulgacao.insert_divulgacao)
         db.none(insertdivulgacao, dados)
         .then(v => {
             res.status(200).json({
@@ -184,8 +184,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
 
     remove_divulgacao: (req, res, next) => {
@@ -193,7 +193,7 @@ module.exports = {
 
         dados = [id_divulgacao]
 
-        const removedivulgacao = new pq(sql.divulgacao.remove_divulgacao);
+        const removedivulgacao = new pq(sql.divulgacao.remove_divulgacao)
         db.none(removedivulgacao, dados)
         .then(v => {
             res.status(200).json({
@@ -202,7 +202,7 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     }
 }

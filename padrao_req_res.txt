@@ -40,3 +40,8 @@ Usar status code de HTTP nas respostas do servidor:
 409 Conflict
 500 Internal Server Error
 ... (https://www.restapitutorial.com/httpstatuscodes.html)
+
+
+=================================
+Design Para Pesquisas em RESTFul
+https://stackoverflow.com/questions/207477/restful-url-design-for-search

@@ -1,19 +1,18 @@
+const { DateTime } = require('luxon')
 const cheerio = require('cheerio')
 const fs = require('fs')
 const G = require('generatorics')
 
-const CORPO_DOCENTE = 'section.entry-content'
+const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
+const UNIFESP_ATESTADO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(5) a'
+const IFRAME_CONSULTA_SELECTOR = '#iframe iframe'
 
-// const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
-// const UNIFESP_ATESTADO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(5) a'
-// const IFRAME_CONSULTA_SELECTOR = '#iframe iframe'
+const PARAGRAPH_ATESTADO_SELECTOR = '#content p'
+const LINK_ATESTADO_SELECTOR = '#content p a'
 
-// const PARAGRAPH_ATESTADO_SELECTOR = '#content p'
-// const LINK_ATESTADO_SELECTOR = '#content p a'
+const CONTENT_ATESTADO_SELECTOR = '#content p.texto:nth-of-type(3)'
 
-// const CONTENT_ATESTADO_SELECTOR = '#content p.texto:nth-of-type(3)'
-
-var read_professores = function(){
+var read_atestado = function(browser, page, options){
     return new Promise(async resolve => {
         // clicar em Menu>Unifesp
         await page.waitForSelector(MENU_UNIFESP_SELECTOR)
@@ -29,51 +28,33 @@ var read_professores = function(){
         let iframe = $(IFRAME_CONSULTA_SELECTOR).attr('src')
         await page.goto(iframe)
 
-        await page.waitForSelector(CORPO_DOCENTE)
-        let $ = cheerio.load('../../professores.html')
+        await page.waitForSelector(PARAGRAPH_ATESTADO_SELECTOR)
+        $ = cheerio.load(await page.content())
+        let date = $(PARAGRAPH_ATESTADO_SELECTOR)
+            .text()
+            .trim()
+            .replace(/(\t)+/g, ' ')
+            .replace('\n', ' ')
+            .split(' ')
+            .map(word => DateTime.fromFormat(word, 'dd/MM/yyyy', {locale: 'pr-br'}))
+            .filter(dt => dt.isValid)[0]
 
-        console.log($('title'))
+        await page.click(LINK_ATESTADO_SELECTOR)
 
-        // var tiposProfessores = [];
+        await page.waitForSelector(CONTENT_ATESTADO_SELECTOR)
 
-        // $('.entry-content h3').each(function(index, element){
-        //     tiposProfessores[index]['nome'] = $(element).text
-        // })
+        let bodyHTML = await page.evaluate(() => document.body.innerHTML)
 
-        // $('#titulouniversidade').each(function(index, element){
-        //     console.log(element)
-        //     // professoresList[index] = $(element).text
-        // });
-        // let teste = $(CORPO_DOCENTE)
-
-        // console.log(professoresList)
-
-        // await page.waitForSelector(PARAGRAPH_ATESTADO_SELECTOR)
-        // $ = cheerio.load(await page.content())
-        // let date = $(PARAGRAPH_ATESTADO_SELECTOR)
-        //     .text()
-        //     .trim()
-        //     .replace(/(\t)+/g, ' ')
-        //     .replace('\n', ' ')
-        //     .split(' ')
-        //     .map(word => DateTime.fromFormat(word, 'dd/MM/yyyy', {locale: 'pr-br'}))
-        //     .filter(dt => dt.isValid)[0]
-
-        // await page.click(LINK_ATESTADO_SELECTOR)
-
-        // await page.waitForSelector(CONTENT_ATESTADO_SELECTOR)
-
-        // let bodyHTML = await page.evaluate(() => document.body.innerHTML)
-
-        // fs.writeFileSync('professores.html', teste)
+        fs.writeFileSync('atestado.html', bodyHTML)
 
         resolve({
-            // html: tiposProfessores
+            html: bodyHTML,
+            date: date == undefined ? DateTime.utc().plus({days: 30}).toString() : date.setZone('utc').toString()
         })
     })
 }
 
-var compile_professores = function(html){
+var compile_atestado = function(html){
     return new Promise(async resolve => {
         const $ = cheerio.load(html)
         
@@ -101,7 +82,7 @@ var compile_professores = function(html){
     })
 }
 
-var save_professores = function(data){
+var save_atestado = function(data){
     return new Promise(async resolve => {
         // TODO: implementar salvar atestado
         console.log('save atestado')
@@ -110,7 +91,7 @@ var save_professores = function(data){
 }
 
 
-var fetch_professores = function(browser, page, options){
+var fetch_atestado = function(browser, page, options){
     return new Promise(async resolve => {
         let browserPersistence = {}
 
@@ -127,8 +108,8 @@ var fetch_professores = function(browser, page, options){
 }
 
 module.exports = {
-    fetch: fetch_professores,
-    read: read_professores,
-    compile: compile_professores,
-    save: save_professores
+    fetch: fetch_atestado,
+    read: read_atestado,
+    compile: compile_atestado,
+    save: save_atestado
 }
