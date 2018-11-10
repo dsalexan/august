@@ -11,6 +11,7 @@ const auth = require('../auth/auth')
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
 const atestado = require('../libraries/unifesp/atestado')
+const index = require('../libraries/unifesp/index')
 
 var Users = require('../models/Users')
 var Alunos = require('../models/Alunos')
@@ -19,27 +20,10 @@ const { performance } = require('perf_hooks')
 
 // Pedro testando
 var Professores = require('../libraries/unifesp/professores')
-router.get('/teste2', function(req, res) {
+router.get('/atualizarcorpodocente', function(req, res) {
+    corpoDocente = index.getCorpoDocente()
 
-    // res.status(200).send({
-    //     a: Professores.read('http://www.unifesp.br/campus/sjc/corpodocente.html')
-    // })
-    console.log(Professores.read())
-
-    // performance.mark('Begin Login Authentication')
-    // UnifespController.authenticateProxy(req.body.username, req.body.password).then(response => {
-    //     res.status(200).send(response)
-    // }, err => {
-    //     res.status(500).send({
-    //         auth: false,
-    //         error: err
-    //     })
-    // }).finnaly(() => {
-    //     performance.mark('End Login Authentication')
-    //     performance.measure('Login Authentication', 'Begin Login Authentication', 'End Login Authentication')
-    //     console.log('performance')
-    //     console.log(performance.getEntriesByType('measure')[0])
-    // })
+    // cadastrarNoBanco()
 })
 router.get('/teste', function(req, res) {
     var fs = require('fs')

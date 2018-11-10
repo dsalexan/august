@@ -6,6 +6,7 @@ const _ = require('lodash')
 
 const historico = require('./historico')
 const atestado = require('./atestado')
+const professores = require('./professores')
 
 // GENERALIZING PUPPETEER PERSISTENCE AND DESTRUCTION
 class Puppet {
@@ -123,6 +124,18 @@ UNIFESP.authenticate = function(username, password, options){
         puppet.destroy(options, attempt)
 
         resolve(attempt)
+    })
+}
+
+UNIFESP.getCorpoDocente = function() {
+    return new Promise((resolve, reject) => {
+        buildPuppet().then(async puppet => {
+            await puppet.page.goto('http://www.unifesp.br/campus/sjc/corpodocente.html')
+
+            professores.getProfs(puppet.page).then( result => {
+                resolve(result)
+            })
+        })
     })
 }
 

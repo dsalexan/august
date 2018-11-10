@@ -12,123 +12,91 @@ const CORPO_DOCENTE = 'section.entry-content'
 // const LINK_ATESTADO_SELECTOR = '#content p a'
 
 // const CONTENT_ATESTADO_SELECTOR = '#content p.texto:nth-of-type(3)'
-
-var read_professores = function(){
-    return new Promise(async resolve => {
-        // clicar em Menu>Unifesp
-        await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR)
-
-        // clicar em Atestado de Matrícula On Line (Visualizar no Google Chrome ou IE)
-        await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
-        await page.click(UNIFESP_ATESTADO_SELECTOR)
-
-        // segue o link no iframe
-        await page.waitForSelector(IFRAME_CONSULTA_SELECTOR)
-        let $  = cheerio.load(await page.content())
-        let iframe = $(IFRAME_CONSULTA_SELECTOR).attr('src')
-        await page.goto(iframe)
-
-        await page.waitForSelector(CORPO_DOCENTE)
-        let $ = cheerio.load('../../professores.html')
-
-        console.log($('title'))
-
-        // var tiposProfessores = [];
-
-        // $('.entry-content h3').each(function(index, element){
-        //     tiposProfessores[index]['nome'] = $(element).text
-        // })
-
-        // $('#titulouniversidade').each(function(index, element){
-        //     console.log(element)
-        //     // professoresList[index] = $(element).text
-        // });
-        // let teste = $(CORPO_DOCENTE)
-
-        // console.log(professoresList)
-
-        // await page.waitForSelector(PARAGRAPH_ATESTADO_SELECTOR)
-        // $ = cheerio.load(await page.content())
-        // let date = $(PARAGRAPH_ATESTADO_SELECTOR)
-        //     .text()
-        //     .trim()
-        //     .replace(/(\t)+/g, ' ')
-        //     .replace('\n', ' ')
-        //     .split(' ')
-        //     .map(word => DateTime.fromFormat(word, 'dd/MM/yyyy', {locale: 'pr-br'}))
-        //     .filter(dt => dt.isValid)[0]
-
-        // await page.click(LINK_ATESTADO_SELECTOR)
-
-        // await page.waitForSelector(CONTENT_ATESTADO_SELECTOR)
-
-        // let bodyHTML = await page.evaluate(() => document.body.innerHTML)
-
-        // fs.writeFileSync('professores.html', teste)
-
-        resolve({
-            // html: tiposProfessores
-        })
-    })
-}
-
-var compile_professores = function(html){
-    return new Promise(async resolve => {
-        const $ = cheerio.load(html)
-        
-        let paragraph = $(CONTENT_ATESTADO_SELECTOR)
-            .text()
-            .trim()
-            .replace(/(\t)+/g, ' ')
-            .replace(/(\n)+/g, ' ')
-            .replace(/(,)+/g, ' ')
-            .replace(/(-)+/g, ' ')
-            .replace(/(\.)+/g, ' ')
-            .replace(/( {3})/g, ' ')
-            .replace(/( {2})/g, ' ')
-            .split(' ')
-
-        let size = 5
-        let perm = []
-        for(let i = 0; i <= paragraph.length - size; i++){
-            perm.push(paragraph.slice(i, i + size).join(' '))
+function containsObject(nome, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i].nome === nome) {
+            return true;
         }
-        perm = perm.map(t => [t, DateTime.fromString(t, 'dd \'de\' MMMM \'de\' yyyy', {locale:'pt-BR'})]) //.filter(dt => dt.isValid)
-        let para  = true
+    }
 
-        resolve()
-    })
+    return false;
 }
 
-var save_professores = function(data){
+var getProfs = function(page){
     return new Promise(async resolve => {
-        // TODO: implementar salvar atestado
-        console.log('save atestado')
-        resolve(true)
-    })
-}
+        $ = cheerio.load(await page.content())
 
+        var professores = [];
 
-var fetch_professores = function(browser, page, options){
-    return new Promise(async resolve => {
-        let browserPersistence = {}
+        $('.entry-content table td:nth-of-type(2) p:nth-of-type(1)').each(function(index, element){
+            var prof = $(element).text().replace(/\n/g, '')
+                                        .replace(/Profª. /g, '')
+                                        .replace(/Profª./g, '')
+                                        .replace(/Profa. /g, '')
+                                        .replace(/Profa./g, '')
+                                        .replace(/Prof. /g, '')
+                                        .replace(/Prof./g, '')
+                                        .replace(/Nome: /g, '')
+                                        .replace(/\s/g, ' ')
+                                        .trim()
+            var honorifico
+            var nome
+            // if (prof.includes('Lilian')) {
+            //     honorifico = 'Dra.'
+            //     nome = 'Lilian Berton'
+            // }
+            if (prof.includes('Dr')) {
+                honorifico = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ')[0]
+                nome = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ').slice(1).join(' ')
+            }
+            else {
+                honorifico = ''
+                nome = prof
+            }
 
-        let atestado = await read_atestado(browser, page)
-        options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
-        
-        await compile_atestado(atestado.html)
-        browserPersistence.puppeteer && (atestado.puppeteer = browserPersistence.puppeteer)
+            if (prof.length > 1) {
+                console.log({honorifico: honorifico, nome: nome})
+                professores.push({honorifico: honorifico, nome: nome})
+            }
+        })
+        $('.entry-content table td:nth-of-type(2)').each(function(index, element){
+            var prof = ($(element).text().split("Área")[0]).replace(/\n/g, '')
+                                                           .replace(/Profª. /g, '')
+                                                           .replace(/Profª./g, '')
+                                                           .replace(/Profa. /g, '')
+                                                           .replace(/Profa./g, '')
+                                                           .replace(/Prof. /g, '')
+                                                           .replace(/Prof./g, '')
+                                                           .replace(/Nome: /g, '')
+                                                           .replace(/\s/g, ' ')
+                                                           .trim()
+            var honorifico
+            var nome
+            // if (prof.includes('Lilian')) {
+            //     honorifico = 'Dra.'
+            //     nome = 'Lilian Berton'
+            // }
+            if (prof.includes('Dr')) {
+                honorifico = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ')[0]
+                nome = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ').slice(1).join(' ')
+            }
+            else {
+                honorifico = ''
+                nome = prof
+            }
 
-        await save_atestado(atestado)
+            if (prof.length > 1 && !containsObject(nome, professores)) {
+                console.log({honorifico: honorifico, nome: nome})
+                professores.push({honorifico: honorifico, nome: nome})
+            }
+        })
+        console.log(professores.length)
 
-        resolve(atestado)
+        resolve(professores)
     })
 }
 
 module.exports = {
-    fetch: fetch_professores,
-    read: read_professores,
-    compile: compile_professores,
-    save: save_professores
+    getProfs: getProfs
 }

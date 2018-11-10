@@ -22,16 +22,13 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "follow-redirects": "^1.5.8",
-<<<<<<< HEAD
-=======
     "full-icu": "^1.2.1",
->>>>>>> master
     "generatorics": "^1.1.0",
     "https": "^1.0.0",
     "js-combinatorics": "^0.5.3",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
-    "luxon": "^1.4.5",
+    "luxon": "^1.6.2",
     "moment": "^2.22.2",
     "pg": "^7.4.3",
     "pg-promise": "^8.4.6",
