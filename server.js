@@ -37,7 +37,7 @@ router.use('/api/auth', authController)
 router.use('/api', require('./controllers/aluno'))
 
 // Cardapio
-router.use('/api/carapio', require('./controllers/cardapio'))
+router.use('/api/ru', require('./controllers/cardapio'))
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)

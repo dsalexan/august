@@ -122,5 +122,28 @@ router.get('/me', auth.auth, function (req, res) {
     // });
 })
 
+router.get('/cardapio', function(req, res) {
+    var search = {
+        data_solicitacao: req.query.data_solicitacao
+    }
+
+    unifesp.readCardapio(search).then(a => {
+        console.log(a)
+        if(a != null) {
+            res.status(200).json({
+                status: 'success',
+                data: a
+            })
+        } else {
+            res.status(404).json({
+                message: 'Not Found',
+                success: false
+            })
+        }
+    }).catch(error => {
+        return next(error)
+    })
+})
+
 
 module.exports = router

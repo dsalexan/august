@@ -21,15 +21,16 @@ router.get('/cardapio/', (req, res, next) => {
         data_solicitacao: req.query.data_solicitacao
     }
 
-    unifesp.readCardapio(search).then(a => {
-        if(a != null) {
+    unifesp.readCardapio(search).then(info => {
+        console.log('data', json_cardapio)
+        if(info != null) {
             res.status(200).json({
                 status: 'success',
-                data: a
+                success: true
             })
         } else {
             res.status(404).json({
-                message: 'Not Found',
+                message: 'not Found',
                 success: false
             })
         }
