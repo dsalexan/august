@@ -1,0 +1,1 @@
+SELECT * FROM unidade_curricular WHERE hash NOT IN ($1:csv)

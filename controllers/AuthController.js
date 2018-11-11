@@ -45,7 +45,6 @@ router.get('/teste', function(req, res) {
     })
 })
 router.get('/teste/ementas', function(req, res) {
-    process.setMaxListeners(100)
     unifesp.fetch('ementas', {
         path: path.join(global.root_path, 'res/ementas'),
         download: false

@@ -1,0 +1,1 @@
+SELECT * FROM uc_alias WHERE hash_uc = $1

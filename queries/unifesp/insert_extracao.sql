@@ -1,0 +1,1 @@
+INSERT INTO unifesp VALUES(DEFAULT, ${extracao}, ${dados}, ${datahora}) RETURNING *
