@@ -17,7 +17,6 @@ var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
 var Divulgacao = require('./models/Divulgacao')
 
-
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
     extended: false
@@ -35,6 +34,10 @@ router.use('/api/auth', authController)
 
 // Aluno
 router.use('/api', require('./controllers/aluno'))
+
+// Cardapio
+router.use('/api/ru/', require('./controllers/cardapio'))
+router.use('/api/ru/get/atual', Utilidades.getCardapio)
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
@@ -61,12 +64,12 @@ router.get('/api/caronas/get/viagem/data_vagas', Carona.searchViagemDataVagas)
 router.get('/api/caronas/get/viagem/data_hora', Carona.searchViagemDataHora)
 router.get('/api/caronas/get/viagem/data', Carona.searchViagemData)
 // router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
-// router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro) 
+// router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro)
 // router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
-// router.get('/api/caronas/get/reserva', Carona.searchReserva) 
+// router.get('/api/caronas/get/reserva', Carona.searchReserva)
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
-//router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
+// router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
 router.use('/api', require('./controllers/caronas'))
 

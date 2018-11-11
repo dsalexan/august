@@ -44,24 +44,6 @@ module.exports = {
             return next(error)
         })
     },
-    getCardapio: (req, res, next) => {
-        var data = req.query.data
-        var hora = req.query.hora
-
-        dados = [data, hora]
-        
-        const viagem = new pq(sql.caronas.srch_viagemDataHora)
-        db.any(viagem, dados)
-        .then(v => {
-            res.status(200).json({
-                data: v,
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },   
     getHistorico: (req, res, next) => {
         var data = req.query.data
         var hora = req.query.hora
@@ -78,6 +60,27 @@ module.exports = {
             })
         })
         .catch(error => {
+            return next(error)
+        })
+    },
+    insertCardapio: (info) => {
+        var cardapio = info.json_cardapio
+        var data_solicitacao = info.data.data_solicitacao
+        
+        dados = [cardapio, data_solicitacao]
+
+        const cardapio_query = new pq(sql.utilidades.insert_cardapio)
+        return db.none(cardapio_query, dados)
+    },
+    getCardapio: (req, res, next) => {
+
+        const cardapio_query = new pq(sql.utilidades.get_last_cardapio)
+        db.any(cardapio_query).then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        }).catch(error => {
             return next(error)
         })
     }

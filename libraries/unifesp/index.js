@@ -1,7 +1,10 @@
 var INTRANET_UNIFESP_URL = 'https://intranet.unifesp.br/'
 var INTRANET_HISTORICO_URL = 'https://www3.unifesp.br/prograd/app_prograd/he_novo/he_aluno_cns_lista_cursos/he_aluno_cns_lista_cursos.php'
+var CARDAPIO_URL = 'https://www.unifesp.br/campus/sjc/servicosnae/restaurante/1647-cardapio-semanal-do-ru.html'
 
 const puppeteer = require('puppeteer')
+const cheerio = require('cheerio')
+const request = require('request')
 const _ = require('lodash')
 
 const historico = require('./historico')
@@ -185,7 +188,190 @@ UNIFESP.authenticateProxyAndRegister = function(username, password){
     })
 }
 
-UNIFESP.fetch = function(what, user, options){
+UNIFESP.readCardapio = function(date) {
+    var cardapio_json = {
+        cardapio: {
+            almoco: {
+                segunda: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                terca: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                quarta: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                quinta: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                sexta: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+            },
+            janta: {
+                segunda: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                terca: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                quarta: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                quinta: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+                sexta: {
+                    prato_base: null,
+                    prato_principal: null,
+                    opcao_vegetariana: null,
+                    guarnicao: null,
+                    sobremesa: null
+                },
+            }
+        }
+    }
+    return new Promise(async (resolve, reject) => {
+        // const browser = await puppeteer.launch()
+        // const page = await browser.newPage()
+        // await page.goto(CARDAPIO_URL)
+        
+        request(CARDAPIO_URL, function(err, resp, html) {
+            if (!err) {
+                const $ = cheerio.load(html);
+                var rows = $("table").find("tr");
+
+                // almoco
+                cardapio_json.cardapio.almoco.segunda.prato_base = $(rows[1]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.prato_base = $(rows[1]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.prato_base = $(rows[1]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.prato_base = $(rows[1]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.prato_base = $(rows[1]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.prato_principal = $(rows[2]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.prato_principal = $(rows[2]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.prato_principal = $(rows[2]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.prato_principal = $(rows[2]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.prato_principal = $(rows[2]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.opcao_vegetariana = $(rows[3]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.opcao_vegetariana = $(rows[3]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.opcao_vegetariana = $(rows[3]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.opcao_vegetariana = $(rows[3]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.opcao_vegetariana = $(rows[3]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.guarnicao = $(rows[4]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.guarnicao = $(rows[4]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.guarnicao = $(rows[4]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.guarnicao = $(rows[4]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.guarnicao = $(rows[4]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.sobremesa = $(rows[5]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.sobremesa = $(rows[5]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.sobremesa = $(rows[5]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.sobremesa = $(rows[5]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.sobremesa = $(rows[5]).children("td:nth-child(6)").text().trim();
+                
+                // janta
+                cardapio_json.cardapio.janta.segunda.prato_base = $(rows[7]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.prato_base = $(rows[7]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.prato_base = $(rows[7]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.prato_base = $(rows[7]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.prato_base = $(rows[7]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.prato_principal = $(rows[8]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.prato_principal = $(rows[8]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.prato_principal = $(rows[8]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.prato_principal = $(rows[8]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.prato_principal = $(rows[8]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.opcao_vegetariana = $(rows[9]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.opcao_vegetariana = $(rows[9]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.opcao_vegetariana = $(rows[9]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.opcao_vegetariana = $(rows[9]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.opcao_vegetariana = $(rows[9]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.guarnicao = $(rows[10]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.guarnicao = $(rows[10]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.guarnicao = $(rows[10]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.guarnicao = $(rows[10]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.guarnicao = $(rows[10]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.sobremesa = $(rows[11]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.sobremesa = $(rows[11]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.sobremesa = $(rows[11]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.sobremesa = $(rows[11]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.sobremesa = $(rows[11]).children("td:nth-child(6)").text().trim();
+                
+                resolve({
+                    data: date,
+                    json_cardapio: JSON.stringify(cardapio_json)
+                })
+            } else {
+                reject()
+            }
+        });
+
+        // $ = cheerio.load(await page.content())
+        // let date = $('table tr')
+        // console.log('EU', date)
+        // date.each((i, e)=> {
+        //     console.log('i',i)
+        //     console.log('e',e)
+        // })
+        //const element = await page.$("$('table tr')[1]")
+        //const text = page.evaluate(() => document.querySelector('table tr').textContent);
+        //const element = await page.$('table tr')[1];
+        //const text = await (await element.getProperty('textContent')).jsonValue();
+        //console.log(textContent);
+        //const element = await page.$('table tr');
+        // await page.evaluate(element => {
+        //     console.log('ELEMENT', element)
+        //     // resolve({a: element.textContent})
+        // }, element)
+    
+        
+        
+    })
+}
+
+UNIFESP.insertCardapio = function(what, user, options){
     return new Promise((resolve, reject) => {
         buildPuppet(options).then(async puppet => {
             options = puppet.defaults(options)

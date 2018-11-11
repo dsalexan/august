@@ -129,5 +129,4 @@ router.get('/me', auth.auth, function (req, res) {
     // });
 })
 
-
 module.exports = router
