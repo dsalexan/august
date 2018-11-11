@@ -43,11 +43,12 @@ router.get('/teste', function(req, res) {
 //
 
 // TODO: add winston logging to this
-router.post('/login', function(req, res){
+router.get('/login', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
-    var usuario = req.body.login
-    var senha = req.body.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
+    console.log("to aqui")
+    var usuario = req.query.login
+    var senha = req.query.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
                                      // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                                      // nao vao interceptar as credenciais do usuario
 
@@ -69,21 +70,24 @@ router.post('/login', function(req, res){
     }).then(result => { // Tentar fazer login no intranet
         if (result.auth) { // Achou o usuario no intranet e a senha esta correta
             Alunos.check_register_aluno(usuario).then(user => { // Procurar usuario no nosso banco
+                console.log('Exists', user.exists)
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
 
-                    unifesp.fetch('historico', undefined, {
-                        puppeteer: result.puppeteer,
-                        authenticated: true
-                    }).then(historico => {
-                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario, senha).then((user) => {
+                    // unifesp.fetch('historico', undefined, {
+                    //     puppeteer: result.puppeteer,
+                    //     authenticated: true
+                    // }).then(historico => {
+                        Alunos.register_aluno(perfHash, usuario, usuario, senha).then((user) => {
+                            console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         }).catch(err => {
                             console.log(err)    
                         })
-                    })
+                    // })
                 } else { // Achou no nosso banco, fazer login
-                    result.puppeteer.browser.close()
+                    // result.puppeteer.browser.close()
+                    console.log(user.data)
                     sendResult(user.data) // Enviar os dados do usuario para fazer login
                 }
             })
@@ -134,6 +138,5 @@ router.get('/me', auth.auth, function (req, res) {
     //     res.status(200).send(decoded);
     // });
 })
-
 
 module.exports = router

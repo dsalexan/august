@@ -143,8 +143,13 @@ module.exports = {
         update_uc: sql('grade/update_uc.sql')
     },
     professor: {
-        insert_professor: sql('professor/insert_professor.sql')
+        insert_professor: sql('professor/insert_professor.sql'),
+    },
+    utilidades: {
+        insert_cardapio: sql('utilidades/insert_cardapio.sql'),
+        get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
     }
+
     
     // // external queries for Users:
     // users: {
