@@ -177,7 +177,6 @@ UNIFESP.authenticateProxyAndRegister = function(username, password){
 
 UNIFESP.readCardapio = function(date) {
     var cardapio_json = {
-        data: date.data_solicitacao,
         cardapio: {
             almoco: {
                 segunda: {
@@ -261,76 +260,79 @@ UNIFESP.readCardapio = function(date) {
         // await page.goto(CARDAPIO_URL)
         
         request(CARDAPIO_URL, function(err, resp, html) {
-                if (!err) {
-                    const $ = cheerio.load(html);
-                    var rows = $("table").find("tr");
+            if (!err) {
+                const $ = cheerio.load(html);
+                var rows = $("table").find("tr");
 
-                    // almoco
-                    cardapio_json.cardapio.almoco.segunda.prato_base = $(rows[1]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.almoco.terca.prato_base = $(rows[1]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.almoco.quarta.prato_base = $(rows[1]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.almoco.quinta.prato_base = $(rows[1]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.almoco.sexta.prato_base = $(rows[1]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.almoco.segunda.prato_principal = $(rows[2]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.almoco.terca.prato_principal = $(rows[2]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.almoco.quarta.prato_principal = $(rows[2]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.almoco.quinta.prato_principal = $(rows[2]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.almoco.sexta.prato_principal = $(rows[2]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.almoco.segunda.opcao_vegetariana = $(rows[3]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.almoco.terca.opcao_vegetariana = $(rows[3]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.almoco.quarta.opcao_vegetariana = $(rows[3]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.almoco.quinta.opcao_vegetariana = $(rows[3]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.almoco.sexta.opcao_vegetariana = $(rows[3]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.almoco.segunda.guarnicao = $(rows[4]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.almoco.terca.guarnicao = $(rows[4]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.almoco.quarta.guarnicao = $(rows[4]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.almoco.quinta.guarnicao = $(rows[4]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.almoco.sexta.guarnicao = $(rows[4]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.almoco.segunda.sobremesa = $(rows[5]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.almoco.terca.sobremesa = $(rows[5]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.almoco.quarta.sobremesa = $(rows[5]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.almoco.quinta.sobremesa = $(rows[5]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.almoco.sexta.sobremesa = $(rows[5]).children("td:nth-child(6)").text().trim();
-                    
-                    // janta
-                    cardapio_json.cardapio.janta.segunda.prato_base = $(rows[7]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.janta.terca.prato_base = $(rows[7]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.janta.quarta.prato_base = $(rows[7]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.janta.quinta.prato_base = $(rows[7]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.janta.sexta.prato_base = $(rows[7]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.janta.segunda.prato_principal = $(rows[8]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.janta.terca.prato_principal = $(rows[8]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.janta.quarta.prato_principal = $(rows[8]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.janta.quinta.prato_principal = $(rows[8]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.janta.sexta.prato_principal = $(rows[8]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.janta.segunda.opcao_vegetariana = $(rows[9]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.janta.terca.opcao_vegetariana = $(rows[9]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.janta.quarta.opcao_vegetariana = $(rows[9]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.janta.quinta.opcao_vegetariana = $(rows[9]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.janta.sexta.opcao_vegetariana = $(rows[9]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.janta.segunda.guarnicao = $(rows[10]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.janta.terca.guarnicao = $(rows[10]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.janta.quarta.guarnicao = $(rows[10]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.janta.quinta.guarnicao = $(rows[10]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.janta.sexta.guarnicao = $(rows[10]).children("td:nth-child(6)").text().trim();
-                    
-                    cardapio_json.cardapio.janta.segunda.sobremesa = $(rows[11]).children("td:nth-child(2)").text().trim();
-                    cardapio_json.cardapio.janta.terca.sobremesa = $(rows[11]).children("td:nth-child(3)").text().trim();
-                    cardapio_json.cardapio.janta.quarta.sobremesa = $(rows[11]).children("td:nth-child(4)").text().trim();
-                    cardapio_json.cardapio.janta.quinta.sobremesa = $(rows[11]).children("td:nth-child(5)").text().trim();
-                    cardapio_json.cardapio.janta.sexta.sobremesa = $(rows[11]).children("td:nth-child(6)").text().trim();
-                    
-                    resolve({json_cardapio: JSON.stringify(cardapio_json)})
-                } else {
-                    reject()
-                }
+                // almoco
+                cardapio_json.cardapio.almoco.segunda.prato_base = $(rows[1]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.prato_base = $(rows[1]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.prato_base = $(rows[1]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.prato_base = $(rows[1]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.prato_base = $(rows[1]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.prato_principal = $(rows[2]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.prato_principal = $(rows[2]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.prato_principal = $(rows[2]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.prato_principal = $(rows[2]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.prato_principal = $(rows[2]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.opcao_vegetariana = $(rows[3]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.opcao_vegetariana = $(rows[3]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.opcao_vegetariana = $(rows[3]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.opcao_vegetariana = $(rows[3]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.opcao_vegetariana = $(rows[3]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.guarnicao = $(rows[4]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.guarnicao = $(rows[4]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.guarnicao = $(rows[4]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.guarnicao = $(rows[4]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.guarnicao = $(rows[4]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.almoco.segunda.sobremesa = $(rows[5]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.almoco.terca.sobremesa = $(rows[5]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.almoco.quarta.sobremesa = $(rows[5]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.almoco.quinta.sobremesa = $(rows[5]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.almoco.sexta.sobremesa = $(rows[5]).children("td:nth-child(6)").text().trim();
+                
+                // janta
+                cardapio_json.cardapio.janta.segunda.prato_base = $(rows[7]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.prato_base = $(rows[7]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.prato_base = $(rows[7]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.prato_base = $(rows[7]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.prato_base = $(rows[7]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.prato_principal = $(rows[8]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.prato_principal = $(rows[8]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.prato_principal = $(rows[8]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.prato_principal = $(rows[8]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.prato_principal = $(rows[8]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.opcao_vegetariana = $(rows[9]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.opcao_vegetariana = $(rows[9]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.opcao_vegetariana = $(rows[9]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.opcao_vegetariana = $(rows[9]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.opcao_vegetariana = $(rows[9]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.guarnicao = $(rows[10]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.guarnicao = $(rows[10]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.guarnicao = $(rows[10]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.guarnicao = $(rows[10]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.guarnicao = $(rows[10]).children("td:nth-child(6)").text().trim();
+                
+                cardapio_json.cardapio.janta.segunda.sobremesa = $(rows[11]).children("td:nth-child(2)").text().trim();
+                cardapio_json.cardapio.janta.terca.sobremesa = $(rows[11]).children("td:nth-child(3)").text().trim();
+                cardapio_json.cardapio.janta.quarta.sobremesa = $(rows[11]).children("td:nth-child(4)").text().trim();
+                cardapio_json.cardapio.janta.quinta.sobremesa = $(rows[11]).children("td:nth-child(5)").text().trim();
+                cardapio_json.cardapio.janta.sexta.sobremesa = $(rows[11]).children("td:nth-child(6)").text().trim();
+                
+                resolve({
+                    data: date,
+                    json_cardapio: JSON.stringify(cardapio_json)
+                })
+            } else {
+                reject()
+            }
         });
 
         // $ = cheerio.load(await page.content())

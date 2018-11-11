@@ -1,0 +1,1 @@
+SELECT * FROM cardapio ORDER BY data_inicio DESC LIMIT 1

@@ -7,13 +7,7 @@ const _ = require('lodash')
 const unifesp = require('../../libraries/unifesp')
 const auth = require('../../auth/auth')
 var Alunos = require('../../models/Alunos')
-
-// GET api/alunos/<ra_aluno> <- retorna um aluno especifico
-// GET api/alunos <- retorna todos os alunos OR alunos que passem nos parametros especificos
-//      GET api/alunos?a=valor;b=value;c=bravura
-// POST api/alunos/ <- insere um novo aluno
-// PUT api/alunos/<ra_aluno> <- atualiza as informações de um aluno
-// DELETE api/alunos/<ra_aluno> <- remove um aluno especifico do banco
+var Utilidades = require('../../models/Utilidades')
 
 // GET 
 router.get('/cardapio/', (req, res, next) => {
@@ -22,11 +16,18 @@ router.get('/cardapio/', (req, res, next) => {
     }
 
     unifesp.readCardapio(search).then(info => {
-        console.log('data', json_cardapio)
         if(info != null) {
-            res.status(200).json({
-                status: 'success',
-                success: true
+            Utilidades.insertCardapio(info).then(() => {
+                res.status(200).json({
+                    status: 'success',
+                    success: true
+                })
+            }).catch((err) => {
+                res.status(200).json({
+                    status: 'error',
+                    success: false,
+                    error: err
+                })
             })
         } else {
             res.status(404).json({

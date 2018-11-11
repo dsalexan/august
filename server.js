@@ -17,7 +17,6 @@ var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
 var Divulgacao = require('./models/Divulgacao')
 
-
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
     extended: false
@@ -37,7 +36,8 @@ router.use('/api/auth', authController)
 router.use('/api', require('./controllers/aluno'))
 
 // Cardapio
-router.use('/api/ru', require('./controllers/cardapio'))
+router.use('/api/ru/', require('./controllers/cardapio'))
+router.use('/api/ru/get/atual', Utilidades.getCardapio)
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
