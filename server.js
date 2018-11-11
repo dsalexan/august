@@ -36,6 +36,9 @@ router.use(function(req, res, next) {
 
 router.use('/api/auth', authController)
 
+// Unifesp
+router.use('/api/unifesp', require('./controllers/unifesp'))
+
 // Aluno
 router.use('/api', require('./controllers/aluno'))
 

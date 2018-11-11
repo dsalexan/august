@@ -1,0 +1,1 @@
+DELETE FROM unidade_curricular WHERE hash = $1

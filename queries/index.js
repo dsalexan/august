@@ -53,6 +53,7 @@ module.exports = {
     users: {
         insert: sql('users/insert.sql')
     },
+    unifesp: sql('unifesp'),
     caronas: {
         select_viagens: sql('carona/select_viagens.sql'),
         // select_viagem_id: sql('caronas/select_viagem_id'),

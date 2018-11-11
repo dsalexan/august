@@ -1,0 +1,1 @@
+DELETE FROM uc_alias WHERE id_alias = ${id_alias}

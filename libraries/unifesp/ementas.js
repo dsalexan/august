@@ -1,4 +1,4 @@
-const { DateTime } = require('luxon')
+const DateTime = require('../../utils/luxon')
 const cheerio = require('cheerio')
 const fs = require('fs')
 const path = require('path')
@@ -6,6 +6,10 @@ const request = require('request-promise')
 const _request = require('request')
 const events = require('events')
 const pdfreader = require('pdfreader')
+
+const {insert_extracao} = require('../../models/Unifesp')
+
+const {UC} = require('./object')
 
 const OFFLINE_MODE = false
 
@@ -56,7 +60,7 @@ function parsePdf(file){
                     rows = pages[i]
                     Object.keys(rows) // => array of y-positions (type: float)
                         .sort((y1, y2) => parseFloat(y1) - parseFloat(y2)) // sort float positions
-                        .forEach((y) => p.push((rows[y] || []).join('')))
+                        .forEach((y) => p.push((rows[y] || []).join(' ').replace(new RegExp('[ ]+','gi'), ' ').trim()))
 
                     items = items.concat(p)
                 }
@@ -273,8 +277,8 @@ var compile_ementas = function(folder){
                 reversed.push(line)
 
                 let merge = false
-                if(prev.length > line.length || Math.abs(line.length - prev.length) <= max_length * 0.15){ // se a diferença entre as linhas estiver nos 15%
-                    if(prev.length > max_length * 0.85){ // se a linha anterior tem ao menos 85% do numero de caracteres da maior linha (pog)
+                if(prev.length > line.length || Math.abs(line.length - prev.length) <= max_length * 0.20){ // se a diferença entre as linhas estiver nos 15%
+                    if(prev.length > max_length * 0.80){ // se a linha anterior tem ao menos 85% do numero de caracteres da maior linha (pog)
                         // se nao e um header, ex: "Complementar:"
                         if(!(line.trim()[line.trim().length-1] == ':' || line.trim()[line.trim().length-2] == ':' || line.trim()[line.trim().length-3] == ':')){
                             if(!find(line)){  // essential data is not merged-up
@@ -315,8 +319,10 @@ var compile_ementas = function(folder){
                     padsasd = 1
                 }
 
-                uc.id = removeAcento(uc.nome).replace(/[,]/, '').replace(new RegExp('[ ]+','gi'), ' ').toLowerCase().trim()
+                uc.id = UC.namefy(uc.nome)
+                uc.hash = UC.verbose(uc.id)
                 uc.file = file
+                uc.carga = uc.carga.replace(/\s/gi, '').replace('hs', 'h')
                 uc.requisitos = uc.requisitos.replace(/(; )/, ';').split(';')
                 if(clear_column(uc.requisitos.join('')).toLowerCase() == 'naoha') uc.requisitos = []
 
@@ -331,9 +337,17 @@ var compile_ementas = function(folder){
 }
 
 var save_ementas = function(data){
-    return new Promise(async resolve => {
-        // TODO: implementar salvar ementas
-        resolve(true)
+    return new Promise(async (resolve, reject) => {
+        insert_extracao({
+            extracao: 'ementas',
+            dados: data,
+            datahora: DateTime.toSQL()
+        }).then(row => {
+            resolve(row)
+        }).catch(err => {
+            console.log('ERROR', 'insert extracao', err)
+            reject(err)
+        })
     })
 }
 
@@ -343,7 +357,8 @@ var fetch_ementas = function(browser, page, downloadPath, forceDownload, options
         let browserPersistence = {}
 
         console.log('READING EMENTAS')
-        let ementas_imcompletas = await read_ementas(browser, page, downloadPath, forceDownload)
+        // let ementas_imcompletas = await read_ementas(browser, page, downloadPath, forceDownload)
+        let ementas_imcompletas = {}
         options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
 
         console.log('COMPILING EMENTAS')
@@ -356,7 +371,7 @@ var fetch_ementas = function(browser, page, downloadPath, forceDownload, options
         browserPersistence.puppeteer && (ementas.puppeteer = browserPersistence.puppeteer)
 
         console.log('SAVING EMENTAS')
-        await save_ementas(ementas)
+        ementas = await save_ementas(ementas)
 
         resolve(ementas)
     })
