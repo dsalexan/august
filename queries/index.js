@@ -141,6 +141,9 @@ module.exports = {
         update_professor: sql('grade/update_professor.sql'),
         update_turma: sql('grade/update_turma.sql'),
         update_uc: sql('grade/update_uc.sql')
+    },
+    professor: {
+        insert_professor: sql('professor/insert_professor.sql')
     }
     
     // // external queries for Users:

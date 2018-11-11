@@ -18,12 +18,18 @@ var Alunos = require('../models/Alunos')
 
 const { performance } = require('perf_hooks')
 
+var ModelProfessores = require('../models/Professores')
+
 // Pedro testando
 var Professores = require('../libraries/unifesp/professores')
 router.get('/atualizarcorpodocente', function(req, res) {
-    corpoDocente = index.getCorpoDocente()
-
-    // cadastrarNoBanco()
+    index.getCorpoDocente().then(corpoDocente => {
+        // console.log(corpoDocente)
+        corpoDocente.professores.forEach(professor => {
+            console.log(professor.nome)
+            ModelProfessores.insert_professor(professor)
+        });
+    })
 })
 router.get('/teste', function(req, res) {
     var fs = require('fs')

@@ -132,8 +132,9 @@ UNIFESP.getCorpoDocente = function() {
         buildPuppet().then(async puppet => {
             await puppet.page.goto('http://www.unifesp.br/campus/sjc/corpodocente.html')
 
-            professores.getProfs(puppet.page).then( result => {
-                resolve(result)
+            professores.getProfs(puppet.page).then(result => {
+                // console.log({"professores": result})
+                resolve({"professores": result})
             })
         })
     })
