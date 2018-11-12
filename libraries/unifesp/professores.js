@@ -29,69 +29,63 @@ var getProfs = function(page){
 
         var professores = [];
 
-        $('.entry-content table td:nth-of-type(2) p:nth-of-type(1)').each(function(index, element){
-            var prof = $(element).text().replace(/\n/g, '')
-                                        .replace(/Profª. /g, '')
-                                        .replace(/Profª./g, '')
-                                        .replace(/Profa. /g, '')
-                                        .replace(/Profa./g, '')
-                                        .replace(/Prof. /g, '')
-                                        .replace(/Prof./g, '')
-                                        .replace(/Nome: /g, '')
-                                        .replace(/\s/g, ' ')
-                                        .trim()
-            var honorifico
-            var nome
-            // if (prof.includes('Lilian')) {
-            //     honorifico = 'Dra.'
-            //     nome = 'Lilian Berton'
-            // }
-            if (prof.includes('Dr')) {
-                honorifico = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ')[0]
-                nome = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ').slice(1).join(' ')
-            }
-            else {
-                honorifico = ''
-                nome = prof
-            }
-
-            if (prof.length > 1) {
-                console.log({honorifico: honorifico, nome: nome})
-                professores.push({honorifico: honorifico, nome: nome})
-            }
-        })
         $('.entry-content table td:nth-of-type(2)').each(function(index, element){
-            var prof = ($(element).text().split("Área")[0]).replace(/\n/g, '')
-                                                           .replace(/Profª. /g, '')
-                                                           .replace(/Profª./g, '')
-                                                           .replace(/Profa. /g, '')
-                                                           .replace(/Profa./g, '')
-                                                           .replace(/Prof. /g, '')
-                                                           .replace(/Prof./g, '')
-                                                           .replace(/Nome: /g, '')
-                                                           .replace(/\s/g, ' ')
-                                                           .trim()
+            var prof = ($(element).text()).replace(new RegExp('Profª. |Profª.|Profa. |Profa.|Prof. |Prof.|Nome: ', 'g'), '')
+                                          .replace(/\s/g, ' ').trim()
+
+            var atributos = prof.split(new RegExp('\n|Área: |Email: |Email:|E-mail: | Sala: | Sala | Sala:|- Tel.| - Tel.| -Tel.| Tel.| - Parque', 'g'))
+
+            var honorNome = atributos[0]
+                                        
             var honorifico
             var nome
-            // if (prof.includes('Lilian')) {
-            //     honorifico = 'Dra.'
-            //     nome = 'Lilian Berton'
-            // }
-            if (prof.includes('Dr')) {
-                honorifico = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ')[0]
-                nome = prof.replace(new RegExp('&nbsp;', 'g'), ' ').split(' ').slice(1).join(' ')
+
+            if (honorNome.includes('Dr')) {
+                honorifico = honorNome.split(' ')[0]
+                nome = honorNome.split(' ').slice(1).join(' ')
             }
             else {
                 honorifico = ''
-                nome = prof
+                nome = honorNome
             }
 
-            if (prof.length > 1 && !containsObject(nome, professores)) {
-                console.log({honorifico: honorifico, nome: nome})
-                professores.push({honorifico: honorifico, nome: nome})
+            if (prof.length > 0) {
+
+                var area = atributos[1]
+                var email = atributos[2].trim()
+
+                var emails = email.split(new RegExp(" ", 'g'))
+                var email1 = emails[0]
+                var email2 = null
+                if (emails.length > 1)
+                    email2 = emails[emails.length-1]
+
+                var sala = atributos[3]
+                var lattes = $(element).children("a:nth-last-of-type(1)").attr('href')
+                if (lattes == undefined) {
+                    lattes = $(element).children("p:nth-last-of-type(1)").children("a:nth-last-of-type(1)").attr('href')
+                }
+                if (lattes == undefined) {
+                    lattes = ''
+                }
+                lattes = lattes.replace('http://%20http', 'http:')
+
+                // console.log(area)
+                // console.log({honorifico: honorifico, nome: nome})
+                var profObj = {
+                    nome: honorifico != '' ? honorifico + ' ' + nome : nome,
+                    area: area,
+                    email1: email1,
+                    email2: email2,
+                    lattes: lattes,
+                    sala: sala
+                }
+                professores.push(profObj)
+                // console.log(profObj)
             }
         })
-        console.log(professores.length)
+        // console.log(professores.length)
+        // console.log(professores)
 
         resolve(professores)
     })

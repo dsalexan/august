@@ -142,6 +142,9 @@ module.exports = {
         update_turma: sql('grade/update_turma.sql'),
         update_uc: sql('grade/update_uc.sql')
     },
+    professor: {
+        insert_professor: sql('professor/insert_professor.sql'),
+    },
     utilidades: {
         insert_cardapio: sql('utilidades/insert_cardapio.sql'),
         get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
