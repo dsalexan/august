@@ -6,9 +6,10 @@ var text = function(t){
     t = t.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o')
     t = t.replace(new RegExp('[ÚÙÛ]','gi'), 'u')
     t = t.replace(new RegExp('[Ç]','gi'), 'c')
-    t = t.replace(new RegExp('[,:\\-\\.]', 'gi'), '')
-    t = t.replace(new RegExp('[ ]+','gi'), ' ')
-    t = t.trim()
+    t = t.replace(new RegExp('[,:\\-\\.]+', 'gi'), '')
+    t = t.replace(/\s+/gi, ' ')
+    t = t.replace(/\s+$/gi, '')
+    t = t.replace(/^\s+/gi, '')
 
     return t
 }
@@ -33,7 +34,27 @@ var singular = function(t){
     return t
 }
 
+var stopword = function(word){
+    return [
+        'e', 
+        'de',
+        'do',
+        'da',
+        'das',
+        'dos',
+        'em',
+        'na',
+        'no',
+        'nos',
+        'nas',
+        'para',
+        'pra',
+        'por'
+    ].includes(word)
+}
+
 module.exports = {
     text: text,
-    singular: singular
+    singular: singular,
+    stopword: stopword
 }

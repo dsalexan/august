@@ -25,7 +25,8 @@ class Puppet {
         return _.defaultsDeep(options, {
             puppeteer: undefined,
             keep_puppet: false,
-            authenticated: false
+            authenticated: false,
+            headless: true
         })
     }
 
@@ -36,7 +37,7 @@ class Puppet {
             if(options.puppeteer == undefined){
                 puppeteer.launch({
                     args: ['--deterministic-fetch'],
-                    headless: false,
+                    headless: options.headless,
                 }).then(browser => {
                     this.browser = browser
                     browser.newPage().then(page => {
@@ -392,10 +393,15 @@ UNIFESP.insertCardapio = function(what, user, options){
 }
 UNIFESP.fetch = function(what, data, options){
     return new Promise((resolve, reject) => {
+        if(options == undefined) options = {}
 
         puppet = [false]
         if(what == 'historico' || what == 'atestado'){
-
+            options.headless = false
+        }else if(what == 'ementas'){
+            options.headless = true
+        }else if(what == 'agenda'){
+            options.puppeteer = false
         }
         buildPuppet(options).then(async puppet => {
             options = puppet.defaults(options)

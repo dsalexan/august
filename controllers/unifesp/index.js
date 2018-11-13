@@ -12,7 +12,31 @@ const lib = require('../../libraries/unifesp')
 
 const {UC} = require('../../libraries/unifesp/object')
 
-const EMENTAS_DATA_EXPIRATION_INTERVAL = {months: 6}
+const EMENTAS_DATA_EXPIRATION_INTERVAL = {seconds: 6}
+
+router.get('/agenda/analysis', (req, res, next) => {
+    let mode = req.query.mode || 'analyse'
+
+    Unifesp.select_analise_latest('agenda').then(analysis => {
+        let _do = []
+
+        if(analysis != null && 1 == 2){
+            if(mode == 'analyse'){
+                throw new Error('Unimplemented overwrite of olde analysis')
+            }else if(mode == 'view'){
+                _do = [analysis]
+            }
+        }else{
+            _do.push(new Promise((resolve, reject) => {
+                Unifesp.select_agenda().then(agenda => {
+                    if(agenda == null) return res.status(500).send({message: 'No agenda registered, run fetch first'})
+
+                    
+                })
+            }))
+        }
+    })
+})
 
 router.get('/ementas/analysis', (req, res, next) => {
     let mode = req.query.mode || 'analyse'
@@ -26,6 +50,11 @@ router.get('/ementas/analysis', (req, res, next) => {
                     Unifesp.select_ementas().then(async result => {
                         if(result == null) return res.status(500).send({message: 'No ementas registered, run fetch first'})
                 
+                        let sqlAnalise = await Unifesp.insert_analise({
+                            base: result.id_extracao,
+                            datahora: DateTime.toSQL()
+                        })
+
                         let update_index = []
                         let reg = []
                         for(let id of Object.keys(result.dados)){
@@ -33,7 +62,7 @@ router.get('/ementas/analysis', (req, res, next) => {
                             let summary = result.dados[id]
                 
                             let uc = new UC()
-                            uc.fromSummary(summary)
+                            uc.fromSummary(summary, sqlAnalise.id_analise)
                             uc.doAlias()
                 
                             // verifica se a uc existe
@@ -47,22 +76,9 @@ router.get('/ementas/analysis', (req, res, next) => {
     
                             update_index.push(uc.hash)
                         }
-    
-                        // verifica as ucs que não foram atualizadas ou inseridas agora mas estao no banco (as que sobraram da analise antnerior)
-                        let ucs = await Unifesp.select_ucs_not_hash(update_index)
-                        
-                        for(let uc of ucs){
-                            reg.push(Unifesp.delete_uc_hash(uc.hash)) // remove o que sobrou de antes
-                        }
             
-                        Promise.all(reg).then(() => {
-                            Unifesp.insert_analise({
-                                base: result.id_extracao,
-                                datahora: DateTime.toSQL()
-                            }).then(analysis => {
-                                resolve(analysis)
-                            })
-                        }).catch(reject)
+                        await Promise.all(reg)
+                        resolve(sqlAnalise)
                     })
                 }))
             }else if(mode == 'view'){
@@ -70,29 +86,50 @@ router.get('/ementas/analysis', (req, res, next) => {
             }
         }else{
             doAnalysis.push(new Promise((resolve, reject) => {
-                Unifesp.select_ementas().then(result => {
+                Unifesp.select_ementas().then(async result => {
                     if(result == null) return res.status(500).send({message: 'No ementas registered, run fetch first'})
             
+                    let sqlAnalise = await Unifesp.insert_analise({
+                        base: result.id_extracao,
+                        datahora: DateTime.toSQL()
+                    })
+
                     let reg = []
+                    let UCIndex = {}
                     for(let id of Object.keys(result.dados)){
                         if(id == '__incomplete') continue
                         let summary = result.dados[id]
             
                         let uc = new UC()
-                        uc.fromSummary(summary)
+                        uc.fromSummary(summary, sqlAnalise.id_analise)
                         uc.doAlias()
-            
-                        reg.push(Unifesp.register_uc(uc))
+
+                        UCIndex[uc.hash] = uc
                     }
-            
-                    Promise.all(reg).then(() => {
-                        Unifesp.insert_analise({
-                            base: result.id_extracao,
-                            datahora: DateTime.toSQL()
-                        }).then(analysis => {
-                            resolve(analysis)
+
+                    let listOfAliases = {}
+                    Object.keys(UCIndex).forEach(hash => {
+                        UCIndex[hash].aliases.forEach(alias => {
+                            (listOfAliases[alias] = listOfAliases[alias] || []).push(hash)
                         })
-                    }).catch(reject)
+                    })
+
+                    let logs = {
+                        errors: []
+                    }
+                    Object.keys(UCIndex).forEach(hash => {
+                        let uc = UCIndex[hash]
+                        logs.errors = logs.errors.concat(uc.hashRequisites(listOfAliases))
+
+                        reg.push(Unifesp.register_uc(uc))
+                    })
+            
+                    await Promise.all(reg)
+
+                    sqlAnalise.datahora = DateTime.toSQL()
+                    sqlAnalise.logs = logs
+                    await Unifesp.update_analise(sqlAnalise)
+                    resolve(sqlAnalise)
                 })
             }))
         }
@@ -113,6 +150,44 @@ router.get('/ementas/analysis', (req, res, next) => {
         })
     })
     
+})
+
+router.get('/agenda', (req, res, next) => {
+    Unifesp.select_agenda().then(result => {
+        let force = req.query.force || false
+        let display = req.query.display || 'all'
+        let date = req.body.date
+        if(force && date == undefined){
+            date = DateTime.utc().toFormat('yyyy-MM-dd', {zone: 'America/Sao_Paulo'})
+        }
+
+        let prom
+        if(result == null || force){
+            prom = lib.fetch('agenda', date)
+        }else{
+            prom = result
+        }
+
+        Promise.all([prom]).then(result => {
+            result = result[0] || result
+
+            let displayData
+            if(display == 'all'){
+                displayData = result
+            }
+
+            res.status(200).send({
+                message: 'Agenda fetched',
+                reference: result.dados.reference,
+                data: displayData
+            })
+        }).catch(err => {
+            console.log(err)
+            res.status(500).send({
+                error: err
+            })
+        })
+    })
 })
 
 router.get('/ementas', (req, res, next) => {

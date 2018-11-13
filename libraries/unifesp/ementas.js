@@ -6,6 +6,7 @@ const request = require('request-promise')
 const _request = require('request')
 const events = require('events')
 const pdfreader = require('pdfreader')
+const PDFParser = require("pdf2json")
 
 const {insert_extracao} = require('../../models/Unifesp')
 
@@ -44,7 +45,7 @@ function removeAcento (text){
     return text;                 
 }
 
-function parsePdf(file){
+function parsePdf1(file){
     return new Promise((resolve, reject) => {        
         var page = 1
         var pages = {}
@@ -60,7 +61,7 @@ function parsePdf(file){
                     rows = pages[i]
                     Object.keys(rows) // => array of y-positions (type: float)
                         .sort((y1, y2) => parseFloat(y1) - parseFloat(y2)) // sort float positions
-                        .forEach((y) => p.push((rows[y] || []).join(' ').replace(new RegExp('[ ]+','gi'), ' ').trim()))
+                        .forEach((y) => p.push((rows[y] || []).join('').replace(new RegExp('[ ]+','gi'), ' ').trim()))
 
                     items = items.concat(p)
                 }
@@ -76,6 +77,19 @@ function parsePdf(file){
                 (rows[item.y] = rows[item.y] || []).push(item.text);
             }
         })
+    })
+}
+
+function parsePdf(file){
+    return new Promise((resolve, reject) => {
+        let pdfParser = new PDFParser(this, 1)
+    
+        pdfParser.on("pdfParser_dataError", reject )
+        pdfParser.on("pdfParser_dataReady", pdfData => {
+            resolve(pdfParser.getRawTextContent().split(/\r?\n/))
+        });
+    
+        pdfParser.loadPDF(file)
     })
 }
 
@@ -242,7 +256,12 @@ var read_ementas = function(browser, page, downloadPath, forceDownload, options)
 
 var compile_ementas = function(folder){
     return new Promise(async (resolve, reject) => {
-        var clear_column = text => removeAcento(text).toLowerCase().replace().replace(new RegExp('[ ]+','gi'), '').replace(new RegExp('[-]+','gi'), '')
+        var clear_column = text => {
+            let t = removeAcento(text).toLowerCase()
+            t = t.replace(/\s+/gi, '')
+            t = t.replace(/\-+/gi, '')
+            return t
+        }
         var find = (text) => {
             for(let col of Object.keys(PDF_LINES_TRANSLATE)){
                 text = clear_column(text)
@@ -266,6 +285,11 @@ var compile_ementas = function(folder){
             }).sort((l1, l2) => l2.length - l1.length)
 
 
+            if(file == 'laboratorio-de-sistemas-computacionais-arquitetura-e-organizacao-de-computadores.pdf')
+            {
+                para = ''
+            }
+
             let j = 0
             for(let i = summary.length-1; i > 0; i--){
                 let max_length = line_size[0].length
@@ -285,7 +309,6 @@ var compile_ementas = function(folder){
                                 // se a gente considerar que faz parte da linha de cima
                                 let c = reversed.pop() || ''
                                 c = prev + ' ' + c
-                                c = c.replace(/[ ]+/, ' ').trim()
                                 reversed.push(c)
                                 i--
 
@@ -297,7 +320,7 @@ var compile_ementas = function(folder){
             }
             if(reversed[reversed.length-1].search(summary[0]) == -1) reversed.push(summary[0])
 
-            summary = reversed
+            summary = reversed.map(l => l.replace(/\s+/gi, ' ').trim())
             summary.reverse()
 
             let essential_data = summary.filter(l => find(l))
@@ -315,7 +338,7 @@ var compile_ementas = function(folder){
                     uc[PDF_LINES_TRANSLATE[col]] = d.substring(d.indexOf(':') + 1).trim()
                 }
 
-                if(file == "seminarios-interdisciplinares.pdf"){
+                if(file == "aspectos-de-implementacao-de-banco-de-dados.pdf"){
                     padsasd = 1
                 }
 
@@ -324,6 +347,7 @@ var compile_ementas = function(folder){
                 uc.file = file
                 uc.carga = uc.carga.replace(/\s/gi, '').replace('hs', 'h')
                 uc.requisitos = uc.requisitos.replace(/(; )/, ';').split(';')
+
                 if(clear_column(uc.requisitos.join('')).toLowerCase() == 'naoha') uc.requisitos = []
 
                 data[uc.id] = uc
