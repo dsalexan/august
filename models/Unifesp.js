@@ -5,6 +5,7 @@ Unifesp = {}
 
 Unifesp.select_extracao_latest = (extracao) => db.oneOrNone(sql.unifesp.select_extracao_latest, {extracao: extracao})
 Unifesp.select_ementas = () => Unifesp.select_extracao_latest('ementas')
+Unifesp.select_agenda = () => Unifesp.select_extracao_latest('agenda')
 
 Unifesp.select_uc = (hash) => db.oneOrNone(sql.unifesp.select_uc, [hash])
 Unifesp.select_alias_uc = (hash) => db.any(sql.unifesp.select_alias_uc, [hash])
@@ -18,6 +19,7 @@ Unifesp.insert_alias = (data) => db.none(sql.unifesp.insert_alias, data)
 Unifesp.insert_analise = (data) => db.one(sql.unifesp.insert_analise, data)
 
 Unifesp.update_uc_hash = (uc) => db.none(sql.unifesp.update_uc_hash, uc)
+Unifesp.update_analise = (analise) => db.none(sql.unifesp.update_analise, analise)
 
 Unifesp.delete_uc_hash = (hash) => db.none(sql.unifesp.delete_uc_hash, [hash])
 Unifesp.delete_alias = (data) => db.none(sql.unifesp.delete_alias_id, data)

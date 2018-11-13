@@ -3,6 +3,8 @@ const cheerio = require('cheerio')
 const fs = require('fs')
 const request = require('request')
 
+const {insert_extracao} = require('../../models/Unifesp')
+
 const OFFLINE_MODE = false
 
 //http://agendasjc.unifesp.br/class/Web/view-schedule.php?sd=2018-11-12
@@ -130,10 +132,17 @@ var compile_agenda = function(html){
 }
 
 var save_agenda = function(data){
-    return new Promise(async resolve => {
-        // TODO: implementar salvar agenda
-        console.log('save agenda')
-        resolve(true)
+    return new Promise(async (resolve, reject) => {
+        insert_extracao({
+            extracao: 'agenda',
+            dados: data,
+            datahora: DateTime.toSQL()
+        }).then(row => {
+            resolve(row)
+        }).catch(err => {
+            console.log('ERROR', 'insert extracao', err)
+            reject(err)
+        })
     })
 }
 
@@ -152,7 +161,7 @@ var fetch_agenda = function(date, options){
             ...agenda_compilada
         }
 
-        await save_agenda(agenda)
+        agenda = await save_agenda(agenda)
 
         resolve(agenda)
     })

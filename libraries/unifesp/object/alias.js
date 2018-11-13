@@ -9,25 +9,6 @@ class Alias{
         this.aliases = []
     }
 
-    stopwords(word){
-        return [
-            'e', 
-            'de',
-            'do',
-            'da',
-            'das',
-            'dos',
-            'em',
-            'na',
-            'no',
-            'nos',
-            'nas',
-            'para',
-            'pra',
-            'por'
-        ].includes(word)
-    }
-
     generate(){
         this.aliases.push(this.simple)
 
@@ -52,10 +33,11 @@ class Alias{
         for(let variant of num_variants){
             let tokens = variant.split(' ')
     
-            let lists = [tokens, tokens.filter(t => !this.stopwords(t))]
+            let lists = [tokens, tokens.filter(t => !simplify.stopword(t))]
             if(_.isEqual(lists[0], lists[1])) lists = [lists[0]]
     
             for(let l of lists){
+                this.aliases.push(l.join(' '))
                 indexes = Array(l.length).fill().map((_, idx) => l[idx].length > 3 ? idx : undefined).filter(i => i != undefined)
                 
                 let cmb = []
