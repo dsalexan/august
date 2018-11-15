@@ -78,7 +78,7 @@ router.get('/login', function(req, res){
                         puppeteer: result.puppeteer,
                         authenticated: true
                     }).then(historico => {
-                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario, senha).then((user) => {
+                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
                             console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         }).catch(err => {
@@ -118,7 +118,6 @@ router.get('/login', function(req, res){
                 ra: user.ra_aluno,
                 nome: user.nome,
                 login: user.login_intranet,
-                senha: user.senha_intranet,
                 email: user.email,
                 telefone: user.telefone
             },
