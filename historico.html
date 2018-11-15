@@ -1,0 +1,965 @@
+
+  
+   <form name="F3" method="post" action="grid_he_aluno.php" target="_self" style="display: none"> 
+    <input type="hidden" name="nmgp_chave" value="">
+    <input type="hidden" name="nmgp_opcao" value="">
+    <input type="hidden" name="nmgp_ordem" value="">
+    <input type="hidden" name="nmgp_chave_det" value="">
+    <input type="hidden" name="nmgp_quant_linhas" value="">
+    <input type="hidden" name="nmgp_url_saida" value="">
+    <input type="hidden" name="nmgp_parms" value="">
+    <input type="hidden" name="nmgp_tipo_pdf" value="">
+    <input type="hidden" name="nmgp_outra_jan" value="">
+    <input type="hidden" name="nmgp_orig_pesq" value="">
+    <input type="hidden" name="script_case_init" value="894"> 
+    <input type="hidden" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1"> 
+   </form> 
+   <form name="F4" method="post" action="grid_he_aluno.php" target="_self" style="display: none"> 
+    <input type="hidden" name="nmgp_opcao" value="rec">
+    <input type="hidden" name="rec" value="">
+    <input type="hidden" name="nm_call_php" value="">
+    <input type="hidden" name="script_case_init" value="894"> 
+    <input type="hidden" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1"> 
+   </form> 
+   <form name="F5" method="post" action="grid_he_aluno_pesq.class.php" target="_self" style="display: none"> 
+    <input type="hidden" name="script_case_init" value="894"> 
+    <input type="hidden" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1"> 
+   </form> 
+   <form name="F6" method="post" action="grid_he_aluno.php" target="_self" style="display: none"> 
+    <input type="hidden" name="script_case_init" value="894"> 
+    <input type="hidden" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1"> 
+   </form> 
+  <form name="Fdoc_word" method="post" action="grid_he_aluno.php" target="_self"> 
+    <input type="hidden" name="nmgp_opcao" value="doc_word"> 
+    <input type="hidden" name="nmgp_cor_word" value="AM"> 
+    <input type="hidden" name="nmgp_navegator_print" value="Netscape"> 
+    <input type="hidden" name="script_case_init" value="894"> 
+    <input type="hidden" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1"> 
+  </form> 
+   <script type="text/javascript">
+    document.Fdoc_word.nmgp_navegator_print.value = navigator.appName;
+   function nm_gp_word_conf(cor)
+   {
+       document.Fdoc_word.nmgp_cor_word.value = cor;
+       document.Fdoc_word.submit();
+   }
+   var obj_tr      = "";
+   var css_tr      = "";
+   var field_over  = 1;
+   var field_click = 1;
+   function over_tr(obj, class_obj)
+   {
+       if (field_over != 1)
+       {
+           return;
+       }
+       if (obj_tr == obj)
+       {
+           return;
+       }
+       obj.className = 'scGridFieldOver';
+   }
+   function out_tr(obj, class_obj)
+   {
+       if (field_over != 1)
+       {
+           return;
+       }
+       if (obj_tr == obj)
+       {
+           return;
+       }
+       obj.className = class_obj;
+   }
+   function click_tr(obj, class_obj)
+   {
+       if (field_click != 1)
+       {
+           return;
+       }
+       if (obj_tr != "")
+       {
+           obj_tr.className = css_tr;
+       }
+       css_tr        = class_obj;
+       if (obj_tr == obj)
+       {
+           obj_tr     = '';
+           return;
+       }
+       obj_tr        = obj;
+       css_tr        = class_obj;
+       obj.className = 'scGridFieldClick';
+   }
+   nm_gp_ini = "ini";
+   nm_gp_rec_ini = "0";
+   nm_gp_rec_fim = "11";
+   function nm_gp_submit_rec(campo) 
+   { 
+      if (nm_gp_ini == "ini" && (campo == "ini" || campo == nm_gp_rec_ini)) 
+      { 
+          return; 
+      } 
+      if (nm_gp_fim == "fim" && (campo == "fim" || campo == nm_gp_rec_fim)) 
+      { 
+          return; 
+      } 
+      document.F4.target = "_self"; 
+      document.F4.rec.value = campo ;
+      document.F4.nmgp_opcao.value = "rec" ;
+      document.F4.submit() ;
+   } 
+   function nm_gp_submit(campo) 
+   { 
+      document.F3.target = "_self"; 
+      document.F3.nmgp_parms.value = campo ;
+      document.F3.nmgp_opcao.value = "igual" ;
+      document.F3.nmgp_url_saida.value = "";
+      document.F3.action           = "grid_he_aluno.php"  ;
+      document.F3.submit() ;
+   } 
+   function nm_gp_submit2(campo) 
+   { 
+      document.F3.target           = "_self"; 
+      document.F3.nmgp_ordem.value = campo ;
+      document.F3.nmgp_opcao.value = "ordem" ;
+      document.F3.nmgp_parms.value = "";
+      document.F3.nmgp_url_saida.value = "";
+      document.F3.action           = "grid_he_aluno.php"  ;
+      document.F3.submit() ;
+   } 
+   function nm_gp_submit3(campo, opc) 
+   { 
+      document.F3.nmgp_parms.value = "";
+      document.F3.target               = "_self"; 
+      document.F3.nmgp_chave_det.value = campo ;
+      document.F3.nmgp_opcao.value     = opc ;
+      document.F3.nmgp_url_saida.value = "";
+      document.F3.action               = "grid_he_aluno.php"  ;
+      document.F3.submit() ;
+   } 
+   function nm_move(tipo) 
+   { 
+      document.F6.target = "_self"; 
+      document.F6.submit() ;
+      return;
+   } 
+   function nm_gp_move(x, y, z, p, g) 
+   { 
+       document.F3.action           = "grid_he_aluno.php"  ;
+       document.F3.nmgp_parms.value = "" ;
+       document.F3.nmgp_orig_pesq.value = "" ;
+       document.F3.nmgp_url_saida.value = "" ;
+       document.F3.nmgp_opcao.value = x; 
+       document.F3.nmgp_outra_jan.value = "" ;
+       document.F3.target = "_self"; 
+       if (y == 1) 
+       {
+           document.F3.target = "_blank"; 
+       }
+       if ("busca" == x)
+       {
+           document.F3.nmgp_orig_pesq.value = z; 
+           z = '';
+       }
+       if (z != null && z != '') 
+       { 
+           document.F3.nmgp_tipo_pdf.value = z; 
+       } 
+       if ("xls" == x)
+       {
+       }
+       if ("pdf" == x)
+       {
+           window.location = "/prograd/app_prograd/he_novo/grid_he_aluno/grid_he_aluno_iframe.php?scsess=t46t3ppk0tc277691vv2idnbi1&str_tmp=/prograd/scriptcase/tmp&str_prod=/prograd/scriptcase/prod&str_btn=ScriptCase6_BlueSoft/ScriptCase6_BlueSoft.css&str_lang=pt_br&str_schema=ScriptCase6_Silver/ScriptCase6_Silver&script_case_init=894&script_case_session=t46t3ppk0tc277691vv2idnbi1&pbfile=%2Fweb%2Funifesp%2Fprograd%2Fscriptcase%2Ftmp%2Fsc_pb_t46t3ppk0tc277691vv2idnbi1.tmp&jspath=%2Fprograd%2Fscriptcase%2Fprod%2Flib%2Fjs&sc_apbgcol=%2Fweb%2Funifesp%2Fprograd%2Fapp_prograd%2Fhe_novo%2F_lib%2Fcss%2F&sc_tp_pdf=" + z + "&sc_parms_pdf=" + p + "&sc_graf_pdf=" + g;
+       }
+       else
+       {
+           document.F3.submit();  
+       }
+   } 
+   function nm_gp_print()
+   {
+       window.open('/prograd/app_prograd/he_novo/grid_he_aluno/grid_he_aluno_iframe_prt.php?path_botoes=/prograd/app_prograd/he_novo/_lib/img&script_case_init=894&script_case_session=t46t3ppk0tc277691vv2idnbi1&opcao=print&tp_print=RC&cor_print=PB','','location=no,menubar,resizable,scrollbars,status=no,toolbar');
+   }
+   nm_img = new Image();
+   function nm_mostra_img(imagem, altura, largura)
+   {
+       tb_show("", imagem, "");
+   }
+   function nm_mostra_doc(campo1, campo2, campo3, campo4)
+   {
+       while (campo2.lastIndexOf("&") != -1)
+       {
+          campo2 = campo2.replace("&" , "**Ecom**");
+       }
+       while (campo2.lastIndexOf("#") != -1)
+       {
+          campo2 = campo2.replace("#" , "**Jvel**");
+       }
+       NovaJanela = window.open (campo4 + "?script_case_init=894&script_case_session=t46t3ppk0tc277691vv2idnbi1&nm_cod_doc=" + campo1 + "&nm_nome_doc=" + campo2 + "&nm_cod_apl=" + campo3, "ScriptCase", "resizable");
+   }
+   function nm_escreve_window()
+   {
+      document.F5.action = "grid_he_aluno_fim.php";
+      document.F5.submit();
+   }
+   function nm_open_popup(parms)
+   {
+       NovaJanela = window.open (parms, '', 'resizable, scrollbars');
+   }
+   </script>
+   <div id="div_F0_top" style="display: none"> 
+      <form name="F0_top" method="post" action="grid_he_aluno.php" target="_self"></form> 
+      <input type="hidden" id="script_init_f0_top" name="script_case_init" value="894"> 
+      <input type="hidden" id="script_session_f0_top" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1">
+      <input type="hidden" id="opcao_f0_top" name="nmgp_opcao" value="muda_qt_linhas"> 
+      </div><div id="div_F0_bot" style="display: none"> 
+      <form name="F0_bot" method="post" action="grid_he_aluno.php" target="_self"></form> 
+      <input type="hidden" id="script_init_f0_bot" name="script_case_init" value="894"> 
+      <input type="hidden" id="script_session_f0_bot" name="script_case_session" value="t46t3ppk0tc277691vv2idnbi1">
+      <input type="hidden" id="opcao_f0_bot" name="nmgp_opcao" value="muda_qt_linhas"> 
+      </div><table id="main_table_grid" class="scGridBorder" align="center" valign="top">
+ <tbody><tr id="sc_grid_head">
+  <td class="scGridTabelaTd" style="vertical-align: top">
+   <table width="100%" class="scGridHeader">
+    <tbody><tr align="center">
+     <td style="padding: 0px">
+      <table style="padding: 0px; border-spacing: 0px; border-width: 0px;" width="100%">
+       <tbody><tr valign="middle">
+        <td align="left" rowspan="3" class="scGridHeaderFont">
+             <img src="/prograd/app_prograd/he_novo/_lib/img/usr__NM__top.jpg" border="0">
+        </td>
+        <td align="left" class="scGridHeaderFont">
+          
+        </td>
+        <td style="font-size: 5px">
+          &nbsp; &nbsp;
+        </td>
+        <td align="center" class="scGridHeaderFont">
+          
+        </td>
+        <td style="font-size: 5px">
+          &nbsp; &nbsp;
+        </td>
+        <td align="right" class="scGridHeaderFont">
+          15/11/2018
+        </td>
+       </tr>
+       <tr valign="middle">
+        <td align="left" class="scGridHeaderFont">
+          
+        </td>
+        <td style="font-size: 5px">
+          &nbsp; &nbsp;
+        </td>
+        <td align="center" class="scGridHeaderFont">
+          
+        </td>
+        <td style="font-size: 5px">
+          &nbsp; &nbsp;
+        </td>
+        <td align="right" class="scGridHeaderFont">
+          Consulta Histórico On line
+        </td>
+       </tr>
+       <tr valign="middle">
+        <td align="left" class="scGridHeaderFont">
+          
+        </td>
+        <td style="font-size: 5px">
+          &nbsp; &nbsp;
+        </td>
+        <td align="center" class="scGridHeaderFont">
+          
+        </td>
+        <td style="font-size: 5px">
+          &nbsp; &nbsp;
+        </td>
+        <td align="right" class="scGridHeaderFont">
+          Coefic. Rendimento: 7,835
+        </td>
+       </tr>
+      </tbody></table>
+     </td>
+    </tr>
+   </tbody></table>
+  </td>
+ </tr>
+      <tr>
+       
+       <td id="sc_grid_toobar_top" class="scGridTabelaTd" valign="top"> 
+        <table class="scGridToolbar" style="padding: 0px; border-spacing: 0px; border-width: 0px; vertical-align: top;" width="100%" valign="top">
+         <tbody><tr> 
+          <td class="scGridToolbarPadding" nowrap="" valign="middle" align="left" width="33%"> 
+         </td> 
+          <td class="scGridToolbarPadding" nowrap="" valign="middle" align="center" width="33%"> 
+           <a href="javascript: nm_gp_print()" id="print_top" onclick="nm_gp_print(); return false;" class="scButton_default" title="Imprimir" style="vertical-align: middle; display:inline-block;" onmouseover="if(this.disabled){ return false; }else{ main_style = this.className; this.className = 'scButton_onmouseover'; }" onmouseout="if(this.disabled){ return false;  }else{ this.className = main_style; }" onmousedown="if(this.disabled){ return false; }else{ this.className = 'scButton_onmousedown'; }" onmouseup="if(this.disabled){ return false;   }else{ this.className = 'scButton_onmouseover'; }">Imprimir</a>
+ 
+         </td> 
+          <td class="scGridToolbarPadding" nowrap="" valign="middle" align="right" width="33%"> 
+           <a href="javascript: document.F5.action='grid_he_aluno_fim.php'; document.F5.submit()" id="sai_top" onclick="document.F5.action='grid_he_aluno_fim.php'; document.F5.submit(); return false;" class="scButton_default" title="Voltar à pagina anterior" style="vertical-align: middle; display:inline-block;" onmouseover="if(this.disabled){ return false; }else{ main_style = this.className; this.className = 'scButton_onmouseover'; }" onmouseout="if(this.disabled){ return false;  }else{ this.className = main_style; }" onmousedown="if(this.disabled){ return false; }else{ this.className = 'scButton_onmousedown'; }" onmouseup="if(this.disabled){ return false;   }else{ this.className = 'scButton_onmouseover'; }">Voltar</a>
+ 
+         </td> 
+        </tr> 
+       </tbody></table> 
+      </td> 
+      
+     </tr> 
+ <tr> 
+  <td id="sc_grid_body" class="scGridTabelaTd" style="vertical-align: top;text-align: center;">
+   <table class="scGridTabela" align="center" id="apl_grid_he_aluno#?#1" width="100%">
+    <tbody><tr>
+     <td class="scGridBlock" style="text-align:left;" colspan="12" align="left"><table><tbody><tr><td>Curso</td><td>: </td><td>INTERDISCIPLINAR EM CIÊNCIA E TECNOLOGIA - NOTURNO</td></tr></tbody></table></td>
+    </tr>
+    <tr>
+     <td class="scGridBlock" style="text-align:left;" nowrap="" colspan="12" align="left"><table><tbody><tr><td>Ano de Ingresso</td><td>: </td><td>2016</td></tr></tbody></table></td>
+    </tr>
+    <tr>
+     <td class="scGridBlock" style="text-align:left;" nowrap="" colspan="12" align="left"><table><tbody><tr><td>Matrícula</td><td>: </td><td>111851</td></tr></tbody></table></td>
+    </tr>
+    <tr>
+     <td class="scGridBlock" style="text-align:left;" colspan="12" align="left"><table><tbody><tr><td>Nome</td><td>: </td><td>GUSTAVO MARTINS COLLAÇO</td></tr></tbody></table></td>
+    </tr>
+    <tr>
+     <td class="scGridBlock" style="text-align:left;" nowrap="" colspan="12" align="left"><table><tbody><tr><td>Situação Acadêmica atual</td><td>: </td><td>EM CURSO</td></tr></tbody></table></td>
+    </tr>
+    <tr id="tit_grid_he_aluno#?#1" align="center" class="scGridLabel">
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Ano Letivo</td>
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Sem</td>
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Série / Termo</td>
+     <td class="scGridLabelFont" style="text-align:left;vertical-align:middle;font-weight:bold;">Turno</td>
+     <td class="scGridLabelFont" style="text-align:left;vertical-align:middle;font-weight:bold;">Código - Unidade Curricular</td>
+     <td class="scGridLabelFont" style="text-align:left;vertical-align:middle;font-weight:bold;">Grupo</td>
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Faltas</td>
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Freq.%</td>
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Créd.</td>
+     <td class="scGridLabelFont" style="text-align:right;vertical-align:middle;font-weight:bold;">Carga Horária</td>
+     <td class="scGridLabelFont" style="text-align:left;vertical-align:middle;font-weight:bold;">Conceito</td>
+     <td class="scGridLabelFont" style="text-align:left;vertical-align:middle;font-weight:bold;">Situação</td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_1">2016</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_1">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_1">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_1">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_1">2672 - CIÊNCIA, TECNOLOGIA E SOCIEDADE</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_1">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_1">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_1">94</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_1">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_1">36</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_1">7</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_1">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_2">2016</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_2">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_2">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_2">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_2">5702 - CÁLCULO EM UMA VARIÁVEL</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_2">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_2">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_2">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_2">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_2">108</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_2">7</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_2">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_3">2016</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_3">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_3">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_3">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_3">5703 - FUNDAMENTOS DE BIOLOGIA MODERNA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_3">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_3">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_3">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_3">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_3">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_3">9</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_3">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_4">2016</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_4">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_4">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_4">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_4">2649 - LÓGICA DE PROGRAMAÇÃO</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_4">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_4">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_4">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_4">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_4">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_4">8,3</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_4">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_5">2016</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_5">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_5">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_5">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_5">5704 - QUÍMICA GERAL</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_5">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_5">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_5">97</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_5">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_5">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_5">7,6</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_5">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_6">2016</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_6">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_6">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_6">I</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_6">5900 - DESENHO TÉCNICO BÁSICO</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_6"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_6">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_6">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_6">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_6">36</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_6">9,1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_6">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_7">2016</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_7">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_7">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_7">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_7">2832 - ALGORITMOS E ESTRUTURAS DE DADOS I</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_7">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_7">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_7">97</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_7">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_7">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_7">7,3</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_7">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_8">2016</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_8">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_8">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_8">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_8">5870 - CIÊNCIA, TECNOLOGIA, SOCIEDADE E AMBIENTE</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_8">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_8">4</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_8">89</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_8">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_8">36</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_8">9,5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_8">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_9">2016</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_9">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_9">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_9">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_9">4369 - FENÔMENOS MECÂNICOS </span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_9">UNIDADE CURRICULAR FIXA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_9">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_9">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_9">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_9">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_9">9,5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_9">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_10">2016</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_10">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_10">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_10">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_10">2650 - GEOMETRIA ANALÍTICA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_10">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_10">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_10">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_10">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_10">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_10">8,2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_10">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_11">2016</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_11">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_11">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_11">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_11">4328 - SÉRIES E EQUAÇÕES DIFERENCIAIS ORDINÁRIAS</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_11">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_11">4</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_11">94</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_11">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_11">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_11">7,6</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_11">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_12">2017</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_12">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_12">3</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_12">I</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_12">6084 - DIREITOS HUMANOS, MULTICULTURALISMO E C&amp;T</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_12"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_12">4</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_12">89</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_12">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_12">36</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_12">9,5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_12">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_13">2017</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_13">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_13">3</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_13">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_13">2833 - ALGORITMOS E ESTRUTURAS DE DADOS II</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_13">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_13">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_13">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_13">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_13">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_13">8</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_13">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_14">2017</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_14">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_14">3</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_14">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_14">3518 - CIRCUITOS DIGITAIS</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_14">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_14">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_14">97</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_14">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_14">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_14">6,8</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_14">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_15">2017</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_15">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_15">3</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_15">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_15">5359 - CÁLCULO EM VÁRIAS VARIÁVEIS </span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_15">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_15">4</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_15">94</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_15">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_15">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_15">2,3</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_15">REPROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_16">2017</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_16">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_16">3</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_16">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_16">2609 - PROBABILIDADE E ESTATÍSTICA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_16">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_16">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_16">99</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_16">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_16">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_16">4,9</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_16">REPROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_17">2017</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_17">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_17">3</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_17">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_17">2475 - ÁLGEBRA LINEAR </span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_17">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_17">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_17">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_17">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_17">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_17">6,5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_17">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_18">2017</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_18">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_18">4</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_18">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_18">2831 - BANCO DE DADOS</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_18">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_18">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_18">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_18">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_18">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_18">10</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_18">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_19">2017</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_19">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_19">4</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_19">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_19">2828 - CÁLCULO NUMÉRICO</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_19">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_19">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_19">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_19">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_19">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_19">6,7</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_19">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_20">2017</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_20">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_20">4</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_20">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_20">2471 - PROGRAMAÇÃO ORIENTADA A OBJETOS</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_20">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_20">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_20">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_20">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_20">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_20">9,7</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_20">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_21">2017</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_21">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_21">4</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_21">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_21">4370 - QUÍMICA GERAL EXPERIMENTAL </span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_21"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_21">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_21">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_21">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_21">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_21">6,8</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_21">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_22">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_22">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_22">5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_22">I</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_22">5168 - PROJETO ORIENTADO A OBJETOS</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_22"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_22">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_22">97</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_22">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_22">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_22">9,5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_22">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_23">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_23">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_23">5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_23">I</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_23">6072 - TECNOLOGIA SOCIAL: PRÁXIS E CONTRA-HEGEMONIA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_23"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_23">4</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_23">89</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_23">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_23">36</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_23">8,7</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_23">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_24">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_24">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_24">5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_24">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_24">3051 - COMPUTAÇÃO GRÁFICA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_24">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_24">6</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_24">92</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_24">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_24">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_24">9,1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_24">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_25">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_25">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_25">5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_25">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_25">7671 - EMPREENDEDORISMO</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_25">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_25">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_25">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_25">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_25">36</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_25">8</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_25">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_26">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_26">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_26">5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_26">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_26">3490 - INTELIGÊNCIA ARTIFICIAL</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_26">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_26">6</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_26">92</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_26">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_26">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_26">8</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_26">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_27">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_27">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_27">5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_27">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_27">2609 - PROBABILIDADE E ESTATÍSTICA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_27"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_27">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_27">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_27">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_27">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_27">8,6</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_27">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_28">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_28">1</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_28">5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_28">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_28">4537 - TECNOLOGIA E MEIO AMBIENTE</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_28"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_28">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_28">100</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_28">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_28">36</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_28">8,5</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_28">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_29">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_29">1</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_29">5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_29">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_29">6079 - TÓPICOS EM CIÊNCIA E TECNOLOGIA II</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_29"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_29">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_29">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_29">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_29">36</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_29">9,5</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_29">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_30">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_30">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_30">6</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_30">I</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_30">3519 - ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_30"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_30">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_30">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_30">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_30">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_30"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_30">EM CURSO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_31">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_31">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_31">6</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_31">I</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_31">2614 - ENGENHARIA DE SOFTWARE</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_31"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_31">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_31">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_31">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_31">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_31"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_31">EM CURSO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_32">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_32">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_32">6</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_32">I</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_32">3489 - INTRODUÇÃO ÀS REDES NEURAIS ARTIFICIAIS</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_32"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_32">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_32">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_32">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_32">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_32"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_32">EM CURSO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_33">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_33">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_33">6</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_33">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_33">4695 - ATIVIDADES COMPLEMENTARES - BCT</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_33"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_33">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_33">100</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_33">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_33">420</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_33">10,0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_33">APROVADO</span></td>
+</tr>
+    <tr class="scGridFieldEven" onmouseover="over_tr(this, 'scGridFieldEven');" onmouseout="out_tr(this, 'scGridFieldEven');" onclick="click_tr(this, 'scGridFieldEven');">
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_34">2018</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_34">2</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_34">6</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_34">N</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_34">2201 - MATEMÁTICA DISCRETA</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_34"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_34">0</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_34">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_34">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_34">72</span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_34"></span></td>
+     <td rowspan="1" class="scGridFieldEvenFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_34">EM CURSO</span></td>
+</tr>
+    <tr class="scGridFieldOdd" onmouseover="over_tr(this, 'scGridFieldOdd');" onmouseout="out_tr(this, 'scGridFieldOdd');" onclick="click_tr(this, 'scGridFieldOdd');">
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_ano_letivo_35">2018</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_semestre_35">2</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_mat_min_serie_serie_35">6</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_d_mat_min_turno_35">N</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_unidade_35">3581 - PROCESSAMENTO DE IMAGENS</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_g_descr_grupo_35">UNIDADE CURRICULAR ELETIVA</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_qtd_faltas_35">0</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_d_frequencia_35">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_creditos_35">&nbsp;</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" nowrap="" align="right" valign="top" height="0px"><span id="id_sc_field_mm_cghor_prev_35">72</span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_nota3_35"></span></td>
+     <td rowspan="1" class="scGridFieldOddFont" align="left" valign="top" height="0px"><span id="id_sc_field_s_abreviatura_35">EM CURSO</span></td>
+</tr>
+</tbody></table></td></tr>      <tr>
+       
+       <td id="sc_grid_toobar_bot" class="scGridTabelaTd" valign="top"> 
+        <table class="scGridToolbar" style="padding: 0px; border-spacing: 0px; border-width: 0px; vertical-align: top;" width="100%" valign="top">
+         <tbody><tr> 
+          <td class="scGridToolbarPadding" nowrap="" valign="middle" align="left" width="33%"> 
+         </td> 
+          <td class="scGridToolbarPadding" nowrap="" valign="middle" align="center" width="33%"> 
+         </td> 
+          <td class="scGridToolbarPadding" nowrap="" valign="middle" align="right" width="33%"> 
+         </td> 
+        </tr> 
+       </tbody></table> 
+      </td> 
+      
+     </tr> 
+ <tr id="sc_grid_foot">
+  <td class="scGridTabelaTd" style="vertical-align: top">
+   <table width="100%" class="scGridFooter">
+    <tbody><tr align="center">
+     <td>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tbody><tr valign="middle">
+        <td align="left" class="scGridFooterFont">
+           Histórico Escolar on-line  <br> (Apenas para consulta interna, não é válido para pedido de bolsas ou como documento oficial) <br> Em casos de dúvidas entre em contato com a Secretaria Acadêmica do Campus.
+        </td>
+        <td style="font-size: 5px">
+           &nbsp; &nbsp;
+        </td>
+        <td align="center" class="scGridFooterFont">
+           
+        </td>
+        <td style="font-size: 5px">
+           &nbsp; &nbsp;
+        </td>
+        <td align="right" class="scGridFooterFont">
+           
+        </td>
+       </tr>
+       <tr valign="middle">
+        <td align="left" class="scGridFooterFont">
+           
+        </td>
+        <td style="font-size: 5px">
+            &nbsp; &nbsp;
+        </td>
+        <td align="center" class="scGridFooterFont">
+           
+        </td>
+        <td style="font-size: 5px">
+           &nbsp; &nbsp;
+        </td>
+        <td align="right" class="scGridFooterFont">
+           Desenvolvido por TI/Prograd
+        </td>
+       </tr>
+       <tr valign="middle">
+        <td align="left" class="scGridFooterFont">
+           
+        </td>
+        <td style="font-size: 5px">
+           &nbsp; &nbsp;
+        </td>
+        <td align="center" class="scGridFooterFont">
+           
+        </td>
+        <td style="font-size: 5px">
+           &nbsp; &nbsp;
+        </td>
+        <td align="right" class="scGridFooterFont">
+           
+        </td>
+       </tr>
+      </tbody></table>
+     </td>
+    </tr>
+   </tbody></table>
+  </td>
+ </tr>
+   </tbody></table>
+   
+   <script type="text/javascript">
+   function NM_liga_tbody(tbody, Obj, Apl)
+   {
+      Nivel = parseInt (Obj[tbody].substr(3));
+      for (ind = tbody + 1; ind < Obj.length; ind++)
+      {
+           Nv = parseInt (Obj[ind].substr(3));
+           Tp = Obj[ind].substr(0, 3);
+           if (Nivel == Nv && Tp == 'top')
+           {
+               break;
+           }
+           if (((Nivel + 1) == Nv && Tp == 'top') || (Nivel == Nv && Tp == 'bot'))
+           {
+               document.getElementById('tbody_' + Apl + '_' + ind + '_' + Tp).style.display='';
+           } 
+      }
+   }
+   function NM_apaga_tbody(tbody, Obj, Apl)
+   {
+      Nivel = Obj[tbody].substr(3);
+      for (ind = tbody + 1; ind < Obj.length; ind++)
+      {
+           Nv = Obj[ind].substr(3);
+           Tp = Obj[ind].substr(0, 3);
+           if ((Nivel == Nv && Tp == 'top') || Nv < Nivel)
+           {
+               break;
+           }
+           if ((Nivel != Nv) || (Nivel == Nv && Tp == 'bot'))
+           {
+               document.getElementById('tbody_' + Apl + '_' + ind + '_' + Tp).style.display='none';
+               if (Tp == 'top')
+               {
+                   document.getElementById('b_open_' + Apl + '_' + ind).style.display='';
+                   document.getElementById('b_close_' + Apl + '_' + ind).style.display='none';
+               } 
+           } 
+      }
+   }
+   NM_obj_ant = '';
+   function NM_apaga_div_lig(obj_nome)
+   {
+      if (NM_obj_ant != '')
+      {
+          NM_obj_ant.style.display='none';
+      }
+      obj = document.getElementById(obj_nome);
+      NM_obj_ant = obj;
+      ind_time = setTimeout("obj.style.display='none'", 300);
+      return ind_time;
+   }
+   </script>
+   

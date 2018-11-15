@@ -17,12 +17,11 @@ var Alunos = require('../../models/Alunos')
 // GET 
 router.get('/alunos/', (req, res, next) => {
     var search = {
-        login_intranet: req.query.login_intranet,
-        senha_intranet: req.query.senha_intranet
+        login_intranet: req.query.login_intranet
     }
 
     var fn = Alunos.select_alunos
-    if(search.login_intranet && search.senha_intranet){
+    if(search.login_intranet){
         fn = Alunos.select_aluno_credenciais
     }
 
@@ -73,7 +72,6 @@ router.post('/alunos', (req, res, next) => {
         ra_aluno: req.body.ra_aluno,
         nome: req.body.nome,
         login_intranet: req.body.login_intranet,
-        senha_intranet: req.body.senha_intranet,
         email: req.body.email,
     }
 
@@ -95,14 +93,13 @@ router.put('/alunos/:ra_aluno', (req, res, next) => {
         ra_aluno: req.params.ra_aluno,
         email: req.body.email,
         nome: req.body.nome,
-        login_intranet: req.body.login_intranet,
-        senha_intranet: req.body.senha_intranet
+        login_intranet: req.body.login_intranet
     }
 
     var updates = []
     if(aluno.email) updates.push(Aluno.update_email_aluno(aluno))
     if(aluno.nome) updates.push(Alunos.update_nome_aluno(aluno))
-    if(aluno.login_intranet && aluno.senha_intranet) updates.push(Alunos.update_credenciais_aluno(aluno))
+    if(aluno.login_intranet) updates.push(Alunos.update_credenciais_aluno(aluno))
 
     Promise.all(updates)
     .then(rowCounts =>{
