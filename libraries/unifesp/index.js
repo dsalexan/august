@@ -409,7 +409,7 @@ UNIFESP.fetch = function(what, data, options){
         if(options == undefined) options = {}
 
         puppet = [false]
-        if(what == 'historico' || what == 'atestado'){
+        if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
             options.headless = false
         }else if(what == 'ementas'){
             options.headless = true
@@ -420,7 +420,7 @@ UNIFESP.fetch = function(what, data, options){
             options = puppet.defaults(options)
             var fn
 
-            if(what == 'historico' || what == 'atestado'){
+            if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
                 if(!options.authenticated){
                     var attempt = await authenticatePuppeteer(puppet.page, data) // data == user
                     if(!attempt.auth){
@@ -435,6 +435,8 @@ UNIFESP.fetch = function(what, data, options){
                 fn = () => historico.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'atestado'){
                 fn = () => atestado.fetch(puppet.browser, puppet.page, options)
+            }else if (what == 'saldo_ru') {
+                fn = () => saldo_ru.read(puppet.browser, puppet.page, options)
             }else if(what == 'agenda'){
                 fn = () => agenda.fetch(data, options) // data == reference date
             }else if(what == 'ementas'){
