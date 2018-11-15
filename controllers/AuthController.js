@@ -7,6 +7,7 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json())
 
 const auth = require('../auth/auth')
+const cryptoJS = require("crypto-js");
 
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
@@ -46,11 +47,12 @@ router.get('/teste', function(req, res) {
 router.get('/login', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
-    console.log("to aqui")
+
     var usuario = req.query.login
-    var senha = req.query.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
-                                     // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
-                                     // nao vao interceptar as credenciais do usuario
+    var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8) 
+                                                        // TODO: encriptar o password no outro lado da chamada usando um metodo 
+                                                        // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
+                                                        // nao vao interceptar as credenciais do usuario
 
     if(usuario == undefined || senha == undefined){
         return res.status(400).send({
@@ -141,5 +143,26 @@ router.get('/me', auth.auth, function (req, res) {
     //     res.status(200).send(decoded);
     // });
 })
+
+function decrypt(transitmessage, pass) {
+    var keySize = 256;
+    var iterations = 100;
+
+    var salt = cryptoJS.enc.Hex.parse(transitmessage.substr(0, 32));
+    var iv = cryptoJS.enc.Hex.parse(transitmessage.substr(32, 32))
+    var encrypted = transitmessage.substring(64);
+    
+    var key = cryptoJS.PBKDF2(pass, salt, {
+        keySize: keySize/32,
+        iterations: iterations
+    });
+  
+    var decrypted = cryptoJS.AES.decrypt(encrypted, key, { 
+        iv: iv, 
+        padding: cryptoJS.pad.Pkcs7,
+        mode: cryptoJS.mode.CBC
+    })
+    return decrypted;
+}
 
 module.exports = router
