@@ -115,8 +115,12 @@ router.get('/login', function(req, res){
         res.status(200).send({
             auth: true,
             data: {
+                ra: user.ra_aluno,
                 nome: user.nome,
-                login: user.login_intranet
+                login: user.login_intranet,
+                senha: user.senha_intranet,
+                email: user.email,
+                telefone: user.telefone
             },
             token: token
         })
