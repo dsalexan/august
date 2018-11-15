@@ -76,19 +76,19 @@ router.get('/login', function(req, res){
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
 
-                    unifesp.fetch('saldo_ru', undefined, {
+                    unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
                         authenticated: true
-                    }).then(saldo => {
-                        console.log(saldo)
-                    // }).then(historico => {
-                    //     Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
-                    //         console.log('bla', user)
-                    //         sendResult(user.data) // Enviar os dados do usuario para fazer login
-                    //     }).catch(err => {
-                    //         console.log(err)    
-                    //     })
+                    }).then(historico => {
+                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
+                            console.log('bla', user)
+                            sendResult(user.data) // Enviar os dados do usuario para fazer login
+                        }).catch(err => {
+                            console.log(err)    
+                        })
                     })
+                    // }).then(saldo => {
+                    //     console.log(saldo)
                 } else { // Achou no nosso banco, fazer login
                     // result.puppeteer.browser.close()
                     console.log(user.data)
