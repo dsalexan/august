@@ -114,7 +114,6 @@ router.get('/login', function(req, res){
         console.log(`Login successful for <${user.login_intranet}> with token: ${token}`)
         res.status(200).send({
             auth: true,
-<<<<<<< HEAD
             data: {
                 ra: user.ra_aluno,
                 nome: user.nome,
@@ -123,9 +122,6 @@ router.get('/login', function(req, res){
                 email: user.email,
                 telefone: user.telefone
             },
-=======
-            data: user,
->>>>>>> db1a54787268648c342bf877ac93fd4843892597
             token: token
         })
 
