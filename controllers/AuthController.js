@@ -74,17 +74,17 @@ router.get('/login', function(req, res){
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
 
-                    // unifesp.fetch('historico', undefined, {
-                    //     puppeteer: result.puppeteer,
-                    //     authenticated: true
-                    // }).then(historico => {
-                        Alunos.register_aluno(perfHash, usuario, usuario, senha).then((user) => {
+                    unifesp.fetch('historico', undefined, {
+                        puppeteer: result.puppeteer,
+                        authenticated: true
+                    }).then(historico => {
+                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario, senha).then((user) => {
                             console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         }).catch(err => {
                             console.log(err)    
                         })
-                    // })
+                    })
                 } else { // Achou no nosso banco, fazer login
                     // result.puppeteer.browser.close()
                     console.log(user.data)
@@ -114,10 +114,7 @@ router.get('/login', function(req, res){
         console.log(`Login successful for <${user.login_intranet}> with token: ${token}`)
         res.status(200).send({
             auth: true,
-            data: {
-                nome: user.nome,
-                login: user.login_intranet
-            },
+            data: user,
             token: token
         })
 
