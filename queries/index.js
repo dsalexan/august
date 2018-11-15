@@ -142,6 +142,21 @@ module.exports = {
         update_turma: sql('grade/update_turma.sql'),
         update_uc: sql('grade/update_uc.sql')
     },
+
+    divulgacao:{
+        alteracao_divulgacao_dia: sql('divulgacao/alteracao_divulgacao_dia.sql'),
+        alteracao_divulgacao_hora: sql('divulgacao/alteracao_divulgacao_hora.sql'),
+        busca_divulgacao_dia_hora: sql('divulgacao/busca_divulgacao_dia_hora.sql'),
+        busca_divulgacao_dia: sql('divulgacao/busca_divulgacao_dia.sql'),
+        busca_divulgacao_hora: sql('divulgacao/busca_divulgacao_hora.sql'),
+        busca_divulgacao_tipo_dia_hora: sql('divulgacao/busca_divulgacao_tipo_dia_hora.sql'),
+        busca_divulgacao_tipo_dia: sql('divulgacao/busca_divulgacao_tipo_dia.sql'),
+        busca_divulgacao_tipo: sql('divulgacao/busca_divulgacao_tipo.sql'),
+        busca_divulgacao_todos_tipo: sql('divulgacao/busca_divulgacao_todos_tipo.sql'),
+        insert_divulgacao: sql('divulgacao/insert_divulgacao.sql'),
+        remove_divulgacao: sql('divulgacao/remove_divulgacao.sql')
+    },
+
     utilidades: {
         insert_cardapio: sql('utilidades/insert_cardapio.sql'),
         get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
