@@ -140,6 +140,8 @@ module.exports = {
         
         dados = [id_motorista, dia, preco, qtd_vagas, descricao]
 
+        console.log('dados', dados)
+
         const viagem = new pq(sql.caronas.ins_viagem)
         db.one(viagem, dados)
         .then(v => {

@@ -7,6 +7,7 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json())
 
 const auth = require('../auth/auth')
+const cryptoJS = require("crypto-js");
 
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
@@ -18,20 +19,26 @@ var Alunos = require('../models/Alunos')
 
 const { performance } = require('perf_hooks')
 
+var ModelProfessores = require('../models/Professores')
+
 // Pedro testando
 var Professores = require('../libraries/unifesp/professores')
 router.get('/atualizarcorpodocente', function(req, res) {
-    corpoDocente = index.getCorpoDocente()
-
-    // cadastrarNoBanco()
+    index.getCorpoDocente().then(corpoDocente => {
+        // console.log(corpoDocente)
+        corpoDocente.professores.forEach(professor => {
+            console.log(professor.nome)
+            ModelProfessores.insert_professor(professor)
+        });
+    })
 })
 router.get('/teste', function(req, res) {
-    var fs = require('fs')
- 
-    var html = fs.readFileSync('historico.html', 'utf8')
-    
-    historico.compile(html).then(result => {
-        res.status(200).send(result)
+    unifesp.fetch('saldo_ru', undefined, {
+        puppeteer: result.puppeteer,
+        authenticated: true
+    }).then(saldo => {
+        console.log(saldo)
+        res.status(200).send(saldo)
     })
 })
 //
@@ -40,11 +47,12 @@ router.get('/teste', function(req, res) {
 router.get('/login', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
-    console.log("to aqui")
+
     var usuario = req.query.login
-    var senha = req.query.senha // TODO: encriptar o password no outro lado da chamada usando um metodo 
-                                     // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
-                                     // nao vao interceptar as credenciais do usuario
+    var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8) 
+                                                        // TODO: encriptar o password no outro lado da chamada usando um metodo 
+                                                        // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
+                                                        // nao vao interceptar as credenciais do usuario
 
     if(usuario == undefined || senha == undefined){
         return res.status(400).send({
@@ -68,17 +76,19 @@ router.get('/login', function(req, res){
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
 
-                    // unifesp.fetch('historico', undefined, {
-                    //     puppeteer: result.puppeteer,
-                    //     authenticated: true
+                    unifesp.fetch('saldo_ru', undefined, {
+                        puppeteer: result.puppeteer,
+                        authenticated: true
+                    }).then(saldo => {
+                        console.log(saldo)
                     // }).then(historico => {
-                        Alunos.register_aluno(perfHash, usuario, usuario, senha).then((user) => {
-                            console.log('bla', user)
-                            sendResult(user.data) // Enviar os dados do usuario para fazer login
-                        }).catch(err => {
-                            console.log(err)    
-                        })
-                    // })
+                    //     Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
+                    //         console.log('bla', user)
+                    //         sendResult(user.data) // Enviar os dados do usuario para fazer login
+                    //     }).catch(err => {
+                    //         console.log(err)    
+                    //     })
+                    })
                 } else { // Achou no nosso banco, fazer login
                     // result.puppeteer.browser.close()
                     console.log(user.data)
@@ -109,8 +119,11 @@ router.get('/login', function(req, res){
         res.status(200).send({
             auth: true,
             data: {
+                ra: user.ra_aluno,
                 nome: user.nome,
-                login: user.login_intranet
+                login: user.login_intranet,
+                email: user.email,
+                telefone: user.telefone
             },
             token: token
         })
@@ -132,5 +145,26 @@ router.get('/me', auth.auth, function (req, res) {
     //     res.status(200).send(decoded);
     // });
 })
+
+function decrypt(transitmessage, pass) {
+    var keySize = 256;
+    var iterations = 100;
+
+    var salt = cryptoJS.enc.Hex.parse(transitmessage.substr(0, 32));
+    var iv = cryptoJS.enc.Hex.parse(transitmessage.substr(32, 32))
+    var encrypted = transitmessage.substring(64);
+    
+    var key = cryptoJS.PBKDF2(pass, salt, {
+        keySize: keySize/32,
+        iterations: iterations
+    });
+  
+    var decrypted = cryptoJS.AES.decrypt(encrypted, key, { 
+        iv: iv, 
+        padding: cryptoJS.pad.Pkcs7,
+        mode: cryptoJS.mode.CBC
+    })
+    return decrypted;
+}
 
 module.exports = router

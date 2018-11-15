@@ -135,8 +135,9 @@ UNIFESP.getCorpoDocente = function() {
         buildPuppet().then(async puppet => {
             await puppet.page.goto('http://www.unifesp.br/campus/sjc/corpodocente.html')
 
-            professores.getProfs(puppet.page).then( result => {
-                resolve(result)
+            professores.getProfs(puppet.page).then(result => {
+                // console.log({"professores": result})
+                resolve({"professores": result})
             })
         })
     })
@@ -394,6 +395,56 @@ UNIFESP.insertCardapio = function(what, user, options){
 
             if(fn){
                 fn(puppet.browser, puppet.page, options).then(result => {
+                    resolve(result)
+                })
+            }else{
+                reject(new Error('UNIFESP - Fetching for "' + what + '" not implemented'))
+            }
+        })
+    })
+}
+
+UNIFESP.fetch = function(what, data, options){
+    return new Promise((resolve, reject) => {
+        if(options == undefined) options = {}
+
+        puppet = [false]
+        if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
+            options.headless = false
+        }else if(what == 'ementas'){
+            options.headless = true
+        }else if(what == 'agenda'){
+            options.puppeteer = false
+        }
+        buildPuppet(options).then(async puppet => {
+            options = puppet.defaults(options)
+            var fn
+
+            if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
+                if(!options.authenticated){
+                    var attempt = await authenticatePuppeteer(puppet.page, data) // data == user
+                    if(!attempt.auth){
+                        return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+                    }
+                }
+            }
+            options.puppeteerObject = puppet
+
+
+            if(what == 'historico'){
+                fn = () => historico.fetch(puppet.browser, puppet.page, options)
+            }else if(what == 'atestado'){
+                fn = () => atestado.fetch(puppet.browser, puppet.page, options)
+            }else if (what == 'saldo_ru') {
+                fn = () => saldo_ru.read(puppet.browser, puppet.page, options)
+            }else if(what == 'agenda'){
+                fn = () => agenda.fetch(data, options) // data == reference date
+            }else if(what == 'ementas'){
+                fn = () => ementas.fetch(puppet.browser, puppet.page, data.path, data.download, options)
+            }
+
+            if(fn){
+                fn().then(result => {
                     resolve(result)
                 })
             }else{

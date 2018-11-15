@@ -22,20 +22,17 @@ Alunos.delete_aluno = (ra_aluno) => db.result(sql.aluno.delete_aluno, [ra_aluno]
 
 
 // SUPER MODELS
-Alunos.register_aluno = (ra_aluno, nome, username_unifesp, password_unifesp) => {
-    var ra_hash = Math.random().toString(36).substring(2, 7) + Math.random().toString(36).substring(2, 7)
+Alunos.register_aluno = (ra_aluno, nome, username_unifesp) => {
     var dados = {
         ra_aluno: ra_aluno,
         nome: nome,
         login_intranet: username_unifesp,
-        senha_intranet: password_unifesp,
         email: ''
     }
     return new Promise((resolve, reject) => {
         Alunos.insert_aluno(dados).then(() => {
             db.one(sql.aluno.select_aluno_credenciais, {
-                login_intranet: dados.login_intranet,
-                senha_intranet: dados.senha_intranet
+                login_intranet: dados.login_intranet
             }).then(a => {
                 resolve({exists: true, data: a})
             }).catch(err => reject(err))

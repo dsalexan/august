@@ -46,7 +46,6 @@ router.post('/alunos', (req, res, next) => {
         ra_aluno: req.body.ra_aluno,
         nome: req.body.nome,
         login_intranet: req.body.login_intranet,
-        senha_intranet: req.body.senha_intranet,
         email: req.body.email,
     }
 
