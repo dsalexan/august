@@ -147,7 +147,7 @@ module.exports = {
         var id_tipo = req.query.id_tipo
 
         dados = [id_tipo]
-
+        
         const buscatipo = new pq(sql.divulgacao.busca_divulgacao_tipo)
         
         db.any(buscatipo, dados)
@@ -180,7 +180,9 @@ module.exports = {
     },
 
     insert_divulgacao: (req, res, next) => {
+        console.log('OI', req.query)
         var ra_aluno = req.query.ra_aluno
+        console.log('ra', ra_aluno)
         var id_tipo = req.query.id_tipo
         var valor = req.query.valor
         var dia = req.query.dia

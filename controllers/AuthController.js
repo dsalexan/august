@@ -80,6 +80,8 @@ router.get('/login', function(req, res){
                         puppeteer: result.puppeteer,
                         authenticated: true
                     }).then(historico => {
+                        console.log('TA', historico.ra_aluno)
+                        console.log('TA2', historico.nome)
                         Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
                             console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
