@@ -12,7 +12,7 @@ module.exports = {
 
     searchViagemData: (req, res, next) => {
         var data = req.query.data
-        
+
         dados = [data]
         const viagem = new pq(sql.caronas.srch_viagemData)
 

@@ -1,5 +1,5 @@
-SELECT V.*
+SELECT V.*, O.*, D.*
 FROM viagem V NATURAL JOIN 
 	origem O NATURAL JOIN 
 	destino D
-WHERE viagem.dia = $1
+WHERE V.dia = $1
