@@ -500,5 +500,68 @@ module.exports = {
         .catch(error => {
             return next(error)
         })
+    },
+    searchViagemMotorista: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+        
+        const viagem = new pq(sql.caronas.srch_viagemMotorista);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },   
+    searchViagemPassageiro: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.srch_viagemPassageiro);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    getAllCaronas: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+        const viagem = new pq(sql.caronas.get_all);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    searchReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.srch_reserva);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
     },   
 }
