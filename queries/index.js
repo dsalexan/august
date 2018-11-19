@@ -142,6 +142,21 @@ module.exports = {
         update_turma: sql('grade/update_turma.sql'),
         update_uc: sql('grade/update_uc.sql')
     },
+
+    divulgacao:{
+        alteracao_divulgacao_dia: sql('divulgacao/alteracao_divulgacao_dia.sql'),
+        alteracao_divulgacao_hora: sql('divulgacao/alteracao_divulgacao_hora.sql'),
+        busca_divulgacao_dia_hora: sql('divulgacao/busca_divulgacao_dia_hora.sql'),
+        busca_divulgacao_dia: sql('divulgacao/busca_divulgacao_dia.sql'),
+        busca_divulgacao_hora: sql('divulgacao/busca_divulgacao_hora.sql'),
+        busca_divulgacao_tipo_dia_hora: sql('divulgacao/busca_divulgacao_tipo_dia_hora.sql'),
+        busca_divulgacao_tipo_dia: sql('divulgacao/busca_divulgacao_tipo_dia.sql'),
+        busca_divulgacao_tipo: sql('divulgacao/busca_divulgacao_tipo.sql'),
+        busca_divulgacao_todos_tipo: sql('divulgacao/busca_divulgacao_todos_tipo.sql'),
+        insert_divulgacao: sql('divulgacao/insert_divulgacao.sql'),
+        remove_divulgacao: sql('divulgacao/remove_divulgacao.sql')
+    },
+
     professor: {
         insert_professor: sql('professor/insert_professor.sql'),
     },
