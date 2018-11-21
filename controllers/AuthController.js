@@ -105,6 +105,7 @@ router.get('/login', function(req, res){
             })
         }
     }).catch(err => {
+        console.log("oi tamo aqui")
         console.log(err)
     })
 

@@ -436,8 +436,10 @@ module.exports = {
     solicitarReserva: (req, res, next) => {
         var id_viagem = req.query.id_viagem
         var id_passageiro = req.query.id_passageiro
+        var id_origem = req.query.id_origem
+        var id_destino = req.query.id_origem
         var status_reserva = req.query.status_reserva
-        dados = [id_viagem, id_passageiro, status_reserva]
+        dados = [id_viagem, id_passageiro, id_origem, id_destino, status_reserva]
 
         const viagem = new pq(sql.caronas.solic_reserva)
         db.none(viagem, dados)
