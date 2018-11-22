@@ -70,6 +70,8 @@ module.exports = {
         del_viagemOrigem: sql('carona/delete_viagemOrigem.sql'),
         del_passageiros: sql('carona/search_reservas_before_delete.sql'),
         get_all: sql('carona/get_all.sql'),
+        diminuir_qtd_vagas: sql('carona/diminuir_vagas.sql'),
+        aumentar_qtd_vagas: sql('carona/aumentar_vagas.sql'), //fazer link server
         solic_reserva: sql('carona/insert_reserva.sql'),
         ins_viagem_destino: sql('carona/insert_viagem_destino.sql'),
         ins_viagem_origem: sql('carona/insert_viagem_origem.sql'),

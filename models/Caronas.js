@@ -30,7 +30,8 @@ module.exports = {
     
     deleteReserva: (req, res, next) => {
         var id = req.query.id
-        dados = [id]
+        var ra = req.query.ra
+        dados = [id, ra]
 
         const viagem = new pq(sql.caronas.del_reserva)
         
@@ -437,7 +438,7 @@ module.exports = {
         var id_viagem = req.query.id_viagem
         var id_passageiro = req.query.id_passageiro
         var id_origem = req.query.id_origem
-        var id_destino = req.query.id_origem
+        var id_destino = req.query.id_destino
         var status_reserva = req.query.status_reserva
         dados = [id_viagem, id_passageiro, id_origem, id_destino, status_reserva]
 
@@ -493,6 +494,18 @@ module.exports = {
 
         const viagem = new pq(sql.caronas.update_statusReserva)
         db.none(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+
+        const viagem2 = new pq(sql.caronas.diminuir_qtd_vagas)
+        db.none(viagem2, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
