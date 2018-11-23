@@ -46,6 +46,23 @@ module.exports = {
             return next(error)
         })
     },
+    updateMenosVaga: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.diminuir_qtd_vagas)
+        
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
     deleteViagem: (req, res, next) => {
         var id = req.query.id
         dados = [id]
@@ -490,7 +507,8 @@ module.exports = {
     },
     updateStatusReserva: (req, res, next) => {
         var id = req.query.id
-        dados = ['true', id]
+        var id_passageiro = req.query.id_passageiro
+        dados = ['true', id, id_passageiro]
 
         const viagem = new pq(sql.caronas.update_statusReserva)
         db.none(viagem, dados)
@@ -503,9 +521,12 @@ module.exports = {
         .catch(error => {
             return next(error)
         })
-
-        const viagem2 = new pq(sql.caronas.diminuir_qtd_vagas)
-        db.none(viagem2, dados)
+    },
+    updateMenosVaga: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+        const viagem = new pq(sql.caronas.diminuir_qtd_vagas)
+        db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
                 data: v,

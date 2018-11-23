@@ -71,6 +71,8 @@ router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 // router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
+router.get('/api/caronas/put/viagem/diminui_vaga', Carona.updateMenosVaga)
+router.get('/api/caronas/put/viagem/aumenta_vaga', Carona.updateMaisVaga)
 router.use('/api', require('./controllers/caronas'))
 
 // Divulgacao
