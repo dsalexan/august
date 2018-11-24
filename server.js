@@ -15,6 +15,7 @@ var authController = require('./controllers/AuthController')
 var Carona = require('./models/Caronas')
 var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
+var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
 
 var bodyParser = require('body-parser')
@@ -38,6 +39,9 @@ router.use('/api', require('./controllers/aluno'))
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))
 router.use('/api/ru/get/atual', Utilidades.getCardapio)
+
+// Bug Reports
+router.use('/api/bugreport/put/bug', BugReport.insertBugReport)
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)

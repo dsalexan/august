@@ -167,6 +167,9 @@ module.exports = {
     utilidades: {
         insert_cardapio: sql('utilidades/insert_cardapio.sql'),
         get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
+    },
+    bugreport: {
+        insert_bug_report: sql('report/insert_bug_report.sql')
     }
 
     

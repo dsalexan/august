@@ -81,13 +81,10 @@ var authenticatePuppeteer = function(page, user){
     const BUTTON_SUBMIT_SELECTOR = 'form[name="form1"] input[type="submit"]'
 
     return new Promise(async (resolve, reject) => {
-        console.log("oi1")
         await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
         await page.waitForSelector(INPUT_USERNAME_SELECTOR)
         await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
         await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
-
-        console.log("oi2")
 
         page.on('response', response => {
             if(response.url().indexOf('index3.php') != -1){
