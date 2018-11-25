@@ -12,7 +12,7 @@ var Utilidades = require('../../models/Utilidades')
 // GET 
 router.get('/cardapio/', (req, res, next) => {
     var search = {
-        data_solicitacao: req.query.data_solicitacao
+        data_solicitacao: formatDate(new Date())
     }
 
     unifesp.readCardapio(search).then(info => {
@@ -60,5 +60,17 @@ router.post('/alunos', (req, res, next) => {
         return next(error)
     })
 })
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 module.exports = router
