@@ -19,7 +19,6 @@ module.exports = {
                 success: true
             })
         }).catch(err => {
-            console.log('ee', err)
             res.status(200).json({
                 data: err,
                 success: false
