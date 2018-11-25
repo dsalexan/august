@@ -84,7 +84,6 @@ router.get('/logintemp', function(req, res){
                 console.log('Exists', user.exists)
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
-                    
                     unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
                         authenticated: true
@@ -97,6 +96,8 @@ router.get('/logintemp', function(req, res){
                     }).catch(err => {
                         console.log('tdjyrx', err)    
                     })
+                    // }).then(saldo => {
+                    //     console.log(saldo)
                 } else { // Achou no nosso banco, fazer login
                     // result.puppeteer.browser.close()
                     // console.log(user.data)
@@ -111,6 +112,7 @@ router.get('/logintemp', function(req, res){
             })
         }
     }).catch(err => {
+        console.log("oi tamo aqui")
         console.log(err)
     })
 

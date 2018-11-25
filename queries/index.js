@@ -69,6 +69,7 @@ module.exports = {
         del_viagemDestino: sql('carona/delete_viagemDestino.sql'),
         del_viagemOrigem: sql('carona/delete_viagemOrigem.sql'),
         del_passageiros: sql('carona/search_reservas_before_delete.sql'),
+        get_all: sql('carona/get_all.sql'),
         solic_reserva: sql('carona/insert_reserva.sql'),
         ins_viagem_destino: sql('carona/insert_viagem_destino.sql'),
         ins_viagem_origem: sql('carona/insert_viagem_origem.sql'),
@@ -85,6 +86,9 @@ module.exports = {
         srch_viagemDataHoraVagas: sql('carona/search_viagem_data_hora_vagas.sql'),
         srch_viagemDataVagas: sql('carona/search_viagem_data_vagas.sql'),
         srch_viagemDataHora: sql('carona/search_viagem_data_hora.sql'),
+        srch_viagemMotorista: sql('carona/search_viagem_motorista.sql'),
+        srch_viagemPassageiro: sql('carona/search_viagem_passageiro.sql'),
+        srch_reserva: sql('carona/search_reserva.sql'),
         select_localidades: sql('carona/select_localidade_descricao.sql'),
         update_viagemDia: sql('carona/update_dia.sql'),
         update_viagemHorario: sql('carona/update_horario.sql'),
@@ -142,12 +146,30 @@ module.exports = {
         update_turma: sql('grade/update_turma.sql'),
         update_uc: sql('grade/update_uc.sql')
     },
+
+    divulgacao:{
+        alteracao_divulgacao_dia: sql('divulgacao/alteracao_divulgacao_dia.sql'),
+        alteracao_divulgacao_hora: sql('divulgacao/alteracao_divulgacao_hora.sql'),
+        busca_divulgacao_dia_hora: sql('divulgacao/busca_divulgacao_dia_hora.sql'),
+        busca_divulgacao_dia: sql('divulgacao/busca_divulgacao_dia.sql'),
+        busca_divulgacao_hora: sql('divulgacao/busca_divulgacao_hora.sql'),
+        busca_divulgacao_tipo_dia_hora: sql('divulgacao/busca_divulgacao_tipo_dia_hora.sql'),
+        busca_divulgacao_tipo_dia: sql('divulgacao/busca_divulgacao_tipo_dia.sql'),
+        busca_divulgacao_tipo: sql('divulgacao/busca_divulgacao_tipo.sql'),
+        busca_divulgacao_todos_tipo: sql('divulgacao/busca_divulgacao_todos_tipo.sql'),
+        insert_divulgacao: sql('divulgacao/insert_divulgacao.sql'),
+        remove_divulgacao: sql('divulgacao/remove_divulgacao.sql')
+    },
+
     professor: {
         insert_professor: sql('professor/insert_professor.sql'),
     },
     utilidades: {
         insert_cardapio: sql('utilidades/insert_cardapio.sql'),
         get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
+    },
+    bugreport: {
+        insert_bug_report: sql('report/insert_bug_report.sql')
     }
 
     

@@ -12,7 +12,7 @@ module.exports = {
 
     searchViagemData: (req, res, next) => {
         var data = req.query.data
-        
+
         dados = [data]
         const viagem = new pq(sql.caronas.srch_viagemData)
 
@@ -436,8 +436,10 @@ module.exports = {
     solicitarReserva: (req, res, next) => {
         var id_viagem = req.query.id_viagem
         var id_passageiro = req.query.id_passageiro
+        var id_origem = req.query.id_origem
+        var id_destino = req.query.id_origem
         var status_reserva = req.query.status_reserva
-        dados = [id_viagem, id_passageiro, status_reserva]
+        dados = [id_viagem, id_passageiro, id_origem, id_destino, status_reserva]
 
         const viagem = new pq(sql.caronas.solic_reserva)
         db.none(viagem, dados)
@@ -500,5 +502,68 @@ module.exports = {
         .catch(error => {
             return next(error)
         })
+    },
+    searchViagemMotorista: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+        
+        const viagem = new pq(sql.caronas.srch_viagemMotorista);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },   
+    searchViagemPassageiro: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.srch_viagemPassageiro);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    getAllCaronas: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+        const viagem = new pq(sql.caronas.get_all);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
+    },
+    searchReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.srch_reserva);
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error);
+        });
     },   
 }

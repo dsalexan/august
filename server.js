@@ -15,6 +15,7 @@ var authController = require('./controllers/AuthController')
 var Carona = require('./models/Caronas')
 var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
+var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
 
 var bodyParser = require('body-parser')
@@ -38,6 +39,9 @@ router.use('/api', require('./controllers/aluno'))
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))
 router.use('/api/ru/get/atual', Utilidades.getCardapio)
+
+// Bug Reports
+router.use('/api/bugreport/put/bug', BugReport.insertBugReport)
 
 // Carona
 router.get('/api/caronas/delete/reserva', Carona.deleteReserva)
@@ -63,10 +67,10 @@ router.get('/api/caronas/get/viagem/data_hora_vagas', Carona.searchViagemDataHor
 router.get('/api/caronas/get/viagem/data_vagas', Carona.searchViagemDataVagas)
 router.get('/api/caronas/get/viagem/data_hora', Carona.searchViagemDataHora)
 router.get('/api/caronas/get/viagem/data', Carona.searchViagemData)
-// router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
-// router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro)
-// router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
-// router.get('/api/caronas/get/reserva', Carona.searchReserva)
+router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
+router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro)
+router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
+router.get('/api/caronas/get/reserva', Carona.searchReserva) 
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 // router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
@@ -84,6 +88,8 @@ router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
 router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
 router.get('/api/divulgacao/put/dia', Divulgacao.alteracao_divulgacao_dia)
 router.get('/api/divulgacao/put/hora', Divulgacao.alteracao_divulgacao_hora)
+router.get('/api/divulgacao/get/todos/tipo', Divulgacao.busca_divulgacao_todos_tipo)
+
 
 // Utilidades
 router.get('/api/utilidades/get/saldo', Utilidades.getSaldo)

@@ -147,7 +147,7 @@ module.exports = {
         var id_tipo = req.query.id_tipo
 
         dados = [id_tipo]
-
+        
         const buscatipo = new pq(sql.divulgacao.busca_divulgacao_tipo)
         
         db.any(buscatipo, dados)
@@ -162,8 +162,27 @@ module.exports = {
         })
     },
 
+    busca_divulgacao_todos_tipo: (req, res, next) => {
+        console.log('oi')
+       
+        const buscatodostipo = new pq(sql.divulgacao.busca_divulgacao_todos_tipo)
+        
+        db.any(buscatodostipo)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
     insert_divulgacao: (req, res, next) => {
+        console.log('OI', req.query)
         var ra_aluno = req.query.ra_aluno
+        console.log('ra', ra_aluno)
         var id_tipo = req.query.id_tipo
         var valor = req.query.valor
         var dia = req.query.dia
@@ -171,9 +190,8 @@ module.exports = {
         var hora_fim = req.query.hora_fim
         var descricao = req.query.descricao
         var quantidade = req.query.quantidade
-        var reserva_automatica = req.query.reserva_automatica
         
-        dados = [ra_aluno, id_tipo, valor, dia, hora_inicio, hora_fim, descricao, quantidade, reserva_automatica]
+        dados = [ra_aluno, id_tipo, valor, dia, hora_inicio, hora_fim, descricao, quantidade]
 
         const insertdivulgacao = new pq(sql.divulgacao.insert_divulgacao)
         db.none(insertdivulgacao, dados)
