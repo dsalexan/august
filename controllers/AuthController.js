@@ -12,6 +12,7 @@ const cryptoJS = require("crypto-js");
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
 const atestado = require('../libraries/unifesp/atestado')
+const saldo_ru = require('../libraries/unifesp/saldo_ru')
 const index = require('../libraries/unifesp/index')
 
 var Users = require('../models/Users')
@@ -43,8 +44,16 @@ router.get('/teste', function(req, res) {
 })
 //
 
+router.get('/login', function(req, res) {
+    var usuario = req.query.login
+    var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+    unifesp.getSaldoRu(usuario, senha).then(result => {
+        console.log(result)
+    })
+})
+
 // TODO: add winston logging to this
-router.get('/login', function(req, res){
+router.get('/logintemp', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
 
@@ -75,23 +84,22 @@ router.get('/login', function(req, res){
                 console.log('Exists', user.exists)
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
-
-                    unifesp.fetch('saldo_ru', undefined, {
+                    
+                    unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
                         authenticated: true
-                    }).then(saldo => {
-                        console.log(saldo)
-                    // }).then(historico => {
-                    //     Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
-                    //         console.log('bla', user)
-                    //         sendResult(user.data) // Enviar os dados do usuario para fazer login
-                    //     }).catch(err => {
-                    //         console.log(err)    
-                    //     })
+                    }).then(historico => {
+                    }).then(historico => {
+                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
+                            console.log('bla', user)
+                            sendResult(user.data) // Enviar os dados do usuario para fazer login
+                        })
+                    }).catch(err => {
+                        console.log('tdjyrx', err)    
                     })
                 } else { // Achou no nosso banco, fazer login
                     // result.puppeteer.browser.close()
-                    console.log(user.data)
+                    // console.log(user.data)
                     sendResult(user.data) // Enviar os dados do usuario para fazer login
                 }
             })
