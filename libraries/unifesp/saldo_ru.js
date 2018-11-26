@@ -23,18 +23,40 @@ var read_saldo_ru = function(page, login, senha){
         // $('#user').val(login)
         // $('#password').val(senha)
 
-        console.log(typeof login)
     //    await page.evaluate((login, senha) => {
     //         document.querySelector('#user').value = login;
     //         document.querySelector('#password').value = senha;
     //     }, login, senha)
+        const INPUT_USERNAME_SELECTOR = 'input#user'
+        const INPUT_PASSWORD_SELECTOR = 'input#password'
+        const BUTTON_SUBMIT_SELECTOR = 'button#btn-login'
 
-        a = login
-        b = senha
-    
-       
-        await page.$eval("input[name=user]", el => {el.val(login)}, login)
-        await page.$eval("input[name=password]", el => {el.value = senha}, {senha})
+        await page.waitForSelector(INPUT_USERNAME_SELECTOR)
+        await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
+        await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
+
+        await page.click(INPUT_USERNAME_SELECTOR)
+        await page.keyboard.type(login)
+
+        await page.click(INPUT_PASSWORD_SELECTOR)
+        await page.keyboard.type(senha)
+        
+        await page.click(BUTTON_SUBMIT_SELECTOR)
+
+        await page.waitForSelector('.col-sm-9')
+
+        let $  = cheerio.load(await page.content())
+
+        if ($('.alert.alert-danger').length > 0)
+            saldo = 0
+        else {
+            await page.waitForSelector('td.cell-qtd')
+            let $  = cheerio.load(await page.content())
+            saldo = $('td.cell-qtd').text()
+        }
+
+        // console.log(await page.content())
+
     //     const a = login
     //     const b = senha
     // await page.$eval("input[name=user]", el => el.value = a)
@@ -42,11 +64,10 @@ var read_saldo_ru = function(page, login, senha){
 
         // await page.waitForSelector('')
         // console.log(await page.content())
-        await page.click('button[type=submit]')
 
-        await page.waitForSelector('#div-saldo')
-        let $  = cheerio.load(await page.content())
-        console.log($('#div-saldo'))
+        // await page.waitForSelector('#div-saldo')
+        // let $  = cheerio.load(await page.content())
+        // console.log($('#div-saldo'))
 
         // let $  = cheerio.load(await page.content())
         // console.log($(MENU_UNIFESP_SELECTOR).text())
@@ -101,7 +122,7 @@ var read_saldo_ru = function(page, login, senha){
         //     console.log(1)
         // }
 
-        // resolve(saldo)
+        resolve(saldo)
     })
 }
 

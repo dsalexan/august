@@ -44,7 +44,7 @@ router.get('/teste', function(req, res) {
 })
 //
 
-router.get('/login', function(req, res) {
+router.get('/logintemp', function(req, res) {
     var usuario = req.query.login
     var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8)
     unifesp.getSaldoRu(usuario, senha).then(result => {
@@ -53,7 +53,7 @@ router.get('/login', function(req, res) {
 })
 
 // TODO: add winston logging to this
-router.get('/logintemp', function(req, res){
+router.get('/login', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
 
