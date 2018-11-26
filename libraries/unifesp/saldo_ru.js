@@ -43,14 +43,14 @@ var read_saldo_ru = function(page, login, senha){
         
         await page.click(BUTTON_SUBMIT_SELECTOR)
 
-        await page.waitForSelector('.col-sm-9')
+        await page.waitForSelector('.col-sm-9', {timeout : 120000})
 
         let $  = cheerio.load(await page.content())
 
         if ($('.alert.alert-danger').length > 0)
             saldo = 0
         else {
-            await page.waitForSelector('td.cell-qtd')
+            await page.waitForSelector('td.cell-qtd', {timeout : 120000})
             let $  = cheerio.load(await page.content())
             saldo = $('td.cell-qtd').text()
         }

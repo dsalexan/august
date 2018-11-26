@@ -147,7 +147,7 @@ UNIFESP.getCorpoDocente = function() {
 UNIFESP.getSaldoRu = function(login, senha) {
     return new Promise((resolve, reject) => {
         buildPuppet().then(async puppet => {
-            await puppet.page.goto('https://phpu.unifesp.br/ru_consulta/index.php')
+            await puppet.page.goto('https://phpu.unifesp.br/ru_consulta/index.php', {timeout: 0})
 
             saldo_ru.read(puppet.page, login, senha).then(result => {
                 // console.log({"professores": result})
