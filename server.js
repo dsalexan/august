@@ -138,6 +138,10 @@ router.get('/api/grades/put/professor', Grade.update_professor)
 router.get('/api/grades/put/turma', Grade.update_turma)
 router.get('/api/grades/put/uc', Grade.update_uc)
 
+router.get('/api/grades/put/addfalta', Grade.update_aluno_turma_addfalta)
+router.get('/api/grades/put/removefalta', Grade.update_aluno_turma_removefalta)
+router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
+
 // Headers
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')

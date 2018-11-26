@@ -144,7 +144,10 @@ module.exports = {
         update_pre_req: sql('grade/update_pre_req.sql'),
         update_professor: sql('grade/update_professor.sql'),
         update_turma: sql('grade/update_turma.sql'),
-        update_uc: sql('grade/update_uc.sql')
+        update_uc: sql('grade/update_uc.sql'),
+        update_aluno_turma_addfalta: sql('grade/update_aluno_turma_addfalta.sql'),
+        update_aluno_turma_removefalta: sql('grade/update_aluno_turma_removefalta.sql'),
+        select_faltas_aluno_turma: sql('grade/select_faltas_aluno_turma.sql')
     },
 
     divulgacao:{
