@@ -44,13 +44,13 @@ router.get('/teste', function(req, res) {
 })
 //
 
-router.get('/logintemp', function(req, res) {
-    var usuario = req.query.login
-    var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8)
-    unifesp.getSaldoRu(usuario, senha).then(result => {
-        console.log(result)
-    })
-})
+// router.get('/logintemp', function(req, res) {
+//     var usuario = req.query.login
+//     var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+//     unifesp.getSaldoRu(usuario, senha).then(result => {
+//         console.log(result)
+//     })
+// })
 
 // TODO: add winston logging to this
 router.get('/login', function(req, res){
