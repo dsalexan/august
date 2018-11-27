@@ -46,11 +46,11 @@ module.exports = {
             return next(error)
         })
     },
-    updateMenosVaga: (req, res, next) => {
+    updateMaisVaga: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.diminuir_qtd_vagas)
+        const viagem = new pq(sql.caronas.aumentar_qtd_vagas)
         
         db.any(viagem, dados)
         .then(v => {
@@ -67,7 +67,7 @@ module.exports = {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.del_viagem);
+        const viagem = new pq(sql.caronas.del_viagem)
 
         db.any(viagem, dados)
         .then(v => {
@@ -77,14 +77,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     deleteViagemDestino: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.del_viagemDestino);
+        const viagem = new pq(sql.caronas.del_viagemDestino)
 
         db.any(viagem, dados)
         .then(v => {
@@ -94,14 +94,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     deleteViagemOrigem: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.del_viagemOrigem);
+        const viagem = new pq(sql.caronas.del_viagemOrigem)
 
         db.any(viagem, dados)
         .then(v => {
@@ -111,14 +111,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     deleteViagemReserva: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.del_viagemReserva);
+        const viagem = new pq(sql.caronas.del_viagemReserva)
 
         db.any(viagem, dados)
         .then(v => {
@@ -128,15 +128,15 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     deletePassageiros: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
         console.log(id)
-        const viagem = new pq(sql.caronas.del_passageiros);
+        const viagem = new pq(sql.caronas.del_passageiros)
         
         db.any(viagem, dados)
         .then(v => {
@@ -146,8 +146,8 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },  
     insertViagem: (req, res, next) => {
         var id_motorista = req.query.id_motorista
@@ -525,6 +525,7 @@ module.exports = {
     updateMenosVaga: (req, res, next) => {
         var id = req.query.id
         dados = [id]
+        
         const viagem = new pq(sql.caronas.diminuir_qtd_vagas)
         db.none(viagem, dados)
         .then(v => {
@@ -541,7 +542,7 @@ module.exports = {
         var id = req.query.id
         dados = [id]
         
-        const viagem = new pq(sql.caronas.srch_viagemMotorista);
+        const viagem = new pq(sql.caronas.srch_viagemMotorista)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -550,14 +551,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },   
     searchViagemPassageiro: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.srch_viagemPassageiro);
+        const viagem = new pq(sql.caronas.srch_viagemPassageiro)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -566,13 +567,13 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
     getAllCaronas: (req, res, next) => {
         var id = req.query.id
         dados = [id]
-        const viagem = new pq(sql.caronas.get_all);
+        const viagem = new pq(sql.caronas.get_all)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -581,14 +582,14 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
-        });
+            return next(error)
+        })
     },
-    searchReserva: (req, res, next) => {
+    searchViagemReserva: (req, res, next) => {
         var id = req.query.id
         dados = [id]
 
-        const viagem = new pq(sql.caronas.srch_reserva);
+        const viagem = new pq(sql.caronas.srch_viagemReserva)
         db.any(viagem, dados)
         .then(v => {
             res.status(200).json({
@@ -597,7 +598,25 @@ module.exports = {
             })
         })
         .catch(error => {
-            return next(error);
+            return next(error)
         });
-    },   
+    },  
+    srch_MotoristaReserva: (req, res, next) => {
+        var id = req.query.id
+        dados = [id]
+
+        const viagem = new pq(sql.caronas.srch_motoristaReserva)
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    
 }
