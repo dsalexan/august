@@ -17,6 +17,7 @@ var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
 var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
+var Mensagem = require('./models/Mensagens')
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
@@ -144,6 +145,9 @@ router.get('/api/grades/put/uc', Grade.update_uc)
 router.get('/api/grades/put/addfalta', Grade.update_aluno_turma_addfalta)
 router.get('/api/grades/put/removefalta', Grade.update_aluno_turma_removefalta)
 router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
+// Mensagens
+router.get('/api/mensagem/put/mensagem', Mensagem.insert_msg)
+router.get('/api/mensagem/get/all', Mensagem.get_all_msgs)
 
 // Headers
 app.use(function(req, res, next) {

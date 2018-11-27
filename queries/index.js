@@ -176,7 +176,11 @@ module.exports = {
     },
     bugreport: {
         insert_bug_report: sql('report/insert_bug_report.sql')
-    }
+    },
+    mensagens: {
+        insert_msg: sql('mensagem/insert_msg.sql'),
+        get_all_msgs: sql('mensagem/get_all_msgs.sql')
+    },
 
     
     // // external queries for Users:
