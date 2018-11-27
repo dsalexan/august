@@ -170,7 +170,11 @@ module.exports = {
     utilidades: {
         insert_cardapio: sql('utilidades/insert_cardapio.sql'),
         get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
-    }
+    },
+    mensagens: {
+        insert_msg: sql('mensagem/insert_msg.sql'),
+        get_all_msgs: sql('mensagem/get_all_msgs.sql')
+    },
 
     
     // // external queries for Users:

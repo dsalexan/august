@@ -16,6 +16,7 @@ var Carona = require('./models/Caronas')
 var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
 var Divulgacao = require('./models/Divulgacao')
+var Mensagem = require('./models/Mensagens')
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
@@ -136,6 +137,10 @@ router.get('/api/grades/put/pre_req', Grade.update_pre_req)
 router.get('/api/grades/put/professor', Grade.update_professor)
 router.get('/api/grades/put/turma', Grade.update_turma)
 router.get('/api/grades/put/uc', Grade.update_uc)
+
+// Mensagens
+router.get('/api/mensagem/put/mensagem', Mensagem.insert_msg)
+router.get('/api/mensagem/get/all', Mensagem.get_all_msgs)
 
 // Headers
 app.use(function(req, res, next) {
