@@ -17,22 +17,27 @@ router.get('/cardapio/', (req, res, next) => {
 
     unifesp.readCardapio(search).then(info => {
         if(info != null) {
-            Utilidades.insertCardapio(info).then(() => {
-                res.status(200).json({
-                    status: 'success',
-                    success: true
-                })
-            }).catch((err) => {
-                res.status(200).json({
-                    status: 'error',
-                    success: false,
-                    error: err
-                })
+            res.status(200).json({
+                success: true,
+                cardapio_json: info
             })
+            
+            // Utilidades.insertCardapio(info).then(() => {
+            //     res.status(200).json({
+            //         status: 'success',
+            //         success: true
+            //     })
+            // }).catch((err) => {
+            //     res.status(200).json({
+            //         status: 'error',
+            //         success: false,
+            //         error: err
+            //     })
+            // })
         } else {
-            res.status(404).json({
-                message: 'not Found',
-                success: false
+            res.status(200).json({
+                success: false,
+                cardapio_json: null
             })
         }
     }).catch(error => {
