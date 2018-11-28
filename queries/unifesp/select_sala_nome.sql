@@ -1,0 +1,1 @@
+SELECT * FROM sala WHERE nome_original = $1 OR nome_display = $1

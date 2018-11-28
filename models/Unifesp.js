@@ -9,13 +9,19 @@ Unifesp.select_agenda = () => Unifesp.select_extracao_latest('agenda')
 
 Unifesp.select_ucs = () => db.any(sql.unifesp.select_ucs)
 Unifesp.select_uc = (hash) => db.oneOrNone(sql.unifesp.select_uc, [hash])
-Unifesp.select_alias_uc = (hash) => db.any(sql.unifesp.select_alias_uc, [hash])
-Unifesp.select_ucs_not_hash = (hashes) => db.any(sql.unifesp.select_ucs_not_hash, [hashes])
-Unifesp.select_analise_latest = (extracao) => db.oneOrNone(sql.unifesp.select_analise_latest, [extracao])
 Unifesp.select_uc_alias = (alias) => db.any(sql.unifesp.select_uc_alias, [alias])
 Unifesp.select_uc_nome = (nome) => db.any(sql.unifesp.select_uc_nome, [nome])
+Unifesp.select_ucs_not_hash = (hashes) => db.any(sql.unifesp.select_ucs_not_hash, [hashes])
+
+Unifesp.select_alias_uc = (hash) => db.any(sql.unifesp.select_alias_uc, [hash])
+
+Unifesp.select_analise_latest = (extracao) => db.oneOrNone(sql.unifesp.select_analise_latest, [extracao])
 
 Unifesp.select_aula_hash = (hash) => db.oneOrNone(sql.unifesp.select_aula_hash, [hash])
+
+Unifesp.select_reserva_texto_datahora_sala = (texto, datahora, id_sala) => db.any(sql.unifesp.select_reserva_texto_datahora_sala, {texto, datahora, id_sala})
+
+Unifesp.select_sala_nome = (nome) => db.oneOrNone(sql.unifesp.select_sala_nome, [nome])
 
 Unifesp.insert_extracao = (data) => db.one(sql.unifesp.insert_extracao, data)
 
@@ -28,6 +34,9 @@ Unifesp.insert_reserva = (data) => db.none(sql.unifesp.insert_reserva, data)
 
 Unifesp.update_uc_hash = (uc) => db.none(sql.unifesp.update_uc_hash, uc)
 Unifesp.update_analise = (analise) => db.none(sql.unifesp.update_analise, analise)
+Unifesp.update_sala_id = (sala) => db.none(sql.unifesp.update_sala_id, sala)
+Unifesp.update_aula_hash = (aula) => db.none(sql.unifesp.update_aula_hash, aula)
+Unifesp.update_reserva_id = (reserva) => db.none(sql.unifesp.update_reserva_id, reserva)
 
 Unifesp.delete_uc_hash = (hash) => db.none(sql.unifesp.delete_uc_hash, [hash])
 Unifesp.delete_alias = (data) => db.none(sql.unifesp.delete_alias_id, data)

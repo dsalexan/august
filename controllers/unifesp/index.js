@@ -176,15 +176,23 @@ function agenda_analyse_rooms(rooms, capacities, sqlAnalise){
             }
             sala.capacity = c
 
-            let sqlSala = null
+            let sqlSala = await Unifesp.select_sala_nome(sala.original)
             if(!sqlSala){
                 sala.id_sala = (await Unifesp.insert_sala(sala)).id_sala
+            }else{
+                sala.id_sala = sqlSala.id_sala
+                try{
+                    await Unifesp.update_sala_id(sala)
+                }catch(erer)
+                {
+                    asdasd = err
+                }
             }
 
             RoomIndex[r] = sala
         }
 
-        // await Promise.all(reg)  
+        await Promise.all(reg)  
 
         resolve({
             data: RoomIndex,
@@ -221,10 +229,18 @@ function agenda_analyse_day(reservas, sqlAnalise, FuzzyUCS, _ROOMS, UNKNOWN_UC){
 
             let sqlAula = await Unifesp.select_aula_hash(aula.hash)
             if(!sqlAula){
-                reg.push(Unifesp.insert_aula(aula))
+                try{
+                    await Unifesp.insert_aula(aula)
+                }catch(err){
+                    asdas = err
+                }
             }else{
                 let diff = Diff.diff(aula, sqlAula)
-                if(Object.keys(diff).length > 0){
+                if(Object.keys(diff).length == 0){
+                    why = 11
+                }else if(diff.id_analise){
+                    await Unifesp.update_aula_hash(aula)
+                }else{
                     console.log('ERROR: multiple data for same hash/aula')
                     errors.push('ERROR: multiple data for same hash/aula')
                     reject(diff)
@@ -236,9 +252,15 @@ function agenda_analyse_day(reservas, sqlAnalise, FuzzyUCS, _ROOMS, UNKNOWN_UC){
             let reserva = ReservationIndex[key]
             
             try{
-                let sqlReserva = null
-                if(!sqlReserva){
-                    reg.push(Unifesp.insert_reserva(reserva))
+                let sqlReserva = await Unifesp.select_reserva_texto_datahora_sala(reserva.texto, reserva.datahora, reserva.id_sala)
+                if(sqlReserva.length == 0){
+                    await Unifesp.insert_reserva(reserva) 
+                }else if(sqlReserva.length == 1){
+                    reserva.id_reserva = sqlReserva[0].id_reserva
+                    reg.push(Unifesp.update_reserva_id(reserva))
+                }else{
+                    console.log(`ERROR: Many reserva entries for texto(${reserva.texto}) and datahora(${reserva.datahora})`)
+                    errors.push(`ERROR: Many reserva entries for texto(${reserva.texto}) and datahora(${reserva.datahora})`)
                 }
             }catch(err){
                 console.log('ERROR: insert reserva', err)

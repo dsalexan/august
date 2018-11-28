@@ -1,0 +1,1 @@
+SELECT * FROM reserva WHERE texto = ${texto} AND datahora = ${datahora} AND id_sala = ${id_sala}
