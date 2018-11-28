@@ -96,6 +96,7 @@ var compile_agenda = function(html){
                 // para cada horario da sala
                 let horario = 0
                 $(tr).find('td.slot').each((j, td) => {
+                    $(td).find('br').replaceWith('\n')
                     let info = $(td).text().trim()
                     let colspan = parseInt($(td).attr('colspan'))
                     let specific_duration = duration.reduce((acc, cur, idx, array) => {

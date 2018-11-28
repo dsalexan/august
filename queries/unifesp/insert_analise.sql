@@ -1,3 +1,3 @@
 INSERT INTO analise
-VALUES (DEFAULT, ${base}, ${datahora}, NULL)
+VALUES (DEFAULT, ${descricao}, ${base}, ${datahora}, NULL)
 RETURNING *

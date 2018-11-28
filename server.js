@@ -11,6 +11,7 @@ global.root_path = path.resolve(__dirname)
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
 })
+server.setTimeout(90000)
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')

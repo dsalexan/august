@@ -83,7 +83,10 @@ class UC{
                     if(requisito.match(/ e /gi)){
                         for(let v of requisito.split(/ e /gi)){
                             simple = irregular(simplify.text(v))
-                            [result, err] = checkRequisites_Helper(simple, listOfAliases)
+                            let check = checkRequisites_Helper(simple, listOfAliases)
+                            result = check[0]
+                            err = check[1]
+
                             err && errors.push(err)
 
                             if(result){
@@ -91,7 +94,10 @@ class UC{
                             }else{
                                 noStopwords = simple.split(' ').filter(word => !simplify.stopword(word)).join(' ')
                                 
-                                [result, err] = checkRequisites_Helper(noStopwords, listOfAliases)
+                                let check = checkRequisites_Helper(simple, listOfAliases)
+                                result = check[0]
+                                err = check[1]
+                                
                                 err && errors.push(err)
 
                                 if(result){

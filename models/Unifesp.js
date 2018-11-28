@@ -7,16 +7,24 @@ Unifesp.select_extracao_latest = (extracao) => db.oneOrNone(sql.unifesp.select_e
 Unifesp.select_ementas = () => Unifesp.select_extracao_latest('ementas')
 Unifesp.select_agenda = () => Unifesp.select_extracao_latest('agenda')
 
+Unifesp.select_ucs = () => db.any(sql.unifesp.select_ucs)
 Unifesp.select_uc = (hash) => db.oneOrNone(sql.unifesp.select_uc, [hash])
 Unifesp.select_alias_uc = (hash) => db.any(sql.unifesp.select_alias_uc, [hash])
 Unifesp.select_ucs_not_hash = (hashes) => db.any(sql.unifesp.select_ucs_not_hash, [hashes])
 Unifesp.select_analise_latest = (extracao) => db.oneOrNone(sql.unifesp.select_analise_latest, [extracao])
+Unifesp.select_uc_alias = (alias) => db.any(sql.unifesp.select_uc_alias, [alias])
+Unifesp.select_uc_nome = (nome) => db.any(sql.unifesp.select_uc_nome, [nome])
+
+Unifesp.select_aula_hash = (hash) => db.oneOrNone(sql.unifesp.select_aula_hash, [hash])
 
 Unifesp.insert_extracao = (data) => db.one(sql.unifesp.insert_extracao, data)
 
 Unifesp.insert_uc = (data) => db.none(sql.unifesp.insert_uc, data)
 Unifesp.insert_alias = (data) => db.none(sql.unifesp.insert_alias, data)
 Unifesp.insert_analise = (data) => db.one(sql.unifesp.insert_analise, data)
+Unifesp.insert_sala = (data) => db.one(sql.unifesp.insert_sala, data)
+Unifesp.insert_aula = (data) => db.none(sql.unifesp.insert_aula, data)
+Unifesp.insert_reserva = (data) => db.none(sql.unifesp.insert_reserva, data)
 
 Unifesp.update_uc_hash = (uc) => db.none(sql.unifesp.update_uc_hash, uc)
 Unifesp.update_analise = (analise) => db.none(sql.unifesp.update_analise, analise)
@@ -50,6 +58,11 @@ Unifesp.register_uc = (uc) => {
 
 Unifesp.update_uc = (uc) => {
     return new Promise((resolve, reject) => {
+        
+        if(uc.hash == 265879372){
+            asdasd = 1
+        }
+        
         Unifesp.update_uc_hash(uc).then(() => {
             Unifesp.select_alias_uc(uc.hash).then(aliases => {
                 let only_aliases = aliases.map(a => a.alias)
