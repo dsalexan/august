@@ -386,7 +386,7 @@ router.get('/agenda', (req, res, next) => {
         let force = req.query.force || false
         let display = req.query.display || 'all'
         let date = req.body.date
-        if(force && date == undefined){
+        if((force && date == undefined) || date == undefined){
             date = DateTime.utc().toFormat('yyyy-MM-dd', {zone: 'America/Sao_Paulo'})
         }
 
