@@ -6,8 +6,10 @@ module.exports = {
     insert_msg: (req, res, next) => {
         var id_destinatario = req.query.id_destinatario
         var msg = req.query.msg
+        var dia = req.query.dia
+        var hora = req.query.hora
 
-        dados = [id_destinatario, msg, false]
+        dados = [id_destinatario, msg, false, dia, hora]
         const viagem = new pq(sql.mensagens.insert_msg)
 
         db.any(viagem, dados)
