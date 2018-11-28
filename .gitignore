@@ -1,3 +1,6 @@
+res/ementas
+res/ementas/*
+
 # Logs
 logs
 *.log
@@ -59,3 +62,7 @@ typings/
 
 # next.js build output
 .next
+
+
+res/ementas
+res/ementas/**

@@ -11,6 +11,8 @@ const historico = require('./historico')
 const atestado = require('./atestado')
 const professores = require('./professores')
 const saldo_ru = require('./saldo_ru')
+const agenda = require('./agenda')
+const ementas = require('./ementas')
 
 // GENERALIZING PUPPETEER PERSISTENCE AND DESTRUCTION
 class Puppet {
@@ -23,7 +25,8 @@ class Puppet {
         return _.defaultsDeep(options, {
             puppeteer: undefined,
             keep_puppet: false,
-            authenticated: false
+            authenticated: false,
+            headless: true
         })
     }
 
@@ -34,7 +37,7 @@ class Puppet {
             if(options.puppeteer == undefined){
                 puppeteer.launch({
                     args: ['--deterministic-fetch'],
-                    headless: true,
+                    headless: options.headless,
                 }).then(browser => {
                     this.browser = browser
                     browser.newPage().then(page => {
@@ -394,28 +397,47 @@ UNIFESP.readCardapio = function(date) {
 }
 
 UNIFESP.insertCardapio = function(what, user, options){
+    // TODO: Como assim isso ta vazio??
+}
+UNIFESP.fetch = function(what, data, options){
     return new Promise((resolve, reject) => {
+        if(options == undefined) options = {}
+
+        puppet = [false]
+        if(what == 'historico' || what == 'atestado'){
+            options.headless = false
+        }else if(what == 'ementas'){
+            options.headless = true
+        }else if(what == 'agenda'){
+            options.puppeteer = false
+        }
         buildPuppet(options).then(async puppet => {
             options = puppet.defaults(options)
             var fn
 
-            if(!options.authenticated){
-                var attempt = await authenticatePuppeteer(puppet.page, user)
-                if(!attempt.auth){
-                    return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+            if(what == 'historico' || what == 'atestado'){
+                if(!options.authenticated){
+                    var attempt = await authenticatePuppeteer(puppet.page, data) // data == user
+                    if(!attempt.auth){
+                        return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+                    }
                 }
             }
             options.puppeteerObject = puppet
 
 
             if(what == 'historico'){
-                fn = historico.fetch
+                fn = () => historico.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'atestado'){
-                fn = atestado.fetch
+                fn = () => atestado.fetch(puppet.browser, puppet.page, options)
+            }else if(what == 'agenda'){
+                fn = () => agenda.fetch(data, options) // data == reference date
+            }else if(what == 'ementas'){
+                fn = () => ementas.fetch(puppet.browser, puppet.page, data.path, data.download, options)
             }
 
             if(fn){
-                fn(puppet.browser, puppet.page, options).then(result => {
+                fn().then(result => {
                     resolve(result)
                 })
             }else{

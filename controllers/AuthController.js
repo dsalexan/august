@@ -1,3 +1,4 @@
+const path = require('path')
 var express = require('express')
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -14,6 +15,7 @@ const historico = require('../libraries/unifesp/historico')
 const atestado = require('../libraries/unifesp/atestado')
 const saldo_ru = require('../libraries/unifesp/saldo_ru')
 const index = require('../libraries/unifesp/index')
+const agenda = require('../libraries/unifesp/agenda')
 
 var Users = require('../models/Users')
 var Alunos = require('../models/Alunos')
@@ -40,6 +42,18 @@ router.get('/teste', function(req, res) {
     }).then(saldo => {
         console.log(saldo)
         res.status(200).send(saldo)
+    })
+})
+router.get('/teste/ementas', function(req, res) {
+    unifesp.fetch('ementas', {
+        path: path.join(global.root_path, 'res/ementas'),
+        download: false
+    }).then(result => {
+        res.status(200).send(result)
+    }).catch(err => {
+        res.send(500).send({
+            error: err
+        })
     })
 })
 //

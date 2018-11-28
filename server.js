@@ -4,10 +4,14 @@ var express = require('express')
 var app = express()
 var port = process.env.PORT || 3000
 var router = express.Router()
+var path = require('path')
+
+global.root_path = path.resolve(__dirname)
 
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
 })
+server.setTimeout(90000)
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
@@ -34,6 +38,9 @@ router.use(function(req, res, next) {
 
 router.use('/api/auth', authController)
 
+// Unifesp
+router.use('/api/unifesp', require('./controllers/unifesp'))
+
 // Aluno
 router.use('/api', require('./controllers/aluno'))
 
@@ -50,7 +57,7 @@ router.get('/api/caronas/delete/viagem_reserva', Carona.deleteViagemReserva)
 router.get('/api/caronas/delete/viagem_destino', Carona.deleteViagemDestino)
 router.get('/api/caronas/delete/viagem_origem', Carona.deleteViagemOrigem)
 router.get('/api/caronas/delete/viagem', Carona.deleteViagem)
-router.get('/api/caronas/delete/passageiros', Carona.deletePassageiros)
+//router.get('/api/caronas/delete/passageiros', Carona.deletePassageiros)
 router.get('/api/caronas/post/viagem/reserva', Carona.solicitarReserva)
 router.get('/api/caronas/post/viagem/origem', Carona.insertOrigemViagem)
 router.get('/api/caronas/post/viagem/destino', Carona.insertDestinoViagem)
@@ -79,7 +86,7 @@ router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
 router.get('/api/caronas/put/viagem/diminui_vaga', Carona.updateMenosVaga)
 router.get('/api/caronas/put/viagem/aumenta_vaga', Carona.updateMaisVaga)
-router.use('/api', require('./controllers/caronas'))
+//router.use('/api', require('./controllers/caronas'))
 
 // Divulgacao
 router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
@@ -148,6 +155,7 @@ router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
 // Mensagens
 router.get('/api/mensagem/put/mensagem', Mensagem.insert_msg)
 router.get('/api/mensagem/get/all', Mensagem.get_all_msgs)
+router.get('/api/mensagem/get/novas', Mensagem.get_nonread_msgs)
 
 // Headers
 app.use(function(req, res, next) {
