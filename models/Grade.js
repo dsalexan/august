@@ -717,8 +717,6 @@ module.exports = {
 
         dados = {ra_aluno: ra_aluno, id_turma: id_turma}
 
-        console.log('addfalta', dados)
-
         const query = new pq(sql.grade.update_aluno_turma_addfalta)
         db.none(query.text, dados)
         .then(() => {
