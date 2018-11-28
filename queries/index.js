@@ -69,7 +69,7 @@ module.exports = {
         del_viagemReserva: sql('carona/delete_viagemReserva.sql'),
         del_viagemDestino: sql('carona/delete_viagemDestino.sql'),
         del_viagemOrigem: sql('carona/delete_viagemOrigem.sql'),
-        del_passageiros: sql('carona/search_reservas_before_delete.sql'),
+        // del_passageiros: sql('carona/search_reservas_before_delete.sql'),
         get_all: sql('carona/get_all.sql'),
         diminuir_qtd_vagas: sql('carona/diminuir_vagas.sql'),
         aumentar_qtd_vagas: sql('carona/aumentar_vagas.sql'),
@@ -180,7 +180,8 @@ module.exports = {
     },
     mensagens: {
         insert_msg: sql('mensagem/insert_msg.sql'),
-        get_all_msgs: sql('mensagem/get_all_msgs.sql')
+        get_all_msgs: sql('mensagem/get_all_msgs.sql'),
+        get_nonread_msgs: sql('mensagem/get_nonread_msgs.sql')
     },
 
     
