@@ -12,6 +12,7 @@ const cryptoJS = require("crypto-js");
 const unifesp = require('../libraries/unifesp')
 const historico = require('../libraries/unifesp/historico')
 const atestado = require('../libraries/unifesp/atestado')
+const saldo_ru = require('../libraries/unifesp/saldo_ru')
 const index = require('../libraries/unifesp/index')
 
 var Users = require('../models/Users')
@@ -42,6 +43,14 @@ router.get('/teste', function(req, res) {
     })
 })
 //
+
+// router.get('/logintemp', function(req, res) {
+//     var usuario = req.query.login
+//     var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+//     unifesp.getSaldoRu(usuario, senha).then(result => {
+//         console.log(result)
+//     })
+// })
 
 // TODO: add winston logging to this
 router.get('/login', function(req, res){
@@ -75,25 +84,22 @@ router.get('/login', function(req, res){
                 console.log('Exists', user.exists)
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)
-
                     unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
                         authenticated: true
                     }).then(historico => {
-                        console.log('TA', historico.ra_aluno)
-                        console.log('TA2', historico.nome)
                         Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
                             console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
-                        }).catch(err => {
-                            console.log(err)    
                         })
+                    }).catch(err => {
+                        console.log('tdjyrx', err)    
                     })
                     // }).then(saldo => {
                     //     console.log(saldo)
                 } else { // Achou no nosso banco, fazer login
                     // result.puppeteer.browser.close()
-                    console.log(user.data)
+                    // console.log(user.data)
                     sendResult(user.data) // Enviar os dados do usuario para fazer login
                 }
             })

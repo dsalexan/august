@@ -181,8 +181,6 @@ module.exports = {
 
         dados = {id_evento: id_evento, id_turma: id_turma, ra_aluno: ra_aluno, data: data, hora: hora, sala: sala, descricao: descricao}
 
-        console.log(dados)
-
         const query = new pq(sql.grade.insert_evento_turma)
         db.none(query.text, dados)
         .then(() => {
@@ -405,7 +403,6 @@ module.exports = {
         const query = new pq(sql.grade.select_grade_aluno_tq_raaluno)
         db.any(query.text, dados)
         .then(q => {
-            console.log(q)
             res.status(200).json({
                 data: q,
                 success: true
@@ -472,7 +469,6 @@ module.exports = {
         const query = new pq(sql.grade.select_info_turma_tq_idturma)
         db.one(query.text, dados)
         .then(q => {
-            console.log(q)
             res.status(200).json({
                 data: q,
                 success: true
@@ -709,6 +705,60 @@ module.exports = {
         .then(() => {
             res.status(200).json({
                 success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+    update_aluno_turma_addfalta: (req, res) => {
+        var ra_aluno = req.query.ra_aluno
+        var id_turma = req.query.id_turma
+
+        dados = {ra_aluno: ra_aluno, id_turma: id_turma}
+
+        console.log('addfalta', dados)
+
+        const query = new pq(sql.grade.update_aluno_turma_addfalta)
+        db.none(query.text, dados)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+    update_aluno_turma_removefalta: (req, res) => {
+        var ra_aluno = req.query.ra_aluno
+        var id_turma = req.query.id_turma
+
+        dados = {ra_aluno: ra_aluno, id_turma: id_turma}
+
+        const query = new pq(sql.grade.update_aluno_turma_removefalta)
+        db.none(query.text, dados)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+    select_faltas_aluno_turma: (req, res) => {
+        var ra_aluno = req.query.ra_aluno
+        var id_turma = req.query.id_turma
+
+        dados = {ra_aluno: ra_aluno, id_turma: id_turma}
+
+        const query = new pq(sql.grade.select_faltas_aluno_turma)
+        db.one(query.text, dados)
+        .then((faltas) => {
+            res.status(200).json({
+                success: true,
+                data: faltas
             })
         })
         .catch(error => {

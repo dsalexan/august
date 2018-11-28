@@ -10,6 +10,7 @@ const _ = require('lodash')
 const historico = require('./historico')
 const atestado = require('./atestado')
 const professores = require('./professores')
+const saldo_ru = require('./saldo_ru')
 
 // GENERALIZING PUPPETEER PERSISTENCE AND DESTRUCTION
 class Puppet {
@@ -138,6 +139,18 @@ UNIFESP.getCorpoDocente = function() {
             professores.getProfs(puppet.page).then(result => {
                 // console.log({"professores": result})
                 resolve({"professores": result})
+            })
+        })
+    })
+}
+
+UNIFESP.getSaldoRu = function(login, senha) {
+    return new Promise((resolve, reject) => {
+        buildPuppet().then(async puppet => {
+            await puppet.page.goto('https://phpu.unifesp.br/ru_consulta/index.php')
+
+            saldo_ru.read(puppet.page, login, senha).then(result => {
+                resolve({"saldo_ru": result})
             })
         })
     })

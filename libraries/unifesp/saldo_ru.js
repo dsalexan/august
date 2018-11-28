@@ -1,35 +1,51 @@
 const { DateTime } = require('luxon')
 const cheerio = require('cheerio')
+const request = require('request')
 const fs = require('fs')
 const G = require('generatorics')
 
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
-const UNIFESP_SALDO_RU_SELECTOR = '#tbCorpoVisual tr:nth-of-type(22) td:nth-of-type(1) a'
+const UNIFESP_SALDO_RU_SELECTOR = '#tbCorpoVisual tr:nth-of-type(22) td a'
 const CONSULTAR_SALDO_RU_SELECTOR = '#sec-content button'
 const TABELA_SALDO_RU_SELECTOR = '.table-responsive:nth(1) tbody:nth(0) tr td:nth(1)'
 
-var read_saldo_ru = function(browser, page, options){
+var a = ''
+var b = ''
+
+var read_saldo_ru = function(page, login, senha){
     return new Promise(async resolve => {
-        // clicar em Menu>Unifesp
-        await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR)
+        const INPUT_USERNAME_SELECTOR = 'input#user'
+        const INPUT_PASSWORD_SELECTOR = 'input#password'
+        const BUTTON_SUBMIT_SELECTOR = 'button#btn-login'
 
-        await page.waitForSelector(UNIFESP_SALDO_RU_SELECTOR)
-        await page.click(UNIFESP_SALDO_RU_SELECTOR)
+        await page.waitForSelector(INPUT_USERNAME_SELECTOR)
+        await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
+        await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
 
-        await page.waitForSelector(CONSULTAR_SALDO_RU_SELECTOR)
-        await page.click(CONSULTAR_SALDO_RU_SELECTOR)
+        await page.click(INPUT_USERNAME_SELECTOR)
+        await page.keyboard.type(login)
 
-        await page.waitForSelector(TABELA_SALDO_RU_SELECTOR)
+        await page.click(INPUT_PASSWORD_SELECTOR)
+        await page.keyboard.type(senha)
+        
+        await page.click(BUTTON_SUBMIT_SELECTOR)
+
+        try {
+            await page.waitForSelector('.col-sm-9', {timeout : 120000})
+        } catch (e) {
+            if (e instanceof TimeoutError) {
+                resolve(null)
+            }
+        }
+
         let $  = cheerio.load(await page.content())
-        let iframe = $(TABELA_SALDO_RU_SELECTOR).length()
 
-        let teste = $(TABELA_SALDO_RU_SELECTOR).attr('length')
-
-        var saldo = 0
-        if (teste != 0)
-        {
-            saldo = $(TABELA_SALDO_RU_SELECTOR)[0].textContent
+        if ($('.alert.alert-danger').length > 0)
+            saldo = 0
+        else {
+            await page.waitForSelector('td.cell-qtd', {timeout : 120000})
+            let $  = cheerio.load(await page.content())
+            saldo = $('td.cell-qtd').text()
         }
 
         resolve(saldo)

@@ -17,6 +17,7 @@ var Grade = require('./models/Grade')
 var Utilidades = require('./models/Utilidades')
 var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
+var Mensagem = require('./models/Mensagens')
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
@@ -70,11 +71,14 @@ router.get('/api/caronas/get/viagem/data', Carona.searchViagemData)
 router.get('/api/caronas/get/viagem/motorista', Carona.searchViagemMotorista)
 router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro)
 router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
-router.get('/api/caronas/get/reserva', Carona.searchReserva) 
+router.get('/api/caronas/get/viagem/reserva', Carona.searchViagemReserva) 
+router.get('/api/caronas/get/viagem/motorista/reserva', Carona.srch_MotoristaReserva)
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 // router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
 router.get('/api/caronas/put/viagem/reserva', Carona.updateStatusReserva)
+router.get('/api/caronas/put/viagem/diminui_vaga', Carona.updateMenosVaga)
+router.get('/api/caronas/put/viagem/aumenta_vaga', Carona.updateMaisVaga)
 router.use('/api', require('./controllers/caronas'))
 
 // Divulgacao
@@ -137,6 +141,13 @@ router.get('/api/grades/put/pre_req', Grade.update_pre_req)
 router.get('/api/grades/put/professor', Grade.update_professor)
 router.get('/api/grades/put/turma', Grade.update_turma)
 router.get('/api/grades/put/uc', Grade.update_uc)
+
+router.get('/api/grades/put/addfalta', Grade.update_aluno_turma_addfalta)
+router.get('/api/grades/put/removefalta', Grade.update_aluno_turma_removefalta)
+router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
+// Mensagens
+router.get('/api/mensagem/put/mensagem', Mensagem.insert_msg)
+router.get('/api/mensagem/get/all', Mensagem.get_all_msgs)
 
 // Headers
 app.use(function(req, res, next) {
