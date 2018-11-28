@@ -179,7 +179,8 @@ module.exports = {
     },
     mensagens: {
         insert_msg: sql('mensagem/insert_msg.sql'),
-        get_all_msgs: sql('mensagem/get_all_msgs.sql')
+        get_all_msgs: sql('mensagem/get_all_msgs.sql'),
+        get_nonread_msgs: sql('mensagem/get_nonread_msgs.sql')
     },
 
     

@@ -40,4 +40,21 @@ module.exports = {
             return next(error)
         })
     },
+    get_nonread_msgs: (req, res, next) => {
+        var id_destinatario = req.query.id_destinatario
+        
+        dados = [id_destinatario]
+        const viagem = new pq(sql.mensagens.get_nonread_msgs)
+
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
 }

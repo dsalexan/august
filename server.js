@@ -148,6 +148,7 @@ router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
 // Mensagens
 router.get('/api/mensagem/put/mensagem', Mensagem.insert_msg)
 router.get('/api/mensagem/get/all', Mensagem.get_all_msgs)
+router.get('/api/mensagem/get/novas', Mensagem.get_nonread_msgs)
 
 // Headers
 app.use(function(req, res, next) {
