@@ -35,6 +35,7 @@ router.get('/atualizarcorpodocente', function(req, res) {
         });
     })
 })
+
 router.get('/teste', function(req, res) {
     unifesp.fetch('saldo_ru', undefined, {
         puppeteer: result.puppeteer,
@@ -44,6 +45,7 @@ router.get('/teste', function(req, res) {
         res.status(200).send(saldo)
     })
 })
+
 router.get('/teste/ementas', function(req, res) {
     unifesp.fetch('ementas', {
         path: path.join(global.root_path, 'res/ementas'),
@@ -72,12 +74,9 @@ router.post('/login', function(req, res){
     performance.mark('Begin Login Authentication')
 
     var usuario = req.body.login
-    console.log(`USU`, usuario) 
-    console.log(`senha`,  req.body.senha) 
     var encrypted_senha = req.body.senha
     var senha = decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
-    console.log(`USU`, usuario) 
-    console.log(`senha`, senha) 
+
                         // TODO: encriptar o password no outro lado da chamada usando um metodo 
                         // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                         // nao vao interceptar as credenciais do usuario
@@ -107,7 +106,7 @@ router.post('/login', function(req, res){
                         puppeteer: result.puppeteer,
                         authenticated: true
                     }).then(historico => {
-                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, senha).then((user) => {
+                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, encrypted_senha).then((user) => {
                             console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         })
