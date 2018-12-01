@@ -35,10 +35,17 @@ const PARAGRAPH2_ATESTADO_SELECTOR = 'div.hash p:nth-of-type(1)'
 
 var read_atestado = function(browser, page, options){
     return new Promise(async resolve => {
-        // clicar em Menu>Unifesp
-        await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
 
+        try{
+            await page.$eval(MENU_UNIFESP_SELECTOR)
+            await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        }catch(err){
+            await page.evaluate('toggleMenu();');
+            await page.waitForSelector(MENU_UNIFESP_SELECTOR)            
+            await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        }
+        
         // clicar em Atestado de Matrícula On Line (Visualizar no Google Chrome ou IE)
         await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
         await page.click(UNIFESP_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})

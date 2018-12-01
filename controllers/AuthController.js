@@ -75,7 +75,7 @@ router.post('/login', function(req, res){
 
     var usuario = req.body.login
     var encrypted_senha = req.body.senha
-    var senha = decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+    var senha = req.body.uncrypted ? encrypted_senha : decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
 
                         // TODO: encriptar o password no outro lado da chamada usando um metodo 
                         // conhecido para o servidor, assim mesmo que interceptem a chamada para a api

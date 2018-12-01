@@ -4,12 +4,13 @@ const fs = require('fs')
 
 const Alunos = require('../../models/Alunos')
 
+var INTRANET_UNIFESP_URL = 'https://intranet.unifesp.br/'
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
 const UNIFESP_HISTORICO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(6) a'
 const IFRAME_CONSULTA_SELECTOR = '#iframe iframe'
 const IFRAME_ENTRIES_SELECTOR = 'table.scGridTabela tbody tr[class^="scGridField"]'
 const LINK_CONSULTA_SELECTOR = 'a.scGridFieldOddLink'
-const MENU_LATERAL_SELECTOR = 'div#menuSlide table tbody tr td:nth-of-type(0)'
+const MENU_LATERAL_SELECTOR = 'div#menuSlide table tbody tr td:nth-of-type(1) a'
 
 const TD_HEADER_TRANSLATION = {
     'Coefic. Rendimento': 'cr',
@@ -44,11 +45,17 @@ const TR_BODY_SELECTOR = 'tr[class^="scGridField"]'
 
 var read_historico = function(browser, page, options){
     return new Promise(async resolve => {
-        await page.waitForSelector(MENU_LATERAL_SELECTOR, {hidden: true})
-        await page.click(MENU_LATERAL_SELECTOR)
+        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
 
-        await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        try{
+            await page.$eval(MENU_UNIFESP_SELECTOR)
+            await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        }catch(err){
+            await page.evaluate('toggleMenu();');
+            await page.waitForSelector(MENU_UNIFESP_SELECTOR)            
+            await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        }
+
         await page.waitForSelector(UNIFESP_HISTORICO_SELECTOR)
         await page.click(UNIFESP_HISTORICO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
