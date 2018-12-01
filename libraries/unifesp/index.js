@@ -398,53 +398,7 @@ UNIFESP.readCardapio = function(date) {
 UNIFESP.insertCardapio = function(what, user, options){
     // TODO: Como assim isso ta vazio??
 }
-UNIFESP.fetch = function(what, data, options){
-    return new Promise((resolve, reject) => {
-        if(options == undefined) options = {}
 
-        puppet = [false]
-        if(what == 'historico' || what == 'atestado'){
-            options.headless = false
-        }else if(what == 'ementas'){
-            options.headless = true
-        }else if(what == 'agenda'){
-            options.puppeteer = false
-        }
-        buildPuppet(options).then(async puppet => {
-            options = puppet.defaults(options)
-            var fn
-
-            if(what == 'historico' || what == 'atestado'){
-                if(!options.authenticated){
-                    var attempt = await authenticatePuppeteer(puppet.page, data) // data == user
-                    if(!attempt.auth){
-                        return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
-                    }
-                }
-            }
-            options.puppeteerObject = puppet
-
-
-            if(what == 'historico'){
-                fn = () => historico.fetch(puppet.browser, puppet.page, options)
-            }else if(what == 'atestado'){
-                fn = () => atestado.fetch(puppet.browser, puppet.page, options)
-            }else if(what == 'agenda'){
-                fn = () => agenda.fetch(data, options) // data == reference date
-            }else if(what == 'ementas'){
-                fn = () => ementas.fetch(puppet.browser, puppet.page, data.path, data.download, options)
-            }
-
-            if(fn){
-                fn().then(result => {
-                    resolve(result)
-                })
-            }else{
-                reject(new Error('UNIFESP - Fetching for "' + what + '" not implemented'))
-            }
-        })
-    })
-}
 
 UNIFESP.fetch = function(what, data, options){
     return new Promise((resolve, reject) => {
@@ -471,7 +425,6 @@ UNIFESP.fetch = function(what, data, options){
                 }
             }
             options.puppeteerObject = puppet
-
 
             if(what == 'historico'){
                 fn = () => historico.fetch(puppet.browser, puppet.page, options)
