@@ -25,8 +25,8 @@ class Puppet {
         return _.defaultsDeep(options, {
             puppeteer: undefined,
             keep_puppet: false,
-            authenticated: false//,
-            // headless: false
+            authenticated: false,
+            headless: process.env.HEADLESS != undefined ? process.env.HEADLESS == 'true' : true
         })
     }
 
@@ -36,8 +36,8 @@ class Puppet {
         return new Promise(resolve => {
             if(options.puppeteer == undefined){
                 puppeteer.launch({
-                    args: ['--no-sandbox', '--disable-setuid-sandbox']//,
-                    // headless: options.headless,
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                    headless: options.headless
                 }).then(browser => {
                     this.browser = browser
                     browser.newPage().then(page => {
@@ -399,9 +399,9 @@ UNIFESP.fetch = function(what, data, options){
 
         puppet = [false]
         if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
-            options.headless = false
+            // options.headless = true
         }else if(what == 'ementas'){
-            options.headless = true
+            // options.headless = true
         }else if(what == 'agenda'){
             options.puppeteer = false
         }

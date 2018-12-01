@@ -56,8 +56,9 @@ var read_historico = function(browser, page, options){
             await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
         }
 
-        await page.waitForSelector(UNIFESP_HISTORICO_SELECTOR)
-        await page.click(UNIFESP_HISTORICO_SELECTOR, {waitUntil: 'domcontentloaded'})
+        // await page.waitForSelector(UNIFESP_HISTORICO_SELECTOR)
+        await page.evaluate('mostraAplicativo("887")')
+        // await page.click(UNIFESP_HISTORICO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         await page.waitForSelector(IFRAME_CONSULTA_SELECTOR)
         let $  = cheerio.load(await page.content())

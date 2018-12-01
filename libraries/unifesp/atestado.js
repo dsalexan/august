@@ -49,8 +49,9 @@ var read_atestado = function(browser, page, options){
         }
 
         // clicar em Atestado de Matrícula On Line (Visualizar no Google Chrome ou IE)
-        await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
-        await page.click(UNIFESP_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})
+        // await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
+        await page.evaluate('mostraAplicativo("886")')
+        // await page.click(UNIFESP_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         // segue o link no iframe
         await page.waitForSelector(IFRAME_CONSULTA_SELECTOR)
