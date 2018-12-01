@@ -1,6 +1,8 @@
-const { DateTime } = require('luxon')
+const DateTime = require('../../utils/luxon')
 const cheerio = require('cheerio')
 const fs = require('fs')
+
+const Alunos = require('../../models/Alunos')
 
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
 const UNIFESP_HISTORICO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(6) a'
@@ -59,7 +61,7 @@ var read_historico = function(browser, page, options){
 
         resolve({
             html: bodyHTML,
-            date: DateTime.utc().toString()
+            date: DateTime.toSQL()
         })
     })
 }
@@ -78,7 +80,7 @@ var compile_historico = function(html){
                     // try parsing date
                     let dt = DateTime.fromFormat(text[0], 'dd/MM/yyyy', { locale: 'utc' })
                     if(dt.isValid){
-                        text = ['date', dt.toString()]
+                        text = ['date', DateTime.toSQL(dt).toString()]
                     }
                 }
 
@@ -142,30 +144,29 @@ var compile_historico = function(html){
 }
 
 var save_historico = function(data){
-    return new Promise(async resolve => {
-        // TODO: implementar salvar historico
-        console.log('save historico')
-        resolve(true)
-    })
+    return Alunos.insert_historico(data, DateTime.toSQL(), data.ra_aluno)
 }
 
 
 var fetch_historico = function(browser, page, options){
     return new Promise(async resolve => {
         let browserPersistence = {}
+        let historico
 
-        let historico = await read_historico(browser, page)
-        options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
-        
-        let compilado = await compile_historico(historico.html)
+        try{
+            historico = await read_historico(browser, page)
+            options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
+            
+            let compilado = await compile_historico(historico.html)
 
-        historico = {
-            date: historico.date,
-            ...compilado
+            historico = compilado
+        }catch(error){
+            historico = {error}
         }
+
         browserPersistence.puppeteer && (historico.puppeteer = browserPersistence.puppeteer)
         
-        await save_historico(historico)
+        historico = await save_historico(historico)
 
         resolve(historico)
     })

@@ -3,6 +3,8 @@ const cheerio = require('cheerio')
 const fs = require('fs')
 const G = require('generatorics')
 
+const Alunos = require('../../models/Alunos')
+
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
 const UNIFESP_ATESTADO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(5) a'
 const IFRAME_CONSULTA_SELECTOR = '#iframe iframe'
@@ -153,30 +155,32 @@ var compile_atestado = function(html){
 }
 
 var save_atestado = function(data){
-    return new Promise(async resolve => {
-        // TODO: implementar salvar atestado
-        console.log('save atestado')
-        resolve(true)
-    })
+    return Alunos.insert_atestado(data, DateTime.toSQL(), data.ra_aluno)
 }
 
 
 var fetch_atestado = function(browser, page, options){
     return new Promise(async resolve => {
         let browserPersistence = {}
+        let atestado
 
-        let atestado = await read_atestado(browser, page)
-        options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
-        
-        let compilado = await compile_atestado(atestado.html)
+        try{
+            atestado = await read_atestado(browser, page)
+            options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
+            
+            let compilado = await compile_atestado(atestado.html)
 
-        atestado = {
-            date: atestado.date,
-            ...compilado
+            atestado = {
+                date: atestado.date,
+                ...compilado
+            }
+        }catch(error){
+            atestado = {error}
         }
+        
         browserPersistence.puppeteer && (atestado.puppeteer = browserPersistence.puppeteer)
 
-        await save_atestado(atestado)
+        atestado = await save_atestado(atestado)
 
         resolve(atestado)
     })

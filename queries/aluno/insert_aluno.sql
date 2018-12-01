@@ -1,2 +1,2 @@
-INSERT INTO aluno (ra_aluno, nome, login_intranet, email) VALUES
-(${ra_aluno}, ${nome}, ${login_intranet}, ${email});
+INSERT INTO aluno VALUES
+(${ra_aluno}, ${nome}, ${login_intranet}, ${senha_intranet}, ${email});
