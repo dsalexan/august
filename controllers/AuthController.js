@@ -107,11 +107,10 @@ router.post('/login', function(req, res){
                         authenticated: true
                     }).then(historico => {
                         Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, encrypted_senha).then((user) => {
-                            console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         })
                     }).catch(err => {
-                        console.log('tdjyrx', err)    
+                        console.log('Error: ', err)
                     })
                     // }).then(saldo => {
                     //     console.log(saldo)
