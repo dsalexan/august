@@ -46,6 +46,50 @@ module.exports = {
             return next(error)
         })
     },
+
+    del_reservas_idas: (req, res, next) => {
+        var id_passageiro = req.query.id_passageiro
+        var dia = req.query.dia
+        var hora = req.query.hora
+
+        dados = [id_passageiro, dia, hora]
+
+        const viagem = new pq(sql.caronas.del_reserva)
+        
+        db.none(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    del_reservas_voltas: (req, res, next) => {
+        var id_passageiro = req.query.id_passageiro
+        var dia = req.query.dia
+        var hora = req.query.hora
+
+        dados = [id_passageiro, dia, hora]
+
+        const viagem = new pq(sql.caronas.del_reserva)
+        
+        db.none(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+
     updateMaisVaga: (req, res, next) => {
         var id = req.query.id
         dados = [id]

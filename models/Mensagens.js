@@ -23,11 +23,11 @@ module.exports = {
             return next(error)
         })
     },
-    get_all_msgs: (req, res, next) => {
+    get_read_msgs: (req, res, next) => {
         var id_destinatario = req.query.id_destinatario
         
         dados = [id_destinatario]
-        const viagem = new pq(sql.mensagens.get_all_msgs)
+        const viagem = new pq(sql.mensagens.get_read_msgs)
 
         db.any(viagem, dados)
         .then(v => {
@@ -47,6 +47,40 @@ module.exports = {
         const viagem = new pq(sql.mensagens.get_nonread_msgs)
 
         db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+    delete_msg: (req, res, next) => {
+        var id_mensagem = req.query.id_mensagem
+        
+        dados = [id_mensagem]
+        const viagem = new pq(sql.mensagens.delete_msg)
+
+        db.none(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+    alterar_status_msg: (req, res, next) => {
+        var id_mensagem = req.query.id_mensagem
+        
+        dados = [id_mensagem]
+        const viagem = new pq(sql.mensagens.alterar_status_msg)
+
+        db.none(viagem, dados)
         .then(v => {
             res.status(200).json({
                 data: v,

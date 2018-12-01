@@ -65,6 +65,8 @@ module.exports = {
         srch_viagemData: sql('carona/search_viagem_data.sql'),
 
         del_reserva: sql('carona/delete_reserva.sql'),
+        del_reservas_idas: sql('carona/delete_reserva_idas.sql'),
+        del_reservas_voltas: sql('carona/delete_reserva_voltas.sql'),
         del_viagem: sql('carona/delete_viagem.sql'),
         del_viagemReserva: sql('carona/delete_viagemReserva.sql'),
         del_viagemDestino: sql('carona/delete_viagemDestino.sql'),
@@ -170,8 +172,10 @@ module.exports = {
     },
     mensagens: {
         insert_msg: sql('mensagem/insert_msg.sql'),
-        get_all_msgs: sql('mensagem/get_all_msgs.sql'),
-        get_nonread_msgs: sql('mensagem/get_nonread_msgs.sql')
+        get_read_msgs: sql('mensagem/get_read_msgs.sql'),
+        get_nonread_msgs: sql('mensagem/get_nonread_msgs.sql'),
+        delete_msg: sql('mensagem/delete_msg.sql'),
+        alterar_status_msg: sql('mensagem/alterar_status_msg.sql')
     },
 
     
