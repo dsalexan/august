@@ -36,7 +36,7 @@ class Puppet {
         return new Promise(resolve => {
             if(options.puppeteer == undefined){
                 puppeteer.launch({
-                    args: ['--deterministic-fetch'],
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
                     headless: options.headless,
                 }).then(browser => {
                     this.browser = browser
