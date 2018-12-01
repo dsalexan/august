@@ -25,8 +25,8 @@ class Puppet {
         return _.defaultsDeep(options, {
             puppeteer: undefined,
             keep_puppet: false,
-            authenticated: false,
-            headless: false
+            authenticated: false//,
+            // headless: false
         })
     }
 
@@ -36,8 +36,8 @@ class Puppet {
         return new Promise(resolve => {
             if(options.puppeteer == undefined){
                 puppeteer.launch({
-                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                    headless: options.headless,
+                    args: ['--no-sandbox', '--disable-setuid-sandbox']//,
+                    // headless: options.headless,
                 }).then(browser => {
                     this.browser = browser
                     browser.newPage().then(page => {
