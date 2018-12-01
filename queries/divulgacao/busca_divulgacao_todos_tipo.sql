@@ -1,1 +1,0 @@
-SELECT * FROM tipo_divulgacao

@@ -149,15 +149,29 @@ module.exports = {
     divulgacao:{
         alteracao_divulgacao_dia: sql('divulgacao/alteracao_divulgacao_dia.sql'),
         alteracao_divulgacao_hora: sql('divulgacao/alteracao_divulgacao_hora.sql'),
-        busca_divulgacao_dia_hora: sql('divulgacao/busca_divulgacao_dia_hora.sql'),
+        alteracao_divulgacao_quantidade: sql('divulgacao/alteracao_divulgacao_quantidade.sql'),
+        insert_divulgacao: sql('divulgacao/insert_divulgacao.sql'),
+        remove_divulgacao: sql('divulgacao/remove_divulgacao.sql'),
+        busca_divulgacao_dia_hora_inicio: sql('divulgacao/busca_divulgacao_dia_hora_inicio.sql'),
+        busca_divulgacao_dia_hora_fim: sql('divulgacao/busca_divulgacao_dia_hora_fim.sql'),
         busca_divulgacao_dia: sql('divulgacao/busca_divulgacao_dia.sql'),
         busca_divulgacao_hora: sql('divulgacao/busca_divulgacao_hora.sql'),
         busca_divulgacao_tipo_dia_hora: sql('divulgacao/busca_divulgacao_tipo_dia_hora.sql'),
         busca_divulgacao_tipo_dia: sql('divulgacao/busca_divulgacao_tipo_dia.sql'),
         busca_divulgacao_tipo: sql('divulgacao/busca_divulgacao_tipo.sql'),
-        busca_divulgacao_todos_tipo: sql('divulgacao/busca_divulgacao_todos_tipo.sql'),
-        insert_divulgacao: sql('divulgacao/insert_divulgacao.sql'),
-        remove_divulgacao: sql('divulgacao/remove_divulgacao.sql')
+        busca_divulgacao_vendedor_ra_aluno: sql('divulgacao/busca_divulgacao_vendedor_ra_aluno.sql'),
+        busca_divulgacao_comprador_ra_aluno: sql('divulgacao/busca_divulgacao_comprador_ra_aluno.sql'),
+        busca_divulgacao: sql('divulgacao/busca_divulgacao.sql'),
+        busca_divulgacao_tipo_quantidade: sql('divulgacao/busca_divulgacao_tipo_quantidade.sql'),
+        busca_divulgacao_tipo_preco: sql('divulgacao/busca_divulgacao_tipo_preco.sql'),
+        busca_divulgacao_quantidade: sql('divulgacao/busca_divulgacao_quantidade.sql'),
+        busca_divulgacao_preco: sql('divulgacao/busca_divulgacao_preco.sql'),
+        busca_divulgacao_dia_quantidade: sql('divulgacao/busca_divulgacao_dia_quantidade.sql'),
+        busca_divulgacao_dia_preco: sql('divulgacao/busca_divulgacao_dia_preco.sql'),
+        select_tipo: sql('divulgacao/select_tipo.sql'),
+        insert_reserva_divulgacao: sql('divulgacao/insert_reserva_divulgacao.sql'),
+        busca_divulgacao_reservas: sql('divulgacao/busca_divulgacao_reservas.sql')
+
     },
 
     professor: {
