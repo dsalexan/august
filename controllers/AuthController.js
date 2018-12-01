@@ -72,8 +72,12 @@ router.post('/login', function(req, res){
     performance.mark('Begin Login Authentication')
 
     var usuario = req.body.login
-    var senha = req.body.senha
-    // var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8) 
+    console.log(`USU`, usuario) 
+    console.log(`senha`,  req.body.senha) 
+    var encrypted_senha = req.body.senha
+    var senha = decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+    console.log(`USU`, usuario) 
+    console.log(`senha`, senha) 
                         // TODO: encriptar o password no outro lado da chamada usando um metodo 
                         // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                         // nao vao interceptar as credenciais do usuario

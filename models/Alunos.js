@@ -31,8 +31,8 @@ Alunos.register_aluno = (ra_aluno, nome, login_intranet, senha_intranet) => {
     var dados = {
         ra_aluno: ra_aluno,
         nome: nome,
-        login_intranet,
-        senha_intranet,
+        login_intranet: login_intranet,
+        senha_intranet: senha_intranet,
         email: ''
     }
     return new Promise((resolve, reject) => {
@@ -46,7 +46,7 @@ Alunos.register_aluno = (ra_aluno, nome, login_intranet, senha_intranet) => {
     })
 }
 
-Alunos.check_register_aluno = (username_unifesp) => {
+Alunos.check_register_aluno = (username_unifesp, senha_unifesp) => {
     return new Promise((resolve, reject) => {
         Alunos.select_aluno_login(username_unifesp).then(result => {
             resolve({
