@@ -207,11 +207,8 @@ UNIFESP.authenticateProxyAndRegister = function(username, password){
 
 UNIFESP.readCardapio = function(date) {
     var cardapio_json = {
+        semana: null,
         cardapio: {
-            semana: {
-                inicio: null,
-                final: null
-            },
             almoco: {
                 segunda: {
                     prato_base: null,
@@ -297,8 +294,10 @@ UNIFESP.readCardapio = function(date) {
             if (!err) {
                 const $ = cheerio.load(html);
 
-                var semana = $(".entry-content p:nth-of-type(1)");
-                console.log(semana.text())
+                var semana = $(".entry-content").find("p")
+                semana = $(semana[0]).text()
+                console.log(semana)
+                cardapio_json.semana = semana
 
                 var rows = $("table").find("tr");
 

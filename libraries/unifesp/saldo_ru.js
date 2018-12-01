@@ -4,11 +4,6 @@ const request = require('request')
 const fs = require('fs')
 const G = require('generatorics')
 
-const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
-const UNIFESP_SALDO_RU_SELECTOR = '#tbCorpoVisual tr:nth-of-type(22) td a'
-const CONSULTAR_SALDO_RU_SELECTOR = '#sec-content button'
-const TABELA_SALDO_RU_SELECTOR = '.table-responsive:nth(1) tbody:nth(0) tr td:nth(1)'
-
 var a = ''
 var b = ''
 
