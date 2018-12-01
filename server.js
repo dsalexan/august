@@ -57,6 +57,8 @@ router.get('/api/caronas/delete/viagem_reserva', Carona.deleteViagemReserva)
 router.get('/api/caronas/delete/viagem_destino', Carona.deleteViagemDestino)
 router.get('/api/caronas/delete/viagem_origem', Carona.deleteViagemOrigem)
 router.get('/api/caronas/delete/viagem', Carona.deleteViagem)
+router.get('/api/caronas/delete/reserva/ida', Carona.del_reservas_idas)
+router.get('/api/caronas/delete/reserva/volta', Carona.del_reservas_voltas)
 //router.get('/api/caronas/delete/passageiros', Carona.deletePassageiros)
 router.get('/api/caronas/post/viagem/reserva', Carona.solicitarReserva)
 router.get('/api/caronas/post/viagem/origem', Carona.insertOrigemViagem)
@@ -153,9 +155,11 @@ router.get('/api/grades/put/addfalta', Grade.update_aluno_turma_addfalta)
 router.get('/api/grades/put/removefalta', Grade.update_aluno_turma_removefalta)
 router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
 // Mensagens
-router.get('/api/mensagem/put/mensagem', Mensagem.insert_msg)
-router.get('/api/mensagem/get/all', Mensagem.get_all_msgs)
+router.get('/api/mensagem/post/mensagem', Mensagem.insert_msg)
+router.get('/api/mensagem/get/lidas', Mensagem.get_read_msgs)
 router.get('/api/mensagem/get/novas', Mensagem.get_nonread_msgs)
+router.get('/api/mensagem/delete/mensagem', Mensagem.delete_msg)
+router.get('/api/mensagem/put/mensagem', Mensagem.alterar_status_msg)
 
 // Headers
 app.use(function(req, res, next) {
