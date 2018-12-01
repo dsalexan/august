@@ -67,15 +67,16 @@ router.get('/teste/ementas', function(req, res) {
 // })
 
 // TODO: add winston logging to this
-router.get('/login', function(req, res){
+router.post('/login', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
 
-    var usuario = req.query.login
-    var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8) 
-                                                        // TODO: encriptar o password no outro lado da chamada usando um metodo 
-                                                        // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
-                                                        // nao vao interceptar as credenciais do usuario
+    var usuario = req.body.login
+    var senha = req.body.senha
+    // var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8) 
+                        // TODO: encriptar o password no outro lado da chamada usando um metodo 
+                        // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
+                        // nao vao interceptar as credenciais do usuario
 
     if(usuario == undefined || senha == undefined){
         return res.status(400).send({
@@ -102,7 +103,7 @@ router.get('/login', function(req, res){
                         puppeteer: result.puppeteer,
                         authenticated: true
                     }).then(historico => {
-                        Alunos.register_aluno(historico.ra_aluno, historico.nome, usuario).then((user) => {
+                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, senha).then((user) => {
                             console.log('bla', user)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         })
@@ -151,9 +152,9 @@ router.get('/login', function(req, res){
             token: token
         })
 
-        performance.mark('End Login Authentication')
-        performance.measure('Login Authentication', 'Begin Login Authentication', 'End Login Authentication')
-        console.log('performance', perfHash, performance.getEntriesByType('measure').pop().duration)
+        // performance.mark('End Login Authentication')
+        // performance.measure('Login Authentication', 'Begin Login Authentication', 'End Login Authentication')
+        // console.log('performance', perfHash, performance.getEntriesByType('measure').pop().duration)
     }
 })
 

@@ -65,6 +65,8 @@ module.exports = {
         srch_viagemData: sql('carona/search_viagem_data.sql'),
 
         del_reserva: sql('carona/delete_reserva.sql'),
+        del_reservas_idas: sql('carona/delete_reserva_idas.sql'),
+        del_reservas_voltas: sql('carona/delete_reserva_voltas.sql'),
         del_viagem: sql('carona/delete_viagem.sql'),
         del_viagemReserva: sql('carona/delete_viagemReserva.sql'),
         del_viagemDestino: sql('carona/delete_viagemDestino.sql'),
@@ -98,17 +100,7 @@ module.exports = {
         update_viagemHorario: sql('carona/update_horario.sql'),
         update_statusReserva: sql('carona/update_status_reserva.sql')
     },
-    aluno: {
-        select_alunos: sql('aluno/select_alunos.sql'),
-        select_aluno_ra: sql('aluno/select_aluno_ra.sql'),
-        select_aluno_credenciais: sql('aluno/select_aluno_credenciais.sql'),
-        select_aluno_login: sql('aluno/select_aluno_login.sql'),
-        insert_aluno: sql('aluno/insert_aluno.sql'),
-        update_email_ra: sql('aluno/update_email_ra.sql'),
-        update_credenciais_ra: sql('aluno/update_credenciais_ra.sql'),
-        update_nome_ra: sql('aluno/update_nome_ra.sql'),
-        delete_aluno: sql('aluno/delete_aluno.sql')
-    },
+    aluno: sql('aluno'),
     grade: {
         delete_aluno_turma: sql('grade/delete_aluno_turma.sql'),
         delete_evento_turma: sql('grade/delete_evento_turma.sql'),
@@ -180,8 +172,10 @@ module.exports = {
     },
     mensagens: {
         insert_msg: sql('mensagem/insert_msg.sql'),
-        get_all_msgs: sql('mensagem/get_all_msgs.sql'),
-        get_nonread_msgs: sql('mensagem/get_nonread_msgs.sql')
+        get_read_msgs: sql('mensagem/get_read_msgs.sql'),
+        get_nonread_msgs: sql('mensagem/get_nonread_msgs.sql'),
+        delete_msg: sql('mensagem/delete_msg.sql'),
+        alterar_status_msg: sql('mensagem/alterar_status_msg.sql')
     },
 
     
