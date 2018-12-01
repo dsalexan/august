@@ -22,6 +22,7 @@ var Utilidades = require('./models/Utilidades')
 var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
 var Mensagem = require('./models/Mensagens')
+var Aluno = require('./models/Alunos');
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
@@ -43,6 +44,8 @@ router.use('/api/unifesp', require('./controllers/unifesp'))
 
 // Aluno
 router.use('/api', require('./controllers/aluno'))
+router.get('/api/aluno/update/email' ,Aluno.update_email_aluno)
+router.get('/api/aluno/update/telefone', Aluno.update_nome_aluno)
 
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))
