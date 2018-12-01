@@ -1,4 +1,4 @@
-UPDATE reserva
+UPDATE reserva_sala
 SET texto = ${texto},
     duracao = ${duracao},
     id_sala = ${id_sala},

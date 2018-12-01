@@ -26,7 +26,7 @@ class Puppet {
             puppeteer: undefined,
             keep_puppet: false,
             authenticated: false,
-            headless: true
+            headless: false
         })
     }
 
