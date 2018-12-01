@@ -11,6 +11,8 @@ Alunos.select_alunos = () => db.any(sql.aluno.select_alunos)
 Alunos.select_aluno_credenciais = (credenciais) => db.oneOrNone(sql.aluno.select_aluno_credenciais, credenciais)
 Alunos.select_aluno_login = (login_intranet) => db.oneOrNone(sql.aluno.select_aluno_login, [login_intranet])
 
+Alunos.select_latest_atestado = (ra_aluno) => db.oneOrNone(sql.aluno.select_latest_atestado, [ra_aluno])
+
 Alunos.insert_aluno = (aluno) => db.none(sql.aluno.insert_aluno, aluno)
 
 Alunos.insert_historico = (extracao, datahora, ra_aluno) => {

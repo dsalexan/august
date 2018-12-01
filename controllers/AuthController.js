@@ -101,11 +101,18 @@ router.post('/login', function(req, res){
             Alunos.check_register_aluno(usuario).then(user => { // Procurar usuario no nosso banco
                 console.log('Exists', user.exists)
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
-                    console.log(`Registering ${usuario}...`)
+                    console.log(`Registering ${usuario}...`)                    
+
                     unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
-                        authenticated: true
-                    }).then(historico => {
+                        authenticated: true,
+                        keep_puppet: true
+                    }).then(async historico => {
+                        await unifesp.fetch('atestado', {ra_aluno: historico.extracao.ra_aluno}, {
+                            puppeteer: historico.puppeteer,
+                            authenticated: true
+                        })
+
                         Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, encrypted_senha).then((user) => {
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         })

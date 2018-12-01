@@ -9,6 +9,8 @@ const DateTime  = require('../../utils/luxon')
 const {Interval, Duration} = require('luxon')
 
 const Unifesp = require('../../models/Unifesp')
+const Alunos = require('../../models/Alunos')
+
 const lib = require('../../libraries/unifesp')
 const simplify = require('../../utils/simplify')
 
@@ -24,6 +26,41 @@ const WEEKDAYS_REFERENCE = {
     'Sábado': 5,
     'Domingo': 6
 }
+
+router.get('/atestado/analysis/:ra_aluno', (req, res, next) => {
+    Alunos.select_latest_atestado(req.params.ra_aluno).then(async atestado => {
+        if(atestado == null) return res.status(404).send({message: 'Atestado not found'})
+        else{
+            let classes = atestado.extracao.classes
+
+            let ucs = []
+            let not_found = []
+            for(let c of classes){
+                let matches = await Unifesp.select_uc_alias(simplify.text(c.uc.toLowerCase()))
+                
+                if(matches.length == 0){
+                    not_found.push(c)
+                }else{
+                    ucs = ucs.concat(matches)
+                }
+            }
+
+            res.status(200).send({
+                statistics: {
+                    ucs_count: ucs.length,
+                    classes_count: classes.length,
+                    not_found: not_found.map(c => c.uc)
+                },
+                ucs: ucs.map(uc => uc.hash),
+                classes,
+                atestado
+            })
+        }
+    }).catch(error => {
+        console.log(error)
+        res.status(500).send({error})
+    })
+})
 
 router.get('/agenda/check', (req, res, next) => {
     // TODO: implementar error checking

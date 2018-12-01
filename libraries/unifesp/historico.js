@@ -178,9 +178,9 @@ var fetch_historico = function(browser, page, options){
             historico = {error}
         }
 
-        browserPersistence.puppeteer && (historico.puppeteer = browserPersistence.puppeteer)
-        
         historico = await save_historico(historico)
+        
+        browserPersistence.puppeteer && (historico.puppeteer = browserPersistence.puppeteer)
 
         resolve(historico)
     })

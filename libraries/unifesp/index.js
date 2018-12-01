@@ -422,7 +422,7 @@ UNIFESP.fetch = function(what, data, options){
             if(what == 'historico'){
                 fn = () => historico.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'atestado'){
-                fn = () => atestado.fetch(puppet.browser, puppet.page, options)
+                fn = () => atestado.fetch(puppet.browser, puppet.page, data.ra_aluno, options)
             }else if (what == 'saldo_ru') {
                 fn = () => saldo_ru.read(puppet.browser, puppet.page, options)
             }else if(what == 'agenda'){
