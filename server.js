@@ -22,6 +22,7 @@ var Utilidades = require('./models/Utilidades')
 var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
 var Mensagem = require('./models/Mensagens')
+var Aluno = require('./models/Alunos');
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
@@ -43,6 +44,8 @@ router.use('/api/unifesp', require('./controllers/unifesp'))
 
 // Aluno
 router.use('/api', require('./controllers/aluno'))
+router.get('/api/aluno/update/email' ,Aluno.update_email_aluno)
+router.get('/api/aluno/update/telefone', Aluno.update_nome_aluno)
 
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))
@@ -93,15 +96,31 @@ router.get('/api/caronas/put/viagem/aumenta_vaga', Carona.updateMaisVaga)
 // Divulgacao
 router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
 router.get('/api/divulgacao/post/divulgacao', Divulgacao.insert_divulgacao)
-router.get('/api/divulgacao/get/divulgacao/diahora', Divulgacao.busca_divulgacao_dia_hora)
+router.get('/api/divulgacao/get/divulgacao/dia/hora_inicio', Divulgacao.busca_divulgacao_dia_hora_inicio)
+router.get('/api/divulgacao/get/divulgacao/dia/hora_fim', Divulgacao.busca_divulgacao_dia_hora_fim)
 router.get('/api/divulgacao/get/divulgacao/dia', Divulgacao.busca_divulgacao_dia)
 router.get('/api/divulgacao/get/divulgacao/hora', Divulgacao.busca_divulgacao_hora)
 router.get('/api/divulgacao/get/divulgacao/tipodiahora', Divulgacao.busca_divulgacao_tipo_dia_hora) 
-router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
-router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
+router.get('/api/divulgacao/get/divulgacao/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
+router.get('/api/divulgacao/get/divulgacao/tipo', Divulgacao.busca_divulgacao_tipo)
 router.get('/api/divulgacao/put/dia', Divulgacao.alteracao_divulgacao_dia)
 router.get('/api/divulgacao/put/hora', Divulgacao.alteracao_divulgacao_hora)
-router.get('/api/divulgacao/get/todos/tipo', Divulgacao.busca_divulgacao_todos_tipo)
+router.get('/api/divulgacao/put/quantidade', Divulgacao.alteracao_divulgacao_quantidade)
+router.get('/api/divulgacao/get/divulgacao', Divulgacao.busca_divulgacao)
+router.get('/api/divulgacao/get/divulgacao/vendedor/ra_aluno', Divulgacao.busca_divulgacao_vendedor_ra_aluno)
+router.get('/api/divulgacao/get/divulgacao/comprador/ra_aluno', Divulgacao.busca_divulgacao_comprador_ra_aluno)
+router.get('/api/divulgacao/get/divulgacao/tipo/quantidade', Divulgacao.busca_divulgacao_tipo_quantidade)
+router.get('/api/divulgacao/get/divulgacao/tipo/preco', Divulgacao.busca_divulgacao_tipo_preco)
+router.get('/api/divulgacao/get/divulgacao/quantidade', Divulgacao.busca_divulgacao_quantidade)
+router.get('/api/divulgacao/get/divulgacao/preco', Divulgacao.busca_divulgacao_preco)
+router.get('/api/divulgacao/get/divulgacao/dia/quantidade', Divulgacao.busca_divulgacao_dia_quantidade)
+router.get('/api/divulgacao/get/divulgacao/dia/preco', Divulgacao.busca_divulgacao_dia_preco)
+router.get('/api/divulgacao/get/divulgacao/select_tipo', Divulgacao.select_tipo)
+router.get('/api/reserva_divulgacao/post/reserva_divulgacao', Divulgacao.insert_reserva_divulgacao)
+router.get('/api/reserva_divulgacao/get/reservas' , Divulgacao.busca_divulgacao_reservas)
+
+
+
 
 
 // Utilidades

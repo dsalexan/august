@@ -1,2 +1,3 @@
 SELECT * FROM item_divulgacao
-WHERE hora_inicio >= $1
+WHERE dia = $1
+AND valor <= $2

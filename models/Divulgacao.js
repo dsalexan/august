@@ -45,15 +45,95 @@ module.exports = {
         })
     },
 
-    busca_divulgacao_dia_hora: (req, res, next) => {
+    alteracao_divulgacao_quantidade: (req, res, next) => {
+        var quantidade = req.query.quantidade
+        var id_divulgacao = req.query.id_divulgacao
+        
+        dados = [quantidade, id_divulgacao]
+
+        const alteraquantidade = new pq(sql.divulgacao.alteracao_divulgacao_quantidade)
+       
+        db.any(alteraquantidade, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_dia_hora_inicio: (req, res, next) => {
         var dia = req.query.dia
         var hora_inicio = req.query.hora_inicio
         
         dados = [dia, hora_inicio]
 
-        const buscadiahora = new pq(sql.divulgacao.busca_divulgacao_dia_hora)
+        const buscadiahorainicio = new pq(sql.divulgacao.busca_divulgacao_dia_hora_inicio)
        
-        db.any(buscadiahora, dados)
+        db.any(buscadiahorainicio, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_dia_hora_fim: (req, res, next) => {
+        var dia = req.query.dia
+        var hora_fim = req.query.hora_fim
+        
+        dados = [dia, hora_fim]
+
+        const buscadiahorafim = new pq(sql.divulgacao.busca_divulgacao_dia_hora_fim)
+       
+        db.any(buscadiahorafim, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_dia_preco: (req, res, next) => {
+        var dia = req.query.dia
+        var preco = req.query.preco
+        
+        dados = [dia, preco]
+
+        const buscadiapreco = new pq(sql.divulgacao.busca_divulgacao_dia_preco)
+       
+        db.any(buscadiapreco, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_dia_quantidade: (req, res, next) => {
+        var dia = req.query.dia
+        var quantidade = req.query.quantidade
+        
+        dados = [dia, quantidade]
+
+        const buscadiaquantidade = new pq(sql.divulgacao.busca_divulgacao_dia_quantidade)
+       
+        db.any(buscadiaquantidade, dados)
         .then(v =>{
             res.status(200).json({
                 data: v,
@@ -85,13 +165,32 @@ module.exports = {
     },
 
     busca_divulgacao_hora: (req, res, next) => {
-        var hora_inicio = req.query.ra_divulgacao
+        var hora_inicio = req.query.hora_inicio
         dados = [hora_inicio]
 
         const buscahora = new pq(sql.divulgacao.busca_divulgacao_hora)
         
         db.any(buscahora, dados)
         .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_preco: (req, res, next) => {
+        var preco = req.query.preco
+        
+        dados = [preco]
+
+        const buscapreco = new pq(sql.divulgacao.busca_divulgacao_preco)
+       
+        db.any(buscapreco, dados)
+        .then(v =>{
             res.status(200).json({
                 data: v,
                 success: true
@@ -143,6 +242,46 @@ module.exports = {
         })
     },
 
+    busca_divulgacao_tipo_preco: (req, res, next) => {
+        var tipo = req.query.tipo
+        var preco = req.query.preco
+        
+        dados = [tipo, preco]
+
+        const buscatipopreco = new pq(sql.divulgacao.busca_divulgacao_tipo_preco)
+       
+        db.any(buscatipopreco, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_tipo_quantidade: (req, res, next) => {
+        var tipo = req.query.tipo
+        var quantidade = req.query.quantidade
+        
+        dados = [tipo, quantidade]
+
+        const buscatipoquantidade = new pq(sql.divulgacao.busca_divulgacao_tipo_quantidade)
+       
+        db.any(buscatipoquantidade, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
     busca_divulgacao_tipo: (req, res, next) => {
         var id_tipo = req.query.id_tipo
 
@@ -162,12 +301,102 @@ module.exports = {
         })
     },
 
-    busca_divulgacao_todos_tipo: (req, res, next) => {
-        console.log('oi')
+    busca_divulgacao: (req, res, next) => {
        
-        const buscatodostipo = new pq(sql.divulgacao.busca_divulgacao_todos_tipo)
         
-        db.any(buscatodostipo)
+        const buscadivulgacao = new pq(sql.divulgacao.busca_divulgacao)
+        
+        db.any(buscadivulgacao)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_quantidade: (req, res, next) => {
+        var quantidade = req.query.quantidade
+
+        dados = [quantidade]
+
+        const buscaquantidade = new pq(sql.divulgacao.busca_divulgacao_quantidade)
+        
+        db.any(buscaquantidade, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    select_tipo: (req, res, next) => {
+        const tipo_divulgacao = new pq(sql.divulgacao.select_tipo)
+        db.any(tipo_divulgacao)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_vendedor_ra_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+
+        dados = [ra_aluno]
+       
+        const buscavendedorraaluno = new pq(sql.divulgacao.busca_divulgacao_vendedor_ra_aluno)
+        
+        db.any(buscavendedorraaluno, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_comprador_ra_aluno: (req, res, next) => {
+        var ra_aluno = req.query.ra_aluno
+
+        dados = [ra_aluno]
+       
+        const buscacompradorraaluno = new pq(sql.divulgacao.busca_divulgacao_comprador_ra_aluno)
+        
+        db.any(buscacompradorraaluno, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_reservas: (req, res, next) => {
+        var id_divulgacao = req.query.id_divulgacao
+
+        dados = [id_divulgacao]
+       
+        const buscareservas= new pq(sql.divulgacao.busca_divulgacao_reservas)
+        
+        db.any(buscareservas, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
@@ -181,9 +410,10 @@ module.exports = {
 
     insert_divulgacao: (req, res, next) => {
         console.log('OI', req.query)
-        var ra_aluno = req.query.ra_aluno
         console.log('ra', ra_aluno)
+        var ra_aluno = req.query.ra_aluno
         var id_tipo = req.query.id_tipo
+        var nome = req.query.nome
         var valor = req.query.valor
         var dia = req.query.dia
         var hora_inicio = req.query.hora_inicio
@@ -191,7 +421,7 @@ module.exports = {
         var descricao = req.query.descricao
         var quantidade = req.query.quantidade
         
-        dados = [ra_aluno, id_tipo, valor, dia, hora_inicio, hora_fim, descricao, quantidade]
+        dados = [ra_aluno, id_tipo, nome, valor, dia, hora_inicio, hora_fim, descricao, quantidade]
 
         const insertdivulgacao = new pq(sql.divulgacao.insert_divulgacao)
         db.none(insertdivulgacao, dados)
@@ -222,5 +452,27 @@ module.exports = {
         .catch(error => {
             return next(error)
         })
+    },
+
+    insert_reserva_divulgacao: (req, res, next) => {
+        var id_divulgacao = req.query.id_divulgacao
+        var ra_aluno_comprador = req.query.ra_aluno_comprador
+        var quantidade = req.query.quantidade
+        var status_reserva = req.query.status_reserva
+        
+        dados = [id_divulgacao, ra_aluno_comprador, quantidade, status_reserva]
+
+        const insertreservadivulgacao = new pq(sql.divulgacao.insert_reserva_divulgacao)
+        db.none(insertreservadivulgacao, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
     }
 }
+    
