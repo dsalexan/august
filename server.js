@@ -28,14 +28,9 @@ var Divulgacao = require('./models/Divulgacao')
 var Mensagem = require('./models/Mensagens')
 var Alunos = require('./models/Alunos')
 
-var bodyParser = require('body-parser')
-router.use(bodyParser.urlencoded({
-    extended: false
-}))
-router.use(bodyParser.json())
 
 // log request middleware
-router.use(function(req, res, next) {
+app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -45,6 +40,12 @@ router.use(function(req, res, next) {
 
     next()
 })
+
+var bodyParser = require('body-parser')
+router.use(bodyParser.urlencoded({
+    extended: false
+}))
+router.use(bodyParser.json())
 
 router.use('/api/auth', authController)
 
