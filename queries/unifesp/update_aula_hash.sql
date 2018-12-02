@@ -6,5 +6,6 @@ SET hash_uc = ${hash_uc},
     monitoria = ${monitoria},
     aula = ${aula},
     reposicao = ${reposicao},
+    pos = ${pos},
     id_analise = ${id_analise}
 WHERE hash = ${hash}

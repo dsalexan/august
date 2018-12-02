@@ -3,6 +3,12 @@ const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery
 
 module.exports = {
+    select_turma_aula: (hash) => db.oneOrNone(sql.grade.select_turma_aula, [hash]),
+    select_turma_aluno: (ra_aluno, turma) => db.oneOrNone(sql.grade.select_turma_aluno, {ra_aluno, turma}),
+    insert_aluno_turma: (ra_aluno, id_turma, faltas=0) => db.none(sql.grade.insert_aluno_turma, {ra_aluno, id_turma, faltas}),
+
+
+
     teste: (req, res, next) => {
         var raTeste = '111111'
         dados = {ra_aluno: raTeste}
@@ -142,24 +148,6 @@ module.exports = {
         dados = {id_uc: id_uc}
 
         const query = new pq(sql.grade.delete_uc)
-        db.none(query.text, dados)
-        .then(() => {
-            res.status(200).json({
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-    insert_aluno_turma: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var id_turma = req.query.id_turma
-        var faltas = req.query.faltas
-
-        dados = {ra_aluno: ra_aluno, id_turma: id_turma, faltas: faltas}
-
-        const query = new pq(sql.grade.insert_aluno_turma)
         db.none(query.text, dados)
         .then(() => {
             res.status(200).json({

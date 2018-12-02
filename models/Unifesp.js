@@ -18,6 +18,7 @@ Unifesp.select_alias_uc = (hash) => db.any(sql.unifesp.select_alias_uc, [hash])
 Unifesp.select_analise_latest = (extracao) => db.oneOrNone(sql.unifesp.select_analise_latest, [extracao])
 
 Unifesp.select_aula_hash = (hash) => db.oneOrNone(sql.unifesp.select_aula_hash, [hash])
+Unifesp.select_aula_data_atestado = (hash_uc, dia, inicio) => db.any(sql.unifesp.select_aula_data_atestado, {hash_uc, dia, inicio})
 
 Unifesp.select_reserva_texto_datahora_sala = (texto, datahora, id_sala) => db.any(sql.unifesp.select_reserva_texto_datahora_sala, {texto, datahora, id_sala})
 
@@ -40,6 +41,30 @@ Unifesp.update_reserva_id = (reserva) => db.none(sql.unifesp.update_reserva_id, 
 
 Unifesp.delete_uc_hash = (hash) => db.none(sql.unifesp.delete_uc_hash, [hash])
 Unifesp.delete_alias = (data) => db.none(sql.unifesp.delete_alias_id, data)
+
+Unifesp.transfer_ucs = async () => {
+    await db.none('DELETE FROM uc')
+    await db.none('ALTER SEQUENCE uc_id_uc_seq RESTART WITH 1')
+    
+    return db.none(sql.unifesp.transfer_ucs)
+}
+
+Unifesp.transfer_aulas = () => {
+    return new Promise(async (resolve, reject) => {
+        try{
+            await db.none('DELETE FROM horario_turma')
+            await db.none('DELETE FROM turma')
+            await db.none('ALTER SEQUENCE turma_id_turma_seq RESTART WITH 1')
+
+            await db.none(sql.unifesp.transfer_aulas)
+            await db.none(sql.unifesp.transfer_reservas)
+
+            resolve()
+        }catch(error){
+            reject(error)
+        }
+    })
+}
 
 Unifesp.register_uc = (uc) => {
     return new Promise((resolve, reject) => {

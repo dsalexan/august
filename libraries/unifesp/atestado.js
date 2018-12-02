@@ -5,6 +5,8 @@ const G = require('generatorics')
 
 const Alunos = require('../../models/Alunos')
 
+var INTRANET_UNIFESP_URL = 'https://intranet.unifesp.br/'
+
 const MENU_UNIFESP_SELECTOR = '#menuPrivado li:nth-of-type(2) a'
 const UNIFESP_ATESTADO_SELECTOR = '#tbCorpoVisual tr:nth-of-type(15) td:nth-of-type(5) a'
 const IFRAME_CONSULTA_SELECTOR = '#iframe iframe'
@@ -35,13 +37,21 @@ const PARAGRAPH2_ATESTADO_SELECTOR = 'div.hash p:nth-of-type(1)'
 
 var read_atestado = function(browser, page, options){
     return new Promise(async resolve => {
-        // clicar em Menu>Unifesp
-        await page.waitForSelector(MENU_UNIFESP_SELECTOR)
-        await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
+
+        try{
+            await page.$eval(MENU_UNIFESP_SELECTOR)
+            await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        }catch(err){
+            await page.evaluate('toggleMenu();');
+            await page.waitForSelector(MENU_UNIFESP_SELECTOR)            
+            await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
+        }
 
         // clicar em Atestado de Matrícula On Line (Visualizar no Google Chrome ou IE)
-        await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
-        await page.click(UNIFESP_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})
+        // await page.waitForSelector(UNIFESP_ATESTADO_SELECTOR)
+        await page.evaluate('mostraAplicativo("886")')
+        // await page.click(UNIFESP_ATESTADO_SELECTOR, {waitUntil: 'domcontentloaded'})
 
         // segue o link no iframe
         await page.waitForSelector(IFRAME_CONSULTA_SELECTOR)
@@ -154,12 +164,12 @@ var compile_atestado = function(html){
     })
 }
 
-var save_atestado = function(data){
-    return Alunos.insert_atestado(data, DateTime.toSQL(), data.ra_aluno)
+var save_atestado = function(data, ra_aluno){
+    return Alunos.insert_atestado(data, DateTime.toSQL(), ra_aluno)
 }
 
 
-var fetch_atestado = function(browser, page, options){
+var fetch_atestado = function(browser, page, ra_aluno, options){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let atestado
@@ -178,9 +188,9 @@ var fetch_atestado = function(browser, page, options){
             atestado = {error}
         }
         
+        atestado = await save_atestado(atestado, ra_aluno)
+        
         browserPersistence.puppeteer && (atestado.puppeteer = browserPersistence.puppeteer)
-
-        atestado = await save_atestado(atestado)
 
         resolve(atestado)
     })

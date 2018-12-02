@@ -35,6 +35,7 @@ router.get('/atualizarcorpodocente', function(req, res) {
         });
     })
 })
+
 router.get('/teste', function(req, res) {
     unifesp.fetch('saldo_ru', undefined, {
         puppeteer: result.puppeteer,
@@ -44,6 +45,7 @@ router.get('/teste', function(req, res) {
         res.status(200).send(saldo)
     })
 })
+
 router.get('/teste/ementas', function(req, res) {
     unifesp.fetch('ementas', {
         path: path.join(global.root_path, 'res/ementas'),
@@ -72,8 +74,9 @@ router.post('/login', function(req, res){
     performance.mark('Begin Login Authentication')
 
     var usuario = req.body.login
-    var senha = req.body.senha
-    // var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8) 
+    var encrypted_senha = req.body.senha
+    var senha = req.body.uncrypted ? encrypted_senha : decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+
                         // TODO: encriptar o password no outro lado da chamada usando um metodo 
                         // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
                         // nao vao interceptar as credenciais do usuario
@@ -98,17 +101,23 @@ router.post('/login', function(req, res){
             Alunos.check_register_aluno(usuario).then(user => { // Procurar usuario no nosso banco
                 console.log('Exists', user.exists)
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
-                    console.log(`Registering ${usuario}...`)
+                    console.log(`Registering ${usuario}...`)                    
+
                     unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
-                        authenticated: true
-                    }).then(historico => {
-                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, senha).then((user) => {
-                            console.log('bla', user)
+                        authenticated: true,
+                        keep_puppet: true
+                    }).then(async historico => {
+                        await unifesp.fetch('atestado', {ra_aluno: historico.extracao.ra_aluno}, {
+                            puppeteer: historico.puppeteer,
+                            authenticated: true
+                        })
+
+                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, encrypted_senha).then((user) => {
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         })
                     }).catch(err => {
-                        console.log('tdjyrx', err)    
+                        console.log('Error: ', err)
                     })
                     // }).then(saldo => {
                     //     console.log(saldo)

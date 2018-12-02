@@ -25,6 +25,10 @@ var ADJUSTS_RESERVATION = [
     }
 })
 
+const TAGS_POS = [
+    /ppgcc/gi
+]
+
 
 function _analysableChunks(chunks, multiple=false) {
     if(multiple){
@@ -127,6 +131,7 @@ class Reserva{
             monitoria: this.monitoria,
             aula: this.aula,
             reposicao: this.reposicao,
+            pos: this.pos,
             id_analise: this.id_analise
         }
     }
@@ -185,10 +190,12 @@ class Reserva{
 
     compile(){
         var _chunks = []
+        
         simplify.combinate(this.translation.split('-'), (tokens, config) => {
             let _v = tokens.join(' - ')
             let _type
             let _display_v = _v
+            
 
             if(_v.match(/\bprofessor\b/gi)){
                 _type = 'professor'
@@ -211,6 +218,9 @@ class Reserva{
             }else if(_v.match(/\baula\b/gi)){
                 _type = 'aula'
                 _display_v = _display_v.replace(/\s?aula\s?/gi, '')
+            }else if(TAGS_POS.map(t => _v.match(t) && _v.match.length > 0).filter(r => r == true).length > 0){
+                _type = 'pos'
+                _display_v = _v
             }else{
                 _display_v = simplify.text(_display_v).split(/[\s]/gi).map(w => w.length >= 3 ? simplify.singular(w) : w).join(' ')
             }
@@ -232,6 +242,7 @@ class Reserva{
         this.monitoria = _chunks.filter(c => c.type == 'monitoria' && !c.multiple).length > 0
         this.aula = _chunks.filter(c => c.type == 'aula' && !c.multiple).length > 0
         this.reposicao = _chunks.filter(c => c.type == 'reposicao' && !c.multiple).length > 0
+        this.pos = _chunks.filter(c => c.type == 'pos' && !c.multiple).length > 0
         this.possibilities = undefined
         this.chunks = _chunks
 
@@ -241,7 +252,13 @@ class Reserva{
     }
 
     async analyse(chunk){
-        let _uc = await Unifesp.select_uc_alias(chunk)
+        let _uc
+        try{
+            _uc = await Unifesp.select_uc_alias(chunk)
+        }catch(err){
+            let alsibhdbasd = err
+            console.log(err)
+        }
 
         if(_uc.length > 0){
             if(_uc.length == 1){

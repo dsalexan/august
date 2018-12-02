@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const cors = require('cors')
 var express = require('express')
 var app = express()
 var port = process.env.PORT || 3000
@@ -13,6 +14,9 @@ var server = app.listen(port, () => {
 })
 server.setTimeout(90000)
 
+// app.use(cors())
+// app.options('*', cors())
+
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
 
@@ -22,19 +26,28 @@ var Utilidades = require('./models/Utilidades')
 var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
 var Mensagem = require('./models/Mensagens')
+var Alunos = require('./models/Alunos')
+
+
+// log request middleware
+app.use(function(req, res, next) {
+    console.log(req.method, req.url)
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', '*');
+    res.header("Access-Control-Allow-Headers", "*");
+    if ('OPTIONS' == req.method) {
+       res.sendStatus(200);
+    } else {
+       next();
+    }
+})
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
     extended: false
 }))
 router.use(bodyParser.json())
-
-// log request middleware
-router.use(function(req, res, next) {
-    console.log(req.method, req.url)
-
-    next()
-})
 
 router.use('/api/auth', authController)
 
@@ -43,6 +56,8 @@ router.use('/api/unifesp', require('./controllers/unifesp'))
 
 // Aluno
 router.use('/api', require('./controllers/aluno'))
+router.get('/api/aluno/update/email', Alunos.update_email_aluno)
+router.get('/api/aluno/update/telefone', Alunos.update_nome_aluno)
 
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))
@@ -93,7 +108,8 @@ router.get('/api/caronas/put/viagem/aumenta_vaga', Carona.updateMaisVaga)
 // Divulgacao
 router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
 router.get('/api/divulgacao/post/divulgacao', Divulgacao.insert_divulgacao)
-router.get('/api/divulgacao/get/divulgacao/diahora', Divulgacao.busca_divulgacao_dia_hora)
+router.get('/api/divulgacao/get/divulgacao/dia/hora_inicio', Divulgacao.busca_divulgacao_dia_hora_inicio)
+router.get('/api/divulgacao/get/divulgacao/dia/hora_fim', Divulgacao.busca_divulgacao_dia_hora_fim)
 router.get('/api/divulgacao/get/divulgacao/dia', Divulgacao.busca_divulgacao_dia)
 router.get('/api/divulgacao/get/divulgacao/hora', Divulgacao.busca_divulgacao_hora)
 router.get('/api/divulgacao/get/divulgacao/tipodiahora', Divulgacao.busca_divulgacao_tipo_dia_hora) 
@@ -101,7 +117,28 @@ router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
 router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
 router.get('/api/divulgacao/put/dia', Divulgacao.alteracao_divulgacao_dia)
 router.get('/api/divulgacao/put/hora', Divulgacao.alteracao_divulgacao_hora)
-router.get('/api/divulgacao/get/todos/tipo', Divulgacao.busca_divulgacao_todos_tipo)
+
+// router.get('/api/divulgacao/get/todos/tipo', Divulgacao.busca_divulgacao_todos_tipo)
+
+router.get('/api/divulgacao/put/quantidade', Divulgacao.alteracao_divulgacao_quantidade)
+router.get('/api/divulgacao/get/divulgacao', Divulgacao.busca_divulgacao)
+router.get('/api/divulgacao/get/divulgacao/vendedor/ra_aluno', Divulgacao.busca_divulgacao_vendedor_ra_aluno)
+router.get('/api/divulgacao/get/divulgacao/comprador/ra_aluno', Divulgacao.busca_divulgacao_comprador_ra_aluno)
+router.get('/api/divulgacao/get/divulgacao/tipo/quantidade', Divulgacao.busca_divulgacao_tipo_quantidade)
+router.get('/api/divulgacao/get/divulgacao/tipo/preco', Divulgacao.busca_divulgacao_tipo_preco)
+router.get('/api/divulgacao/get/divulgacao/quantidade', Divulgacao.busca_divulgacao_quantidade)
+router.get('/api/divulgacao/get/divulgacao/preco', Divulgacao.busca_divulgacao_preco)
+router.get('/api/divulgacao/get/divulgacao/dia/quantidade', Divulgacao.busca_divulgacao_dia_quantidade)
+router.get('/api/divulgacao/get/divulgacao/dia/preco', Divulgacao.busca_divulgacao_dia_preco)
+router.get('/api/divulgacao/get/divulgacao/select_tipo', Divulgacao.select_tipo)
+router.get('/api/reserva_divulgacao/post/reserva_divulgacao', Divulgacao.insert_reserva_divulgacao)
+router.get('/api/reserva_divulgacao/get/reservas' , Divulgacao.busca_divulgacao_reservas)
+router.get('/api/reserva_divulgacao/delete/reservas', Divulgacao.remove_divulgacao_reservas)
+router.get('/api/reserva_divulgacao/delete/todas_reservas', Divulgacao.remove_divulgacao_todas_reservas)
+router.get('/api/reserva_divulgacao/put/setar_quantidade', Divulgacao.setar_quantidade)
+
+
+
 
 
 // Utilidades
@@ -119,7 +156,21 @@ router.get('/api/grades/delete/pre_req', Grade.delete_pre_req)
 router.get('/api/grades/delete/professor', Grade.delete_professor)
 router.get('/api/grades/delete/turma', Grade.delete_turma)
 router.get('/api/grades/delete/uc', Grade.delete_uc)
-router.get('/api/grades/post/aluno_turma', Grade.insert_aluno_turma)
+router.get('/api/grades/post/aluno_turma', (req, res, next) => {
+    var ra_aluno = req.query.ra_aluno
+    var id_turma = req.query.id_turma
+    var faltas = req.query.faltas
+
+    Grade.insert_aluno_turma(ra_aluno, id_turma, faltas)
+    .then(() => {
+        res.status(200).json({
+            success: true
+        })
+    })
+    .catch(error => {
+        return next(error)
+    })
+})
 router.get('/api/grades/post/evento_turma', Grade.insert_evento_turma)
 router.get('/api/grades/post/horario_turma', Grade.insert_horario_turma)
 router.get('/api/grades/post/horario', Grade.insert_horario)
@@ -162,11 +213,11 @@ router.get('/api/mensagem/delete/mensagem', Mensagem.delete_msg)
 router.get('/api/mensagem/put/mensagem', Mensagem.alterar_status_msg)
 
 // Headers
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    next()
-})
+// app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+//     next()
+// })
 
 // Router
 app.use('/', router)
