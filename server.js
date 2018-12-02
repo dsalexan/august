@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const cors = require('cors')
 var express = require('express')
 var app = express()
 var port = process.env.PORT || 3000
@@ -12,6 +13,9 @@ var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
 })
 server.setTimeout(90000)
+
+app.use(cors())
+app.options('*', cors())
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
