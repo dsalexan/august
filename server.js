@@ -99,7 +99,7 @@ router.get('/api/caronas/put/viagem/aumenta_vaga', Carona.updateMaisVaga)
 // Divulgacao
 router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
 router.get('/api/divulgacao/post/divulgacao', Divulgacao.insert_divulgacao)
-router.get('/api/divulgacao/get/divulgacao/diahora', Divulgacao.busca_divulgacao_dia_hora)
+router.get('/api/divulgacao/get/divulgacao/diahora', Divulgacao.busca_divulgacao_dia_hora_inicio)
 router.get('/api/divulgacao/get/divulgacao/dia', Divulgacao.busca_divulgacao_dia)
 router.get('/api/divulgacao/get/divulgacao/hora', Divulgacao.busca_divulgacao_hora)
 router.get('/api/divulgacao/get/divulgacao/tipodiahora', Divulgacao.busca_divulgacao_tipo_dia_hora) 
