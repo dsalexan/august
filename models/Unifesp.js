@@ -49,15 +49,21 @@ Unifesp.transfer_ucs = async () => {
     return db.none(sql.unifesp.transfer_ucs)
 }
 
-Unifesp.transfer_aulas = async () => {
-    // new Promise(async (resolve, reject) => {
-    await db.none('DELETE FROM horario_turma')
-    await db.none('DELETE FROM turma')
-    await db.none('ALTER SEQUENCE turma_id_turma_seq RESTART WITH 1')
+Unifesp.transfer_aulas = () => {
+    return new Promise(async (resolve, reject) => {
+        try{
+            await db.none('DELETE FROM horario_turma')
+            await db.none('DELETE FROM turma')
+            await db.none('ALTER SEQUENCE turma_id_turma_seq RESTART WITH 1')
 
-    await db.none(sql.unifesp.transfer_aulas)
-    return db.none(sql.unifesp.transfer_reservas)
-    // })
+            await db.none(sql.unifesp.transfer_aulas)
+            await db.none(sql.unifesp.transfer_reservas)
+
+            resolve()
+        }catch(error){
+            reject(error)
+        }
+    })
 }
 
 Unifesp.register_uc = (uc) => {

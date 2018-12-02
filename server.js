@@ -14,8 +14,8 @@ var server = app.listen(port, () => {
 })
 server.setTimeout(90000)
 
-app.use(cors())
-app.options('*', cors())
+// app.use(cors())
+// app.options('*', cors())
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
@@ -31,16 +31,16 @@ var Alunos = require('./models/Alunos')
 
 // log request middleware
 app.use(function(req, res, next) {
-    // res.header("Access-Control-Allow-Origin", "*");
-    // res.header('Access-Control-Allow-Methods', '*');
-    // res.header("Access-Control-Allow-Headers", "*");
-    // if ('OPTIONS' == req.method) {
-    //    res.sendStatus(200);
-    // } else {
-    //    next();
-    // }
-
     console.log(req.method, req.url)
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', '*');
+    res.header("Access-Control-Allow-Headers", "*");
+    if ('OPTIONS' == req.method) {
+       res.sendStatus(200);
+    } else {
+       next();
+    }
 })
 
 var bodyParser = require('body-parser')
