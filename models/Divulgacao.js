@@ -65,6 +65,26 @@ module.exports = {
         })
     },
 
+   setar_quantidade: (req, res, next) => {
+       var id_divulgacao = req.query.id_divulgacao
+        var quantidade = req.query.quantidade
+        
+        dados = [id_divulgacao, quantidade]
+
+        const setarquantidade = new pq(sql.divulgacao.setar_quantidade)
+       
+        db.any(setarquantidade, dados)
+        .then(v =>{
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
     busca_divulgacao_dia_hora_inicio: (req, res, next) => {
         var dia = req.query.dia
         var hora_inicio = req.query.hora_inicio
@@ -397,6 +417,45 @@ module.exports = {
         const buscareservas= new pq(sql.divulgacao.busca_divulgacao_reservas)
         
         db.any(buscareservas, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    remove_divulgacao_reservas: (req, res, next) => {
+        var id_reserva = req.query.id_reserva
+
+        dados = [id_reserva]
+       
+        const removereserva = new pq(sql.divulgacao.remove_divulgacao_reservas)
+        
+        db.any(removereserva, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    remove_divulgacao_todas_reservas: (req, res, next) => {
+        var id_divulgacao = req.query.id_divulgacao
+
+        dados = [id_divulgacao]
+        console.log(dados)
+       
+        const removetodasreserva = new pq(sql.divulgacao.remove_divulgacao_todas_reservas)
+        
+        db.any(removetodasreserva, dados)
         .then(v => {
             res.status(200).json({
                 data: v,

@@ -126,7 +126,10 @@ module.exports = {
         busca_divulgacao_dia_preco: sql('divulgacao/busca_divulgacao_dia_preco.sql'),
         select_tipo: sql('divulgacao/select_tipo.sql'),
         insert_reserva_divulgacao: sql('divulgacao/insert_reserva_divulgacao.sql'),
-        busca_divulgacao_reservas: sql('divulgacao/busca_divulgacao_reservas.sql')
+        busca_divulgacao_reservas: sql('divulgacao/busca_divulgacao_reservas.sql'),
+        remove_divulgacao_reservas: sql('divulgacao/remove_divulgacao_reservas.sql'),
+        remove_divulgacao_todas_reservas: sql('divulgacao/remove_divulgacao_todas_reservas.sql'),
+        setar_quantidade: sql('divulgacao/setar_quantidade.sql')
 
     },
 

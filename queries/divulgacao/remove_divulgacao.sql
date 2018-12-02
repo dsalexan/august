@@ -1,2 +1,2 @@
 DELETE FROM item_divulgacao
-WHERE id_divulgacao = $1
+WHERE id_divulgacao = $1 
