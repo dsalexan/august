@@ -7,9 +7,11 @@ const path = require('path')
 const Diff = require('../../utils/diff')
 const DateTime  = require('../../utils/luxon')
 const {Interval, Duration} = require('luxon')
+const FuzzySet = require('fuzzyset.js')
 
 const Unifesp = require('../../models/Unifesp')
 const Alunos = require('../../models/Alunos')
+const Grade = require('../../models/Grade')
 
 const lib = require('../../libraries/unifesp')
 const simplify = require('../../utils/simplify')
@@ -27,37 +29,251 @@ const WEEKDAYS_REFERENCE = {
     'Domingo': 6
 }
 
+const TAGS_POS = [
+    'ppgcc'
+]
+
+function createFuzzy(_ucs){
+    let FuzzySearch = {}
+
+    let AliasIndex = {
+        regular: {},
+        nospace: {}
+    }
+    let AliasList = {
+        regular: [],
+        nospace: []
+    }
+    let AliasNoSpace = {}
+    for(let _uc of _ucs){
+        for(let alias of _uc.aliases){
+            AliasIndex.regular[alias] = AliasIndex.regular[alias] || []
+            AliasIndex.regular[alias].push(_uc)
+            AliasList.regular.push(alias)
+
+            let _nospace = alias.replace(/\s/gi, '')
+            AliasIndex.nospace[_nospace] = AliasIndex.nospace[_nospace] || []
+            AliasIndex.nospace[_nospace].push(_uc)
+            AliasList.nospace.push(_nospace)       
+            
+            AliasNoSpace[_nospace] = AliasNoSpace[_nospace] || []
+            AliasNoSpace[_nospace] = alias
+        }
+    }
+
+    FuzzySearch.regular = FuzzySet(AliasList.regular)
+    FuzzySearch.nospace = FuzzySet(AliasList.nospace)
+    FuzzySearch._index = AliasIndex
+    FuzzySearch._typeTranslator = AliasNoSpace
+
+    FuzzySearch.index = (_result) => {
+        return FuzzySearch._index[_result.type][_result.alias]
+    }
+
+    FuzzySearch.alias = (_result) => {
+        if(_result.type == 'regular'){
+            return _result.alias
+        }else if(_result.type == 'nospace'){
+            return FuzzySearch._typeTranslator[_result.alias]
+        }
+
+        return _result.alias
+    }
+    
+    FuzzySearch.get = (word, _min=0.75) => {
+        let _regular = FuzzySearch.regular.get(word, undefined, _min)
+        let _nospace = FuzzySearch.nospace.get(word.replace(/\s/gi, ''), undefined, _min)
+
+        _regular = (_regular || []).map(_result => {
+            return {
+                chunk: word, 
+                alias: _result[1], 
+                value: _result[0],
+                type: 'regular'
+            }
+        })
+
+        _nospace = (_nospace || []).map(_result => {
+            return {
+                chunk: word, 
+                alias: _result[1], 
+                value: _result[0],
+                type: 'nospace'
+            }
+        })
+
+        return (_regular || []).concat(_nospace || [])
+    }
+
+    return FuzzySearch
+}
+
 router.get('/atestado/analysis/:ra_aluno', (req, res, next) => {
-    Alunos.select_latest_atestado(req.params.ra_aluno).then(async atestado => {
+    var TRANSLATE_DIA = {
+        seg: 'mon',
+        ter: 'tue',
+        qua: 'wed',
+        qui: 'thu',
+        sex: 'fri',
+        sab: 'sat',
+        dom: 'sun'
+    }
+
+    var ra_aluno = req.params.ra_aluno
+    Alunos.select_latest_atestado(ra_aluno).then(async atestado => {
         if(atestado == null) return res.status(404).send({message: 'Atestado not found'})
         else{
             let classes = atestado.extracao.classes
 
             let ucs = []
             let not_found = []
+            let multiple = []
+            let classIndex = {}
             for(let c of classes){
-                let matches = await Unifesp.select_uc_alias(simplify.text(c.uc.toLowerCase()))
+                let class_name = simplify.text(c.uc.toLowerCase())
+                let matches = await Unifesp.select_uc_alias(class_name)
                 
+                matches = matches.map(m => {
+                    return {
+                        ...m,
+                        classe: c
+                    }
+                })
+
                 if(matches.length == 0){
                     not_found.push(c)
+                }else if(matches.length > 1){
+                    // use levshstein for better matching
+                    let _f = createFuzzy(matches)
+                    let _ranking = _f.get(class_name)
+                    _ranking.sort((v1, v2) => v2.value - v1.value)
+                    
+                    let _matches = [] 
+                    let _MatchUCIndex = []
+                    _ranking.forEach(_r => {
+                        let _ucs = _f.index(_r)
+                        for(let _uc of _ucs){
+                            if(!_MatchUCIndex.includes(_uc.hash)){
+                                _matches.push({
+                                    uc: _uc,
+                                    match: [_r.chunk, _f.alias(_r)],
+                                    value: _r.value
+                                })
+
+                                _MatchUCIndex.push(_uc.hash)
+                            }
+                        }
+                    })
+
+                    let full__matches = _matches.filter(m => m.value == 1)
+
+                    if(full__matches.length == 1){
+                        ucs.push(full__matches[0].uc)
+                    }else{
+                        multiple.push({...c, matches: _matches})
+                    }
                 }else{
-                    ucs = ucs.concat(matches)
+                    ucs.push(matches[0])
                 }
             }
 
+            let _unidades_curriculares = {}
+            for(let uc of ucs){
+                if(!_unidades_curriculares[uc.hash]) _unidades_curriculares[uc.hash] = []
+
+                _unidades_curriculares[uc.hash].push({
+                    nome: uc.classe.uc,
+                    dia: uc.classe.dia,
+                    inicio: uc.classe.inicio,
+                    classe: uc.classe
+                })
+            }
+
+            // achar aulas
+            let aulas = []
+            for(let hash_uc in _unidades_curriculares){
+                for(let _unidade of _unidades_curriculares[hash_uc]){
+                let _aulas = await Unifesp.select_aula_data_atestado(hash_uc, TRANSLATE_DIA[_unidade.dia], _unidade.inicio.replace('h', ':'))
+                    
+                    if(_aulas.length == 1){
+                        aulas.push(_aulas.map(_a => {
+                            return {
+                                ..._a,
+                                dia: _unidade.dia,
+                                inicio: _unidade.inicio
+                            }
+                        })[0])
+                    }else{
+                        multiple.push({
+                            ..._unidade.classe,
+                            matches: _aulas
+                        })
+                    }
+                }
+            }
+
+            let logs = []
+
+            // para cada aula inserir em aluno_turma
+            for(let aula of aulas){
+                let turma = await Grade.select_turma_aula(aula.hash)
+
+                if(turma != null){
+                    let turma_aluno = await Grade.select_turma_aluno(ra_aluno, turma.id_turma)
+
+                    if(turma_aluno == null){
+                        // TODO: insert at aluno_turma
+                        try{
+                            await Grade.insert_aluno_turma(ra_aluno, turma.id_turma)
+                        }catch(err){
+                            let asda = err
+                        }
+                    }else{
+                        console.log([undefined, `Turma already linked to aluno (${ra_aluno} / ${turma.id_turma})`])
+                        logs.push({
+                            warning: 'Turma already linked',
+                            turma
+                        })
+                    }
+                }else{
+                    console.log([undefined, `Turma not found for aula ${aula.hash}`])
+                    logs.push({
+                        error: 'Turma not found',
+                        aula
+                    })
+                }
+            }
+
+
             res.status(200).send({
+                logs,
                 statistics: {
                     ucs_count: ucs.length,
                     classes_count: classes.length,
-                    not_found: not_found.map(c => c.uc)
+                    aulas_count: aulas.length,
+                    not_found: not_found.map(c => c.uc),
+                    multiple,
                 },
-                ucs: ucs.map(uc => uc.hash),
+                aulas,
                 classes,
                 atestado
             })
+
+
         }
     }).catch(error => {
         console.log(error)
+        res.status(500).send({error})
+    })
+})
+
+
+router.get('/agenda/transfer', (req, res, next) => {
+    Unifesp.transfer_aulas().then(() => {
+        res.status(200).send({
+            message: 'done'
+        })
+    }).catch(error => {
         res.status(500).send({error})
     })
 })
@@ -315,6 +531,16 @@ function agenda_analyse_day(reservas, sqlAnalise, FuzzyUCS, _ROOMS, UNKNOWN_UC){
         })
     })
 }
+
+router.get('/ementas/transfer', (req, res, next) => {
+    Unifesp.transfer_ucs().then(() => {
+        res.status(200).send({
+            message: 'done'
+        })
+    }).catch(error => {
+        res.status(500).send({error})
+    })
+})
 
 router.get('/ementas/analysis', (req, res, next) => {
     let mode = req.query.mode || 'analyse'
