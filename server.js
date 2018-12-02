@@ -31,14 +31,14 @@ var Alunos = require('./models/Alunos')
 
 // log request middleware
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', '*');
-    res.header("Access-Control-Allow-Headers", "*");
-    if ('OPTIONS' == req.method) {
-       res.sendStatus(200);
-    } else {
-       next();
-    }
+    // res.header("Access-Control-Allow-Origin", "*");
+    // res.header('Access-Control-Allow-Methods', '*');
+    // res.header("Access-Control-Allow-Headers", "*");
+    // if ('OPTIONS' == req.method) {
+    //    res.sendStatus(200);
+    // } else {
+    //    next();
+    // }
 
     console.log(req.method, req.url)
 })
@@ -213,11 +213,11 @@ router.get('/api/mensagem/delete/mensagem', Mensagem.delete_msg)
 router.get('/api/mensagem/put/mensagem', Mensagem.alterar_status_msg)
 
 // Headers
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    next()
-})
+// app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+//     next()
+// })
 
 // Router
 app.use('/', router)
