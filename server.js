@@ -44,8 +44,8 @@ router.use('/api/unifesp', require('./controllers/unifesp'))
 
 // Aluno
 router.use('/api', require('./controllers/aluno'))
-router.get('/api/aluno/update/email', Aluno.update_email_aluno)
-router.get('/api/aluno/update/telefone', Aluno.update_nome_aluno)
+router.get('/api/aluno/update/email', Alunos.update_email_aluno)
+router.get('/api/aluno/update/telefone', Alunos.update_nome_aluno)
 
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))
