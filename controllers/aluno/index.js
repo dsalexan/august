@@ -96,8 +96,9 @@ router.put('/alunos/:ra_aluno', (req, res, next) => {
         login_intranet: req.body.login_intranet
     }
 
+    console.log('update aluno', aluno)
     var updates = []
-    if(aluno.email) updates.push(Aluno.update_email_aluno(aluno))
+    if(aluno.email) updates.push(Alunos.update_email_aluno(aluno))
     if(aluno.nome) updates.push(Alunos.update_nome_aluno(aluno))
     if(aluno.login_intranet) updates.push(Alunos.update_credenciais_aluno(aluno))
 

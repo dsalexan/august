@@ -22,7 +22,7 @@ var Utilidades = require('./models/Utilidades')
 var BugReport = require('./models/BugReport')
 var Divulgacao = require('./models/Divulgacao')
 var Mensagem = require('./models/Mensagens')
-var Aluno = require('./models/Alunos');
+var Alunos = require('./models/Alunos')
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({
@@ -32,6 +32,9 @@ router.use(bodyParser.json())
 
 // log request middleware
 router.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
     console.log(req.method, req.url)
 
     next()
@@ -44,8 +47,8 @@ router.use('/api/unifesp', require('./controllers/unifesp'))
 
 // Aluno
 router.use('/api', require('./controllers/aluno'))
-router.get('/api/aluno/update/email' ,Aluno.update_email_aluno)
-router.get('/api/aluno/update/telefone', Aluno.update_nome_aluno)
+router.get('/api/aluno/update/email' ,Alunos.update_email_aluno)
+router.get('/api/aluno/update/telefone', Alunos.update_nome_aluno)
 
 // Cardapio
 router.use('/api/ru/', require('./controllers/cardapio'))

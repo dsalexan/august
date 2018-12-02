@@ -21,9 +21,9 @@ Alunos.insert_historico = (extracao, datahora, ra_aluno) => {
 Alunos.insert_atestado = (extracao, datahora, ra_aluno) => db.one(sql.aluno.insert_atestado, {extracao, datahora, ra_aluno})
 
 // db.result para acessar numero de linhas alteradas
-Alunos.update_email_aluno = (aluno) => db.result(sql.aluno.update_email_ra, aluno, r => r.rowCount)
-Alunos.update_nome_aluno = (aluno) => db.result(sql.aluno.update_nome_ra, aluno, r => r.rowCount)
-Alunos.update_credenciais_aluno = (aluno) => db.result(sql.aluno.update_credenciais_ra, aluno, r => r.rowCount)
+Alunos.update_email_aluno = (aluno) => db.none(sql.aluno.update_email_ra, aluno)
+Alunos.update_nome_aluno = (aluno) => db.none(sql.aluno.update_nome_ra, aluno)
+Alunos.update_credenciais_aluno = (ra_aluno) => db.result(sql.aluno.update_credenciais_ra, aluno, r => r.rowCount)
 
 Alunos.delete_aluno = (ra_aluno) => db.result(sql.aluno.delete_aluno, [ra_aluno], r => r.rowCount)
 
