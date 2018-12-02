@@ -122,7 +122,21 @@ router.get('/api/grades/delete/pre_req', Grade.delete_pre_req)
 router.get('/api/grades/delete/professor', Grade.delete_professor)
 router.get('/api/grades/delete/turma', Grade.delete_turma)
 router.get('/api/grades/delete/uc', Grade.delete_uc)
-router.get('/api/grades/post/aluno_turma', Grade.insert_aluno_turma)
+router.get('/api/grades/post/aluno_turma', (req, res, next) => {
+    var ra_aluno = req.query.ra_aluno
+    var id_turma = req.query.id_turma
+    var faltas = req.query.faltas
+
+    Grade.insert_aluno_turma(ra_aluno, id_turma, faltas)
+    .then(() => {
+        res.status(200).json({
+            success: true
+        })
+    })
+    .catch(error => {
+        return next(error)
+    })
+})
 router.get('/api/grades/post/evento_turma', Grade.insert_evento_turma)
 router.get('/api/grades/post/horario_turma', Grade.insert_horario_turma)
 router.get('/api/grades/post/horario', Grade.insert_horario)
