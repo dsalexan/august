@@ -45,11 +45,14 @@ var Alunos = require('./models/Alunos')
 //     // }
 // })
 
+app.use(cors())
+app.options('*', cors())
+
 var bodyParser = require('body-parser')
-router.use(bodyParser.urlencoded({
+app.use(bodyParser.urlencoded({
     extended: false
 }))
-router.use(bodyParser.json())
+app.use(bodyParser.json())
 
 router.use('/api/auth', authController)
 
@@ -216,15 +219,13 @@ router.get('/api/mensagem/delete/mensagem', Mensagem.delete_msg)
 router.get('/api/mensagem/put/mensagem', Mensagem.alterar_status_msg)
 
 // Headers
-app.use(function(req, res, next) {
-    console.log(req.method, req.url)
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    next()
-})
+// app.use(function(req, res, next) {
+//     console.log(req.method, req.url)
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+//     next()
+// })
 
-app.use(cors())
-app.options('*', cors())
 //
 // app.use(function(req, res, next) {
 //     console.log(req.method, req.url)
