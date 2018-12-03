@@ -661,6 +661,23 @@ module.exports = {
             return next(error)
         })
     },
+    searchPassageiroReserva: (req, res, next) => {
+        var id_viagem = req.query.id_viagem
+        var id_passageiro = req.query.id_passageiro
+        
+        dados = [id_viagem, id_passageiro]
 
+        const viagem = new pq(sql.caronas.srch_passageiroReserva)
+        db.any(viagem, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
     
 }
