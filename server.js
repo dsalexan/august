@@ -12,7 +12,7 @@ global.root_path = path.resolve(__dirname)
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
 })
-server.setTimeout(90000)
+// server.setTimeout(90000)
 
 // app.use(cors())
 // app.options('*', cors())
@@ -216,25 +216,26 @@ router.get('/api/mensagem/delete/mensagem', Mensagem.delete_msg)
 router.get('/api/mensagem/put/mensagem', Mensagem.alterar_status_msg)
 
 // Headers
-// app.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*')
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-//     next()
-// })
 app.use(function(req, res, next) {
     console.log(req.method, req.url)
-
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept');
-    
-    next();
-    // if ('OPTIONS' == req.method) {
-    //    res.sendStatus(200);
-    // } else {
-    //    next();
-    // }
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
 })
+// app.use(function(req, res, next) {
+//     console.log(req.method, req.url)
+
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//     res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept');
+    
+//     next();
+//     // if ('OPTIONS' == req.method) {
+//     //    res.sendStatus(200);
+//     // } else {
+//     //    next();
+//     // }
+// })
 
 
 // Router
