@@ -224,7 +224,8 @@ app.use(function(req, res, next) {
     console.log(req.method, req.url)
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,Origin,Accept,Access-Control-Allow-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Origin') //'Origin, X-Requested-With, Content-Type, Accept')
+    
     next()
 //     if (req.method === 'OPTIONS') {
 //         console.log('!OPTIONS');
