@@ -101,7 +101,8 @@ router.get('/api/divulgacao/delete/divulgacao', Divulgacao.remove_divulgacao)
 router.get('/api/divulgacao/post/divulgacao', Divulgacao.insert_divulgacao)
 router.get('/api/divulgacao/get/divulgacao/diahora', Divulgacao.busca_divulgacao_dia_hora_inicio)
 router.get('/api/divulgacao/get/divulgacao/dia', Divulgacao.busca_divulgacao_dia)
-router.get('/api/divulgacao/get/divulgacao/hora', Divulgacao.busca_divulgacao_hora)
+router.get('/api/divulgacao/get/divulgacao/hora_inicio', Divulgacao.busca_divulgacao_hora_inicio)
+router.get('/api/divulgacao/get/divulgacao/hora_fim', Divulgacao.busca_divulgacao_hora_fim)
 router.get('/api/divulgacao/get/divulgacao/tipodiahora', Divulgacao.busca_divulgacao_tipo_dia_hora) 
 router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
 router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
@@ -125,7 +126,7 @@ router.get('/api/reserva_divulgacao/post/reserva_divulgacao', Divulgacao.insert_
 router.get('/api/reserva_divulgacao/get/reservas' , Divulgacao.busca_divulgacao_reservas)
 router.get('/api/reserva_divulgacao/delete/reservas', Divulgacao.remove_divulgacao_reservas)
 router.get('/api/reserva_divulgacao/delete/todas_reservas', Divulgacao.remove_divulgacao_todas_reservas)
-router.get('/api/reserva_divulgacao/put/setar_quantidade', Divulgacao.setar_quantidade)
+router.get('/api/divulgacao/put/setar_quantidade', Divulgacao.setar_quantidade)
 
 
 
@@ -195,6 +196,7 @@ router.get('/api/grades/put/uc', Grade.update_uc)
 router.get('/api/grades/put/addfalta', Grade.update_aluno_turma_addfalta)
 router.get('/api/grades/put/removefalta', Grade.update_aluno_turma_removefalta)
 router.get('/api/grades/get/faltas', Grade.select_faltas_aluno_turma)
+
 // Mensagens
 router.get('/api/mensagem/post/mensagem', Mensagem.insert_msg)
 router.get('/api/mensagem/get/lidas', Mensagem.get_read_msgs)

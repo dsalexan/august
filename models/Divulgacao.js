@@ -66,14 +66,14 @@ module.exports = {
     },
 
    setar_quantidade: (req, res, next) => {
-       var id_divulgacao = req.query.id_divulgacao
+        var id_divulgacao = req.query.id_divulgacao
         var quantidade = req.query.quantidade
         
-        dados = [id_divulgacao, quantidade]
+        dados = [quantidade, id_divulgacao]
 
         const setarquantidade = new pq(sql.divulgacao.setar_quantidade)
        
-        db.any(setarquantidade, dados)
+        db.none(setarquantidade, dados)
         .then(v =>{
             res.status(200).json({
                 data: v,
@@ -184,13 +184,31 @@ module.exports = {
         })
     },
 
-    busca_divulgacao_hora: (req, res, next) => {
+    busca_divulgacao_hora_inicio: (req, res, next) => {
         var hora_inicio = req.query.hora_inicio
         dados = [hora_inicio]
 
-        const buscahora = new pq(sql.divulgacao.busca_divulgacao_hora)
+        const buscahorainicio = new pq(sql.divulgacao.busca_divulgacao_hora_inicio)
         
-        db.any(buscahora, dados)
+        db.any(buscahorainicio, dados)
+        .then(v => {
+            res.status(200).json({
+                data: v,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
+
+    busca_divulgacao_hora_fim: (req, res, next) => {
+        var hora_fim = req.query.hora_fim
+        dados = [hora_fim]
+
+        const buscahorafim = new pq(sql.divulgacao.busca_divulgacao_hora_fim)
+        
+        db.any(buscahorafim, dados)
         .then(v => {
             res.status(200).json({
                 data: v,
