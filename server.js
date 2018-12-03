@@ -9,13 +9,10 @@ var path = require('path')
 
 global.root_path = path.resolve(__dirname)
 
-var server = app.listen(port, () => {
-    console.log(`server listening at port ${port}`)
-})
-server.setTimeout(90000)
+// server.setTimeout(90000)
 
-// app.use(cors())
-// app.options('*', cors())
+app.use(cors())
+app.options('*', cors())
 
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
@@ -29,26 +26,33 @@ var Mensagem = require('./models/Mensagens')
 var Alunos = require('./models/Alunos')
 
 
-// log request middleware
-app.use(function(req, res, next) {
-    console.log(req.method, req.url)
+// // log request middleware
+// app.use(function(req, res, next) {
+//     console.log(req.method, req.url)
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', '*');
-    res.header("Access-Control-Allow-Headers", "*");
-    if ('OPTIONS' == req.method) {
-       res.sendStatus(200);
-    } else {
-       next();
-    }
-})
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header('Access-Control-Allow-Methods', '*');
+//     res.header("Access-Control-Allow-Headers", "*");
+    
+//     next();
+//     // if ('OPTIONS' == req.method) {
+//     //    res.sendStatus(200);
+//     // } else {
+//     //    next();
+//     // }
+// })
+
+// app.use(cors())
+// app.options('*', cors())
 
 var bodyParser = require('body-parser')
-router.use(bodyParser.urlencoded({
+app.use(bodyParser.urlencoded({
     extended: false
 }))
-router.use(bodyParser.json())
+app.use(bodyParser.json())
 
+
+//#region 
 router.use('/api/auth', authController)
 
 // Unifesp
@@ -97,6 +101,7 @@ router.get('/api/caronas/get/viagem/passageiro', Carona.searchViagemPassageiro)
 router.get('/api/caronas/get/viagem', Carona.getAllCaronas)
 router.get('/api/caronas/get/viagem/reserva', Carona.searchViagemReserva) 
 router.get('/api/caronas/get/viagem/motorista/reserva', Carona.srch_MotoristaReserva)
+router.get('/api/caronas/get/viagem/passageiro/reserva', Carona.searchPassageiroReserva)
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 // router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)
@@ -212,19 +217,66 @@ router.get('/api/mensagem/get/novas', Mensagem.get_nonread_msgs)
 router.get('/api/mensagem/delete/mensagem', Mensagem.delete_msg)
 router.get('/api/mensagem/put/mensagem', Mensagem.alterar_status_msg)
 
+//#endregion
+
 // Headers
-// app.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*')
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+app.use(function(req, res, next) {
+    console.log(req.method, req.url)
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,Origin,Accept,Access-Control-Allow-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Origin') //'Origin, X-Requested-With, Content-Type, Accept')
+    
+    next()
+//     if (req.method === 'OPTIONS') {
+//         console.log('!OPTIONS');
+//         var headers = {};
+//         // IE8 does not allow domains to be specified, just the *
+//         // headers["Access-Control-Allow-Origin"] = req.headers.origin;
+//         headers["Access-Control-Allow-Origin"] = "*";
+//         headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+//         headers["Access-Control-Allow-Credentials"] = false;
+//         headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+//         headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+//         res.writeHead(200, headers);
+//         res.end();
+//   } else {
+//   //...other requests
+//     console.log(req.method, req.url)
 //     next()
-// })
+//   }
+// //     res.header('Access-Control-Allow-Origin', '*')
+// //     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+})
+
 
 // Router
 app.use('/', router)
+
+// app.options('/teste', (req, res, next) => {
+//     res.status(200)
+//     next()
+// })
+app.post('/teste', (req, res, next) => {
+    console.log('TESTE ACHOU', req.body)
+    res.status(200).send(req.body)
+})
+app.put('/teste', (req, res, next) => {
+    console.log('TESTE ACHOU', req.body)
+    res.status(200).send(req.body)
+})
+app.get('/teste', (req, res, next) => {
+    console.log('TESTE GET ACHOU')
+    res.status(200).send('ACHO')
+})
 
 // error handling middleware
 // chamar next(err) nos erro0r handling individuais em cada rota pra cair nesse error handler genérico aqui
 app.use(function(err, req, res, next) {
     console.error(err.stack)
     res.status(500).json(err)
+})
+
+
+var server = app.listen(port, () => {
+    console.log(`server listening at port ${port}`)
 })
