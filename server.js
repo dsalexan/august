@@ -9,9 +9,6 @@ var path = require('path')
 
 global.root_path = path.resolve(__dirname)
 
-var server = app.listen(port, () => {
-    console.log(`server listening at port ${port}`)
-})
 // server.setTimeout(90000)
 
 // app.use(cors())
@@ -251,4 +248,9 @@ app.use('/', router)
 app.use(function(err, req, res, next) {
     console.error(err.stack)
     res.status(500).json(err)
+})
+
+
+var server = app.listen(port, () => {
+    console.log(`server listening at port ${port}`)
 })
