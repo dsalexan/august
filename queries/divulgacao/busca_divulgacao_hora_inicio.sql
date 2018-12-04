@@ -1,2 +1,2 @@
 SELECT * FROM item_divulgacao
-WHERE hora_inicio >= $1
+WHERE hora_inicio <= $1
