@@ -1,2 +1,2 @@
 SELECT * FROM item_divulgacao
-WHERE hora_fim <= $1
+WHERE hora_fim >= $1

@@ -105,7 +105,7 @@ router.get('/api/divulgacao/get/divulgacao/hora_inicio', Divulgacao.busca_divulg
 router.get('/api/divulgacao/get/divulgacao/hora_fim', Divulgacao.busca_divulgacao_hora_fim)
 router.get('/api/divulgacao/get/divulgacao/tipodiahora', Divulgacao.busca_divulgacao_tipo_dia_hora) 
 router.get('/api/divulgacao/get/tipodia', Divulgacao.busca_divulgacao_tipo_dia)
-router.get('/api/divulgacao/get/tipo', Divulgacao.busca_divulgacao_tipo)
+router.get('/api/divulgacao/get/divulgacao/tipo', Divulgacao.busca_divulgacao_tipo)
 router.get('/api/divulgacao/put/dia', Divulgacao.alteracao_divulgacao_dia)
 router.get('/api/divulgacao/put/hora', Divulgacao.alteracao_divulgacao_hora)
 
