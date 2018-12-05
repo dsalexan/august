@@ -46,7 +46,7 @@ module.exports = {
             resposta = 0
         }
 
-        res.status(200).send(resposta)
+        res.status(200).send({"saldo_ru": resposta})
         // let servico_atual = await unifesp.select_servicos_ativos()
 
         // require('../libraries/unifesp').fetch('saldo_ru', aluno).then(result => {
