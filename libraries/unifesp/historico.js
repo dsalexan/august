@@ -165,10 +165,11 @@ var save_historico = function(data){
 }
 
 
-var fetch_historico = function(browser, page, options={}){
+var fetch_historico = function(browser, page, _options){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let historico
+        let options = _options || {}
 
         try{
             historico = await read_historico(browser, page)
@@ -176,10 +177,8 @@ var fetch_historico = function(browser, page, options={}){
             
             let compilado = await compile_historico(historico.html)
 
-            if(compilado.ra_aluno){
-                var options = { format: 'Letter' };
-                
-                pdf.create(historico.html, options).toFile(path.join(global.root_path, 'res/historicos/' + compilado.ra_aluno + '.pdf'), function(err, res) {
+            if(compilado.ra_aluno){                
+                pdf.create(historico.html, { format: 'Letter' }).toFile(path.join(global.root_path, 'res/historicos/' + compilado.ra_aluno + '.pdf'), function(err, res) {
                     if (err) return console.log(err);
                     console.log(res); // { filename: '/res/historicos/111866.pdf' }
                 }); 

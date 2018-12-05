@@ -87,10 +87,8 @@ var read_atestado = function(browser, page, ra_aluno, options){
 
         fs.writeFileSync('atestado.html', bodyHTML)
         
-        var html = fs.readFileSync('atestado.html', 'utf8');
-        var options = { format: 'Letter' };
-        
-        pdf.create(html, options).toFile(path.join(global.root_path, 'res/atestados/' + ra_aluno + '.pdf'), function(err, res) {
+        var html = fs.readFileSync('atestado.html', 'utf8');        
+        pdf.create(html, { format: 'Letter' }).toFile(path.join(global.root_path, 'res/atestados/' + ra_aluno + '.pdf'), function(err, res) {
             if (err) return console.log(err);
             console.log(res); // { filename: '/res/atestados/111866.pdf' }
         });
@@ -186,10 +184,11 @@ var save_atestado = function(data, ra_aluno){
 }
 
 
-var fetch_atestado = function(browser, page, ra_aluno, options={}){
+var fetch_atestado = function(browser, page, ra_aluno, _options){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let atestado
+        let options = _options || {}
 
         try{
             atestado = await read_atestado(browser, page, ra_aluno)
