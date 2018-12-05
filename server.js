@@ -247,6 +247,7 @@ router.put('/api/grade/:ra_aluno/turmas/:id_turma/faltas', async (req, res, next
 
     if(value == undefined){
         value = await Grade.select_faltas_aluno_turma(ra_aluno, id_turma).faltas
+        value = parseInt(value)
     }
 
     if(req.body.add){
