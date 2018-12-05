@@ -108,7 +108,7 @@ router.get('/api/caronas/get/viagem/reserva', Carona.searchViagemReserva)
 router.get('/api/caronas/get/viagem/motorista/reserva', Carona.srch_MotoristaReserva)
 router.get('/api/caronas/get/viagem/passageiro/reserva', Carona.searchPassageiroReserva)
 
-router.get('/api/caronas/localidades', Carona.selectLocalidadeDescricao)
+router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 
 router.get('/api/caronas/put/viagem/dia', Carona.updateDiaViagem)
 // router.get('/api/caronas/put/viagem/hora', Carona.updateHoraViagem)

@@ -1,0 +1,1 @@
+UPDATE servico SET ativo = 0 WHERE id_servico = $1

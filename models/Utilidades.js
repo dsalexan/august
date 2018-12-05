@@ -35,6 +35,8 @@ module.exports = {
 
         let aluno = await Alunos.select_aluno_ra(ra_aluno)
 
+        let servico_atual = await unifesp.select_servicos_ativos()
+
         unifesp.fetch('saldo_ru', aluno).then(result => {
             res.status(200).send(result.extracao && result.extracao.saldo)
         })
