@@ -319,8 +319,8 @@ module.exports = {
     select_compromissos_compromisso_tq_raaluno: (req, res, next) => {
         let dados = {
             ra_aluno: req.params.ra_aluno,
-            data_inicio: req.query.data_inicio,
-            data_fim: req.query.data_fim
+            data_inicio: req.query.data_inicio || req.query.dt_inicio,
+            data_fim: req.query.data_fim || req.query.dt_fim
         }
 
         const query = new pq(sql.grade.select_compromissos_compromisso_tq_raaluno)
