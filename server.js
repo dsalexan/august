@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+var fs = require('fs');
+
 const cors = require('cors')
 var express = require('express')
 var app = express()
@@ -182,6 +184,21 @@ router.get('/api/grades/post/aluno_turma', (req, res, next) => {
         return next(error)
     })
 })
+
+router.get('/getPDF/historico',function(req, res){
+    var rm_aluno = req.query.ra_aluno
+    var data =fs.readFileSync(path.join(global.root_path, 'res/historicos/' +rm_aluno+ '.pdf'))
+    res.contentType("application/pdf");
+    res.send(data);
+});
+
+router.get('/getPDF/atestado',function(req, res){
+    var rm_aluno = req.query.ra_aluno
+    var data =fs.readFileSync(path.join(global.root_path, 'res/atestados/' +rm_aluno+ '.pdf'))
+    res.contentType("application/pdf");
+    res.send(data);
+});
+
 
 router.get('/api/grades/post/horario_turma', Grade.insert_horario_turma)
 router.get('/api/grades/post/horario', Grade.insert_horario)

@@ -25,6 +25,7 @@
     "express": "^4.16.3",
     "fast-levenshtein": "^2.0.6",
     "follow-redirects": "^1.5.8",
+    "fs": "0.0.1-security",
     "full-icu": "^1.2.1",
     "fuzzyset.js": "0.0.7",
     "generatorics": "^1.1.0",
@@ -45,7 +46,8 @@
     "puppeteer": "^1.9.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
-    "ssl-root-cas": "^1.2.5"
+    "ssl-root-cas": "^1.2.5",
+    "wkhtmltopdf": "^0.3.4"
   },
   "devDependencies": {
     "eslint": "^5.7.0",
