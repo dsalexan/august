@@ -289,9 +289,24 @@ router.get('/atestado/analysis/:ra_aluno', (req, res, next) => {
     })
 })
 
-router.get('/atestado/:ra_aluno', (req, res, next) => {
+router.get('/atestado/:ra_aluno', async (req, res, next) => {
     let ra_aluno = req.params.ra_aluno
-    lib.fetch('atestado', {ra_aluno}).then(atestado => {
+
+    let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
+
+    lib.fetch('atestado', aluno).then(atestado => {
+        res.status(200).send(atestado)
+    }).catch(next)
+})
+
+router.get('/historico/:ra_aluno', async (req, res, next) => {
+    let ra_aluno = req.params.ra_aluno
+
+    let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
+
+    lib.fetch('historico', aluno).then(atestado => {
         res.status(200).send(atestado)
     }).catch(next)
 })

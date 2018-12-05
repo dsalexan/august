@@ -84,20 +84,7 @@ let _INTRANET = {
     _: 'https://intranet.unifesp.br/',
     INPUT_USERNAME_SELECTOR: 'form[name="form1"] input[name="username"]',
     INPUT_PASSWORD_SELECTOR: 'form[name="form1"] input[name="password"]',
-    BUTTON_SUBMIT_SELECTOR: 'form[name="form1"] input[type="submit"]',
-    auth: (page) => {
-        return new Promise((resolve, reject) => {
-            page.on('response', response => {
-                if(response.url().indexOf('index3.php') != -1){
-                    if(response.url().indexOf('?loginx=') != -1){
-                        resolve(true)
-                    }else{
-                        resolve(false)
-                    }
-                }
-            })
-        })
-    }
+    BUTTON_SUBMIT_SELECTOR: 'form[name="form1"] input[type="submit"]'
 }
 
 let _RU = {
@@ -139,15 +126,17 @@ var authenticatePuppeteer = function(page, user, WHERE=_INTRANET){
             await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
 
 
-            // page.on('response', response => {
-            //     if(response.url().indexOf('index3.php') != -1){
-            //         if(response.url().indexOf('?loginx=') != -1){
-            //             resolve({auth: false, user: username})
-            //         }else{
-            //             resolve({auth: true, user: username})
-            //         }
-            //     }
-            // })
+            if(auth == undefined){
+                page.on('response', response => {
+                    if(response.url().indexOf('index3.php') != -1){
+                        if(response.url().indexOf('?loginx=') != -1){
+                            resolve({auth: false, user: username})
+                        }else{
+                            resolve({auth: true, user: username})
+                        }
+                    }
+                })
+            }
             
             await page.click(INPUT_USERNAME_SELECTOR)
             await page.keyboard.type(username)
@@ -155,7 +144,7 @@ var authenticatePuppeteer = function(page, user, WHERE=_INTRANET){
             await page.click(INPUT_PASSWORD_SELECTOR)
             await page.keyboard.type(password)
             
-            auth(page).then(result => {
+            auth && auth(page).then(result => {
                 resolve({
                     auth: result,
                     user: username

@@ -108,7 +108,7 @@ var save_saldo_ru = function(data, ra_aluno){
     return Alunos.insert_saldo_ru({saldo: data.saldo}, DateTime.toSQL(data.datahora), ra_aluno)
 }
 
-var fetch_saldo_ru = function(browser, page, ra_aluno, force, options){
+var fetch_saldo_ru = function(browser, page, ra_aluno, force, options={}){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let saldo
@@ -129,7 +129,7 @@ var fetch_saldo_ru = function(browser, page, ra_aluno, force, options){
                 saldo = await read_saldo_ru(browser, page)
             }
 
-            options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
+            options && options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
         }catch(error){
             saldo = {error}
         }

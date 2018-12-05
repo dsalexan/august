@@ -1,6 +1,8 @@
 const DateTime = require('../../utils/luxon')
 const cheerio = require('cheerio')
 const fs = require('fs')
+const path = require('path')
+var pdf = require('html-pdf')
 
 const Alunos = require('../../models/Alunos')
 
@@ -45,7 +47,7 @@ const TR_BODY_SELECTOR = 'tr[class^="scGridField"]'
 
 var read_historico = function(browser, page, options){
     return new Promise(async resolve => {
-        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
+        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'networkidle2'})
 
         try{
             await page.$eval(MENU_UNIFESP_SELECTOR)
@@ -71,9 +73,9 @@ var read_historico = function(browser, page, options){
 
         await page.waitForSelector('table tbody td')
         let bodyHTML = await page.evaluate(() => document.body.innerHTML)
-
+        
         fs.writeFileSync('historico.html', bodyHTML)
-
+        
         resolve({
             html: bodyHTML,
             date: DateTime.toSQL()
@@ -163,16 +165,25 @@ var save_historico = function(data){
 }
 
 
-var fetch_historico = function(browser, page, options){
+var fetch_historico = function(browser, page, options={}){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let historico
 
         try{
             historico = await read_historico(browser, page)
-            options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
+            options && options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
             
             let compilado = await compile_historico(historico.html)
+
+            if(compilado.ra_aluno){
+                var options = { format: 'Letter' };
+                
+                pdf.create(historico.html, options).toFile(path.join(global.root_path, 'res/historicos/' + compilado.ra_aluno + '.pdf'), function(err, res) {
+                    if (err) return console.log(err);
+                    console.log(res); // { filename: '/res/historicos/111866.pdf' }
+                }); 
+            }
 
             historico = compilado
         }catch(error){

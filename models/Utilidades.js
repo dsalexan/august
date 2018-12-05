@@ -30,7 +30,6 @@ function decrypt(transitmessage, pass) {
 module.exports = {
     select_latest_saldo_aluno: (ra_aluno) => db.oneOrNone(sql.utilidades.select_latest_saldo_aluno, [ra_aluno]),
 
-
     getSaldo: async (req, res) => {
         var ra_aluno = req.params.ra_aluno
 

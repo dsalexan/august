@@ -28,6 +28,7 @@
     "full-icu": "^1.2.1",
     "fuzzyset.js": "0.0.7",
     "generatorics": "^1.1.0",
+    "html-pdf": "^2.2.0",
     "https": "^1.0.0",
     "js-combinatorics": "^0.5.3",
     "js-levenshtein": "^1.1.4",

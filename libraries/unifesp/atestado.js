@@ -1,6 +1,8 @@
 const { DateTime } = require('luxon')
 const cheerio = require('cheerio')
 const fs = require('fs')
+const path = require('path')
+var pdf = require('html-pdf')
 const G = require('generatorics')
 
 const Alunos = require('../../models/Alunos')
@@ -35,15 +37,15 @@ const TIMES_ATESTADO_TRANSLATE = {
 
 const PARAGRAPH2_ATESTADO_SELECTOR = 'div.hash p:nth-of-type(1)'
 
-var read_atestado = function(browser, page, options){
+var read_atestado = function(browser, page, ra_aluno, options){
     return new Promise(async resolve => {
-        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
+        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'networkidle2'})
 
         try{
             await page.$eval(MENU_UNIFESP_SELECTOR)
             await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
         }catch(err){
-            await page.evaluate('toggleMenu();');
+            await page.evaluate('toggleMenu()');
             await page.waitForSelector(MENU_UNIFESP_SELECTOR)            
             await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
         }
@@ -77,6 +79,14 @@ var read_atestado = function(browser, page, options){
         let bodyHTML = await page.evaluate(() => document.body.innerHTML)
 
         fs.writeFileSync('atestado.html', bodyHTML)
+        
+        var html = fs.readFileSync('atestado.html', 'utf8');
+        var options = { format: 'Letter' };
+        
+        pdf.create(html, options).toFile(path.join(global.root_path, 'res/atestados/' + ra_aluno + '.pdf'), function(err, res) {
+            if (err) return console.log(err);
+            console.log(res); // { filename: '/res/atestados/111866.pdf' }
+        });
 
         resolve({
             html: bodyHTML,
@@ -169,14 +179,14 @@ var save_atestado = function(data, ra_aluno){
 }
 
 
-var fetch_atestado = function(browser, page, ra_aluno, options){
+var fetch_atestado = function(browser, page, ra_aluno, options={}){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let atestado
 
         try{
-            atestado = await read_atestado(browser, page)
-            options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
+            atestado = await read_atestado(browser, page, ra_aluno)
+            options && options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
             
             let compilado = await compile_atestado(atestado.html)
 
