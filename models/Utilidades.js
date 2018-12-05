@@ -35,11 +35,23 @@ module.exports = {
 
         let aluno = await Alunos.select_aluno_ra(ra_aluno)
 
+        let resposta
+        try{
+            let saldo = await db.oneOrNone(sql.utilidades.select_latest_saldo_aluno, [ra_aluno])
+
+            if(saldo != null){
+                resposta = saldo.extracao && saldo.extracao.saldo
+            }
+        }catch(error){
+            resposta = 0
+        }
+
+        res.status(200).send(resposta)
         // let servico_atual = await unifesp.select_servicos_ativos()
 
-        require('../libraries/unifesp').fetch('saldo_ru', aluno).then(result => {
-            res.status(200).send(result.extracao && result.extracao.saldo)
-        })
+        // require('../libraries/unifesp').fetch('saldo_ru', aluno).then(result => {
+        //     res.status(200).send(result.extracao && result.extracao.saldo)
+        // })
     },
     getMatricula: (req, res, next) => {
         var id_motorista = req.query.id_motorista
