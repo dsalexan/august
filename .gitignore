@@ -1,5 +1,9 @@
 res/ementas
 res/ementas/*
+res/atestados
+res/atestados/*
+res/historicos
+res/historicos/*
 
 # Logs
 logs
