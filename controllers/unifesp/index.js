@@ -6,6 +6,7 @@ const _ = require('lodash')
 const path = require('path')
 const Diff = require('../../utils/diff')
 const DateTime  = require('../../utils/luxon')
+const Crypt  = require('../../utils/crypt')
 const {Interval, Duration} = require('luxon')
 const FuzzySet = require('fuzzyset.js')
 
@@ -107,6 +108,27 @@ function createFuzzy(_ucs){
 
     return FuzzySearch
 }
+
+router.post('/encrypt/', (req, res, next) => {
+    let text = req.body.text
+    res.status(200).send(Crypt.encrypt(text, 'Achilles'))
+})
+
+router.post('/decrypt/', (req, res, next) => {
+    let text = req.body.text
+    res.status(200).send(Crypt.decrypt(text, 'Achilles'))
+})
+
+router.get('/saldo_ru/:ra_aluno', async (req, res, next) => {
+    let ra_aluno = req.params.ra_aluno
+
+    let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
+
+    lib.fetch('saldo_ru', aluno).then(saldo => {
+        res.status(200).send(saldo)
+    }).catch(next)
+})
 
 router.get('/atestado/analysis/:ra_aluno', (req, res, next) => {
     var TRANSLATE_DIA = {
@@ -265,6 +287,13 @@ router.get('/atestado/analysis/:ra_aluno', (req, res, next) => {
         console.log(error)
         res.status(500).send({error})
     })
+})
+
+router.get('/atestado/:ra_aluno', (req, res, next) => {
+    let ra_aluno = req.params.ra_aluno
+    lib.fetch('atestado', {ra_aluno}).then(atestado => {
+        res.status(200).send(atestado)
+    }).catch(next)
 })
 
 

@@ -194,15 +194,14 @@ module.exports = {
     //     })
     // },  
     insertViagem: (req, res, next) => {
-        var id_motorista = req.query.id_motorista
-        var dia = req.query.dia
-        var preco = req.query.preco
-        var qtd_vagas = req.query.qtd_vagas
-        var descricao = req.query.descricao
+        var id_motorista = req.body.id_motorista
+        var dia = req.body.dia
+        var preco = req.body.preco
+        var qtd_vagas = req.body.qtd_vagas
+        var descricao = req.body.descricao
         
         dados = [id_motorista, dia, preco, qtd_vagas, descricao]
 
-        console.log('dados', dados)
 
         const viagem = new pq(sql.caronas.ins_viagem)
         db.one(viagem, dados)
@@ -217,9 +216,9 @@ module.exports = {
         })
     },
     insertOrigemViagem: (req, res, next) => {
-        var id_viagem = req.query.id_viagem
-        var hora = req.query.hora
-        var origem = req.query.origem
+        var id_viagem = req.params.id_viagem
+        var hora = req.body.hora
+        var origem = req.body.origem
         
         dados = [id_viagem, origem, hora]
 
@@ -236,8 +235,8 @@ module.exports = {
         })
     },
     insertDestinoViagem: (req, res, next) => {
-        var id_viagem = req.query.id_viagem
-        var destino = req.query.destino
+        var id_viagem = req.params.id_viagem
+        var destino = req.body.destino
         
         dados = [id_viagem, destino]
 
@@ -496,11 +495,12 @@ module.exports = {
         })
     },
     solicitarReserva: (req, res, next) => {
-        var id_viagem = req.query.id_viagem
-        var id_passageiro = req.query.id_passageiro
-        var id_origem = req.query.id_origem
-        var id_destino = req.query.id_destino
-        var status_reserva = req.query.status_reserva
+        var id_viagem = req.params.id_viagem
+
+        var id_passageiro = req.body.id_passageiro
+        var id_origem = req.body.id_origem
+        var id_destino = req.body.id_destino
+        var status_reserva = req.body.status_reserva
         dados = [id_viagem, id_passageiro, id_origem, id_destino, status_reserva]
 
         const viagem = new pq(sql.caronas.solic_reserva)

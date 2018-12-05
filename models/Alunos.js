@@ -19,6 +19,7 @@ Alunos.insert_historico = (extracao, datahora, ra_aluno) => {
     return db.one(sql.aluno.insert_historico, {extracao, datahora, ra_aluno})
 }
 Alunos.insert_atestado = (extracao, datahora, ra_aluno) => db.one(sql.aluno.insert_atestado, {extracao, datahora, ra_aluno})
+Alunos.insert_saldo_ru = (extracao, datahora, ra_aluno) => db.one(sql.aluno.insert_saldo_ru, {extracao, datahora, ra_aluno})
 
 // db.result para acessar numero de linhas alteradas
 Alunos.update_email_aluno = (aluno) => db.none(sql.aluno.update_email_ra, aluno)

@@ -138,10 +138,7 @@ module.exports = {
     professor: {
         insert_professor: sql('professor/insert_professor.sql'),
     },
-    utilidades: {
-        insert_cardapio: sql('utilidades/insert_cardapio.sql'),
-        get_last_cardapio: sql('utilidades/get_last_cardapio.sql')
-    },
+    utilidades: sql('utilidades'),
     bugreport: {
         insert_bug_report: sql('report/insert_bug_report.sql')
     },

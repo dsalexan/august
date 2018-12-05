@@ -78,35 +78,94 @@ var buildPuppet = function(options){
 }
 
 // TODO: add error throwing for no internet connection
-// GENERALIZING BROWSER UNIFESP LOGIN
-var authenticatePuppeteer = function(page, user){
-    const INPUT_USERNAME_SELECTOR = 'form[name="form1"] input[name="username"]'
-    const INPUT_PASSWORD_SELECTOR = 'form[name="form1"] input[name="password"]'
-    const BUTTON_SUBMIT_SELECTOR = 'form[name="form1"] input[type="submit"]'
+// GENERALIZING BROWSER UNIFESP LOGIN`
 
-    return new Promise(async (resolve, reject) => {
-        await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'domcontentloaded'})
-        await page.waitForSelector(INPUT_USERNAME_SELECTOR)
-        await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
-        await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
+let _INTRANET = {
+    _: 'https://intranet.unifesp.br/',
+    INPUT_USERNAME_SELECTOR: 'form[name="form1"] input[name="username"]',
+    INPUT_PASSWORD_SELECTOR: 'form[name="form1"] input[name="password"]',
+    BUTTON_SUBMIT_SELECTOR: 'form[name="form1"] input[type="submit"]',
+    auth: (page) => {
+        return new Promise((resolve, reject) => {
+            page.on('response', response => {
+                if(response.url().indexOf('index3.php') != -1){
+                    if(response.url().indexOf('?loginx=') != -1){
+                        resolve(true)
+                    }else{
+                        resolve(false)
+                    }
+                }
+            })
+        })
+    }
+}
 
-        page.on('response', response => {
-            if(response.url().indexOf('index3.php') != -1){
-                if(response.url().indexOf('?loginx=') != -1){
-                    resolve({auth: false, user: user.username})
-                }else{
-                    resolve({auth: true, user: user.username})
+let _RU = {
+    _: 'https://phpu.unifesp.br/ru_consulta/index.php',
+    INPUT_USERNAME_SELECTOR: 'input#user',
+    INPUT_PASSWORD_SELECTOR: 'input#password',
+    BUTTON_SUBMIT_SELECTOR: 'button#btn-login',
+    auth: (page) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await page.waitForSelector('.col-sm-9', {timeout : 120000})
+            } catch (e) {
+                if (e instanceof TimeoutError) {
+                    resolve(false)
                 }
             }
+
+            resolve(true)
         })
-        
-        await page.click(INPUT_USERNAME_SELECTOR)
-        await page.keyboard.type(user.username)
-        
-        await page.click(INPUT_PASSWORD_SELECTOR)
-        await page.keyboard.type(user.password)
-        
-        await page.click(BUTTON_SUBMIT_SELECTOR)
+    }
+}
+
+
+var authenticatePuppeteer = function(page, user, WHERE=_INTRANET){
+    const INPUT_USERNAME_SELECTOR = WHERE.INPUT_USERNAME_SELECTOR
+    const INPUT_PASSWORD_SELECTOR = WHERE.INPUT_PASSWORD_SELECTOR
+    const BUTTON_SUBMIT_SELECTOR = WHERE.BUTTON_SUBMIT_SELECTOR
+
+    const auth = WHERE.auth
+
+    return new Promise(async (resolve, reject) => {
+        let username = user.username || user.login || user.login_intranet
+        let password = user.password || user.senha || user.senha_intranet
+
+        try{
+            await page.goto(WHERE._, {waitUntil: 'domcontentloaded'})
+            await page.waitForSelector(INPUT_USERNAME_SELECTOR)
+            await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
+            await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
+
+
+            // page.on('response', response => {
+            //     if(response.url().indexOf('index3.php') != -1){
+            //         if(response.url().indexOf('?loginx=') != -1){
+            //             resolve({auth: false, user: username})
+            //         }else{
+            //             resolve({auth: true, user: username})
+            //         }
+            //     }
+            // })
+            
+            await page.click(INPUT_USERNAME_SELECTOR)
+            await page.keyboard.type(username)
+            
+            await page.click(INPUT_PASSWORD_SELECTOR)
+            await page.keyboard.type(password)
+            
+            auth(page).then(result => {
+                resolve({
+                    auth: result,
+                    user: username
+                })
+            })
+
+            await page.click(BUTTON_SUBMIT_SELECTOR)
+        }catch(err){
+            reject(err)
+        }
     })
 }
 
@@ -405,33 +464,47 @@ UNIFESP.fetch = function(what, data, options){
         if(options == undefined) options = {}
 
         puppet = [false]
-        if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
+        let where = _INTRANET
+        let delayed_authentication = false
+        if(what == 'historico' || what == 'atestado'){
             // options.headless = true
+            where = _INTRANET
+        }else if(what == 'saldo_ru'){
+            // options.headless = true
+            where = _RU
+            delayed_authentication = true
         }else if(what == 'ementas'){
-            // options.headless = true
+            options.headless = false
         }else if(what == 'agenda'){
             options.puppeteer = false
         }
         buildPuppet(options).then(async puppet => {
             options = puppet.defaults(options)
             var fn
+            let authenticate_puppet
 
             if(what == 'historico' || what == 'atestado' || what == 'saldo_ru'){
                 if(!options.authenticated){
-                    var attempt = await authenticatePuppeteer(puppet.page, data) // data == user
-                    if(!attempt.auth){
-                        return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+                    if(delayed_authentication){
+                        authenticate_puppet = authenticatePuppeteer(puppet.page, data, where)
+                    }else{
+                        var attempt = await authenticatePuppeteer(puppet.page, data, where) // data == user
+
+                        if(!attempt.auth){
+                            return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
+                        }
                     }
                 }
             }
             options.puppeteerObject = puppet
+            authenticate_puppet && (options.authenticate = authenticate_puppet)
 
             if(what == 'historico'){
                 fn = () => historico.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'atestado'){
                 fn = () => atestado.fetch(puppet.browser, puppet.page, data.ra_aluno, options)
             }else if (what == 'saldo_ru') {
-                fn = () => saldo_ru.read(puppet.browser, puppet.page, options)
+                fn = () => saldo_ru.fetch(puppet.browser, puppet.page, data.ra_aluno, data.force || false, options)
             }else if(what == 'agenda'){
                 fn = () => agenda.fetch(data, options) // data == reference date
             }else if(what == 'ementas'){

@@ -3,6 +3,8 @@ const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery
 const unifesp = require('../libraries/unifesp')
 const cryptoJS = require("crypto-js");
+const Alunos = require('../models/Alunos')
+const DateTime = require('../utils/luxon')
 
 function decrypt(transitmessage, pass) {
     var keySize = 256;
@@ -26,14 +28,21 @@ function decrypt(transitmessage, pass) {
 }
 
 module.exports = {
-    getSaldo: (req, res) => {
-        var usuario = req.query.login
-        var senha = decrypt(req.query.senha, 'Achilles').toString(cryptoJS.enc.Utf8)
+    select_latest_saldo_aluno: (ra_aluno) => db.oneOrNone(sql.utilidades.select_latest_saldo_aluno, [ra_aluno]),
 
-        unifesp.getSaldoRu(usuario, senha).then(result => {
+
+    getSaldo: async (req, res) => {
+        var ra_aluno = req.params.ra_aluno
+
+        let aluno = await Alunos.select_aluno_ra(ra_aluno)
+
+        unifesp.fetch('saldo_ru', {
+            login: aluno.login_intranet, 
+            senha: aluno.senha_intranet
+        }).then(result => {
             res.status(200).send(result)
         })
-    },    
+    },
     getMatricula: (req, res, next) => {
         var id_motorista = req.query.id_motorista
         var id_origem = req.query.id_origem

@@ -58,7 +58,7 @@ module.exports = {
         })
     },
     delete_msg: (req, res, next) => {
-        var id_mensagem = req.query.id_mensagem
+        var id_mensagem = req.params.id_mensagem
         
         dados = [id_mensagem]
         const viagem = new pq(sql.mensagens.delete_msg)
@@ -75,7 +75,7 @@ module.exports = {
         })
     },
     alterar_status_msg: (req, res, next) => {
-        var id_mensagem = req.query.id_mensagem
+        var id_mensagem = req.params.id_mensagem
         
         dados = [id_mensagem]
         const viagem = new pq(sql.mensagens.alterar_status_msg)

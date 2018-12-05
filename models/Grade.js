@@ -5,9 +5,11 @@ const pq = require('pg-promise').ParameterizedQuery
 module.exports = {
     select_turma_aula: (hash) => db.oneOrNone(sql.grade.select_turma_aula, [hash]),
     select_turma_aluno: (ra_aluno, turma) => db.oneOrNone(sql.grade.select_turma_aluno, {ra_aluno, turma}),
+    select_faltas_aluno_turma: (ra_aluno, id_turma) => db.oneOrNone(sql.grade.select_faltas_aluno_turma, {ra_aluno, id_turma}),
+    
     insert_aluno_turma: (ra_aluno, id_turma, faltas=0) => db.none(sql.grade.insert_aluno_turma, {ra_aluno, id_turma, faltas}),
 
-
+    update_faltas_aluno_turma: (ra_aluno, id_turma, faltas) => db.none(sql.grade.update_faltas_aluno_turma, {ra_aluno, id_turma, faltas}),
 
     teste: (req, res, next) => {
         var raTeste = '111111'
@@ -159,15 +161,25 @@ module.exports = {
         })
     },
     insert_evento_turma: (req, res, next) => {
-        var id_evento = req.query.id_evento
-        var id_turma = req.query.id_turma
-        var ra_aluno = req.query.ra_aluno
-        var data = req.query.data
-        var hora = req.query.hora
-        var sala = req.query.sala
-        var descricao = req.query.descricao
+        var id_turma = req.params.id_turma
+        var ra_aluno = req.params.ra_aluno
+        
+        var id_evento = req.body.id_evento
+        var data = req.body.data
+        var hora = req.body.hora
+        var sala = req.body.sala
+        var descricao = req.body.descricao
 
-        dados = {id_evento: id_evento, id_turma: id_turma, ra_aluno: ra_aluno, data: data, hora: hora, sala: sala, descricao: descricao}
+        dados = {
+            id_turma,
+            ra_aluno,
+
+            id_evento,
+            data,
+            hora,
+            sala,
+            descricao
+        }
 
         const query = new pq(sql.grade.insert_evento_turma)
         db.none(query.text, dados)
@@ -288,7 +300,7 @@ module.exports = {
         })
     },
     select_alunos_turma_tq_idturma: (req, res, next) => {
-        var id_turma = req.query.id_turma
+        var id_turma = req.params.id_turma
 
         dados = {id_turma: id_turma}
 
@@ -305,11 +317,11 @@ module.exports = {
         })
     },
     select_compromissos_compromisso_tq_raaluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
-        var dt_inicio = req.query.dt_inicio
-        var dt_fim = req.query.dt_fim
-
-        dados = {ra_aluno: ra_aluno, dt_inicio: dt_inicio, dt_fim: dt_fim}
+        let dados = {
+            ra_aluno: req.params.ra_aluno,
+            data_inicio: req.query.data_inicio,
+            data_fim: req.query.data_fim
+        }
 
         const query = new pq(sql.grade.select_compromissos_compromisso_tq_raaluno)
         db.any(query.text, dados)
@@ -367,7 +379,7 @@ module.exports = {
         })
     },
     select_eventos_turma_tq_idturma: (req, res, next) => {
-        var id_turma = req.query.id_turma
+        var id_turma = req.params.id_turma
 
         dados = {id_turma: id_turma}
 
@@ -450,7 +462,7 @@ module.exports = {
         })
     },
     select_info_turma_tq_idturma: (req, res, next) => {
-        var id_turma = req.query.id_turma
+        var id_turma = req.params.id_turma
 
         dados = {id_turma: id_turma}
 
@@ -501,7 +513,7 @@ module.exports = {
         })
     },
     select_turmas_aluno_tq_raaluno: (req, res, next) => {
-        var ra_aluno = req.query.ra_aluno
+        var ra_aluno = req.params.ra_aluno
 
         dados = {ra_aluno: ra_aluno}
 
@@ -693,58 +705,6 @@ module.exports = {
         .then(() => {
             res.status(200).json({
                 success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-    update_aluno_turma_addfalta: (req, res) => {
-        var ra_aluno = req.query.ra_aluno
-        var id_turma = req.query.id_turma
-
-        dados = {ra_aluno: ra_aluno, id_turma: id_turma}
-
-        const query = new pq(sql.grade.update_aluno_turma_addfalta)
-        db.none(query.text, dados)
-        .then(() => {
-            res.status(200).json({
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-    update_aluno_turma_removefalta: (req, res) => {
-        var ra_aluno = req.query.ra_aluno
-        var id_turma = req.query.id_turma
-
-        dados = {ra_aluno: ra_aluno, id_turma: id_turma}
-
-        const query = new pq(sql.grade.update_aluno_turma_removefalta)
-        db.none(query.text, dados)
-        .then(() => {
-            res.status(200).json({
-                success: true
-            })
-        })
-        .catch(error => {
-            return next(error)
-        })
-    },
-    select_faltas_aluno_turma: (req, res) => {
-        var ra_aluno = req.query.ra_aluno
-        var id_turma = req.query.id_turma
-
-        dados = {ra_aluno: ra_aluno, id_turma: id_turma}
-
-        const query = new pq(sql.grade.select_faltas_aluno_turma)
-        db.one(query.text, dados)
-        .then((faltas) => {
-            res.status(200).json({
-                success: true,
-                data: faltas
             })
         })
         .catch(error => {
