@@ -495,12 +495,12 @@ module.exports = {
         })
     },
     solicitarReserva: (req, res, next) => {
-        var id_viagem = req.params.id_viagem
+        var id_viagem = req.params.id_viagem || req.query.id_viagem
 
-        var id_passageiro = req.body.id_passageiro
-        var id_origem = req.body.id_origem
-        var id_destino = req.body.id_destino
-        var status_reserva = req.body.status_reserva
+        var id_passageiro = req.body.id_passageiro || req.query.id_passageiro
+        var id_origem = req.body.id_origem || req.query.id_origem
+        var id_destino = req.body.id_destino || req.query.id_destino
+        var status_reserva = req.body.status_reserva || req.query.status_reserva
         dados = [id_viagem, id_passageiro, id_origem, id_destino, status_reserva]
 
         const viagem = new pq(sql.caronas.solic_reserva)
