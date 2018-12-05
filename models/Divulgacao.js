@@ -486,8 +486,6 @@ module.exports = {
     },
 
     insert_divulgacao: (req, res, next) => {
-        console.log('OI', req.query)
-        console.log('ra', ra_aluno)
         var ra_aluno = req.query.ra_aluno
         var id_tipo = req.query.id_tipo
         var nome = req.query.nome

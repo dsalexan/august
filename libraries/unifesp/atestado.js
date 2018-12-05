@@ -37,6 +37,12 @@ const TIMES_ATESTADO_TRANSLATE = {
 
 const PARAGRAPH2_ATESTADO_SELECTOR = 'div.hash p:nth-of-type(1)'
 
+var delay = function(_time){
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, _time)
+    })
+}
+
 var read_atestado = function(browser, page, ra_aluno, options){
     return new Promise(async resolve => {
         await page.goto(INTRANET_UNIFESP_URL, {waitUntil: 'networkidle2'})
@@ -45,6 +51,7 @@ var read_atestado = function(browser, page, ra_aluno, options){
             await page.$eval(MENU_UNIFESP_SELECTOR)
             await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})
         }catch(err){
+            await delay(2000)
             await page.evaluate('toggleMenu()');
             await page.waitForSelector(MENU_UNIFESP_SELECTOR)            
             await page.click(MENU_UNIFESP_SELECTOR, {waitUntil: 'domcontentloaded'})

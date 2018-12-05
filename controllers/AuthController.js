@@ -103,6 +103,7 @@ router.post('/login', function(req, res){
                 if (!user.exists) { // Nao achou, registrar novo usuario e fazer login
                     console.log(`Registering ${usuario}...`)                    
 
+                    
                     unifesp.fetch('historico', undefined, {
                         puppeteer: result.puppeteer,
                         authenticated: true,
