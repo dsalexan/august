@@ -108,6 +108,11 @@ router.get('/api/caronas/get/viagem/reserva', Carona.searchViagemReserva)
 router.get('/api/caronas/get/viagem/motorista/reserva', Carona.srch_MotoristaReserva)
 router.get('/api/caronas/get/viagem/passageiro/reserva', Carona.searchPassageiroReserva)
 
+router.get('/api/caronas/post/viagem/reserva', Carona.solicitarReserva)
+router.get('/api/caronas/post/viagem/origem', Carona.insertOrigemViagem)
+router.get('/api/caronas/post/viagem/destino', Carona.insertDestinoViagem)
+router.get('/api/caronas/post/viagem', Carona.insertViagem)
+
 router.get('/api/caronas/localidades', Carona.selectLocalidadeDescricao)
 router.get('/api/caronas/get/localidades', Carona.selectLocalidadeDescricao)
 
