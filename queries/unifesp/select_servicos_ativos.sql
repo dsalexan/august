@@ -1,3 +1,3 @@
 SELECT *
 FROM servico
-WHERE ativo = 1
+WHERE ativo = TRUE AND nome LIKE $1

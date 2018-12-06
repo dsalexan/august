@@ -9,6 +9,8 @@ var port = process.env.PORT || 3000
 var router = express.Router()
 var path = require('path')
 
+const service = require('./utils/service')
+
 global.root_path = path.resolve(__dirname)
 
 // server.setTimeout(90000)
@@ -19,13 +21,17 @@ app.options('*', cors())
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
 
-var Carona = require('./models/Caronas')
-var Grade = require('./models/Grade')
-var Utilidades = require('./models/Utilidades')
-var BugReport = require('./models/BugReport')
-var Divulgacao = require('./models/Divulgacao')
-var Mensagem = require('./models/Mensagens')
-var Alunos = require('./models/Alunos')
+const lib = require('./libraries/unifesp')
+const saldo_ru = require('./libraries/unifesp/saldo_ru')
+
+const Carona = require('./models/Caronas')
+const Grade = require('./models/Grade')
+const Utilidades = require('./models/Utilidades')
+const BugReport = require('./models/BugReport')
+const Divulgacao = require('./models/Divulgacao')
+const Mensagem = require('./models/Mensagens')
+const Alunos = require('./models/Alunos')
+const Unifesp = require('./models/Unifesp')
 
 
 // // log request middleware
@@ -161,7 +167,31 @@ router.get('/api/divulgacao/put/setar_quantidade', Divulgacao.setar_quantidade)
 
 
 // Utilidades
-router.get('/api/utilidades/saldo/:ra_aluno', Utilidades.getSaldo)
+router.get('/api/utilidades/saldo/:ra_aluno', async (req, res) => {
+    var ra_aluno = req.params.ra_aluno
+
+    let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    
+    let result =  await saldo_ru.check(ra_aluno)
+    if(result.read_from_intranet){
+        let servicos_atuais = await Unifesp.select_servicos_ativos('saldo_ru')
+
+        if(servicos_atuais.length > 0){
+            servicos_atuais = servicos_atuais[0]
+
+            await service.waitFor(servicos_atuais.id_servico)
+
+            result = await Utilidades.select_latest_saldo_aluno(ra_aluno)
+        }else{
+            result = await lib.fetch('saldo_ru', aluno)
+        }
+    }
+
+    res.status(200).send({
+        'saldo_ru': result.extracao && result.extracao.saldo
+    })
+})
+
 router.get('/api/utilidades/matricula', Utilidades.getMatricula)
 router.get('/api/utilidades/cardapio', Utilidades.getCardapio)
 router.get('/api/utilidades/historico', Utilidades.getHistorico)

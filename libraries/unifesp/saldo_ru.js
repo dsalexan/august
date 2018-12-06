@@ -61,29 +61,6 @@ var check_saldo_ru = function(ra_aluno){
 
 var read_saldo_ru = function(browser, page){
     return new Promise(async resolve => {
-        // const INPUT_USERNAME_SELECTOR = 'input#user'
-        // const INPUT_PASSWORD_SELECTOR = 'input#password'
-        // const BUTTON_SUBMIT_SELECTOR = 'button#btn-login'
-
-        // await page.waitForSelector(INPUT_USERNAME_SELECTOR)
-        // await page.waitForSelector(INPUT_PASSWORD_SELECTOR)
-        // await page.waitForSelector(BUTTON_SUBMIT_SELECTOR)
-
-        // await page.click(INPUT_USERNAME_SELECTOR)
-        // await page.keyboard.type(credentials.login)
-
-        // await page.click(INPUT_PASSWORD_SELECTOR)
-        // await page.keyboard.type(credentials.senha)
-        
-        // await page.click(BUTTON_SUBMIT_SELECTOR)
-
-        // try {
-        //     await page.waitForSelector('.col-sm-9', {timeout : 120000})
-        // } catch (e) {
-        //     if (e instanceof TimeoutError) {
-        //         resolve(null)
-        //     }
-        // }
 
         let $  = cheerio.load(await page.content())
 
@@ -108,33 +85,20 @@ var save_saldo_ru = function(data, ra_aluno){
     return Alunos.insert_saldo_ru({saldo: data.saldo}, DateTime.toSQL(data.datahora), ra_aluno)
 }
 
-var fetch_saldo_ru = function(browser, page, ra_aluno, force, options={}){
+var fetch_saldo_ru = function(browser, page, ra_aluno, options={}){
     return new Promise(async resolve => {
         let browserPersistence = {}
         let saldo
-        let read_from_intranet = force
 
         try{
-            if(!force){
-                saldo = await check_saldo_ru(ra_aluno)
-                read_from_intranet = saldo.read_from_intranet
-            }
-
-            if(read_from_intranet) {
-                let attempt = await options.authenticate
-                if(!attempt.auth){
-                    return reject(new Error('UNIFESP - Unable to authenticate browser during fetching'))
-                }
-
-                saldo = await read_saldo_ru(browser, page)
-            }
+            saldo = await read_saldo_ru(browser, page)
 
             options && options.puppeteerObject && options.puppeteerObject.destroy(options, browserPersistence)
         }catch(error){
             saldo = {error}
         }
 
-        if(read_from_intranet) saldo = await save_saldo_ru(saldo, ra_aluno)
+        saldo = await save_saldo_ru(saldo, ra_aluno)
         
         browserPersistence.puppeteer && (saldo.puppeteer = browserPersistence.puppeteer)
 
@@ -144,6 +108,7 @@ var fetch_saldo_ru = function(browser, page, ra_aluno, force, options={}){
 
 
 module.exports = {
+    check: check_saldo_ru,
     read: read_saldo_ru,
     fetch: fetch_saldo_ru
 }

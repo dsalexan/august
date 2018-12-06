@@ -1,1 +1,1 @@
-UPDATE servico SET ativo = 0 WHERE id_servico = $1
+UPDATE servico SET ativo = FALSE WHERE id_servico = $1

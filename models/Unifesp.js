@@ -24,7 +24,8 @@ Unifesp.select_reserva_texto_datahora_sala = (texto, datahora, id_sala) => db.an
 
 Unifesp.select_sala_nome = (nome) => db.oneOrNone(sql.unifesp.select_sala_nome, [nome])
 
-Unifesp.select_servicos_ativos = () => db.any(sql.unifesp.select_servicos_ativos)
+Unifesp.select_servicos_ativos = (nome) => db.any(sql.unifesp.select_servicos_ativos, [nome])
+Unifesp.select_servico = (id_servico) => db.oneOrNone(sql.unifesp.select_servico, [id_servico])
 
 
 Unifesp.insert_extracao = (data) => db.none(sql.unifesp.insert_extracao, data)
