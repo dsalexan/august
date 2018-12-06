@@ -174,7 +174,7 @@ router.get('/api/utilidades/saldo/:ra_aluno', async (req, res) => {
     
     let result =  await saldo_ru.check(ra_aluno)
     if(result.read_from_intranet){
-        let servicos_atuais = await Unifesp.select_servicos_ativos('saldo_ru')
+        let servicos_atuais = await Unifesp.select_servicos_ativos_aluno('saldo_ru', ra_aluno)
 
         if(servicos_atuais.length > 0){
             servicos_atuais = servicos_atuais[0]

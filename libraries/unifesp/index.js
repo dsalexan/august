@@ -2,6 +2,7 @@ var INTRANET_UNIFESP_URL = 'https://intranet.unifesp.br/'
 var INTRANET_HISTORICO_URL = 'https://www3.unifesp.br/prograd/app_prograd/he_novo/he_aluno_cns_lista_cursos/he_aluno_cns_lista_cursos.php'
 var CARDAPIO_URL = 'https://www.unifesp.br/campus/sjc/servicosnae/restaurante/1647-cardapio-semanal-do-ru.html'
 
+const DateTime = require('../../utils/luxon')
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 const request = require('request')
@@ -451,8 +452,10 @@ UNIFESP.insertCardapio = function(what, user, options){
 
 
 UNIFESP.fetch = function(what, data, options){
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         if(options == undefined) options = {}
+
+        var servico = await ModelUnifesp.insert_servico(what, DateTime.toSQL(), data.ra_aluno || null)
 
         puppet = [false]
         let where = _INTRANET
@@ -478,17 +481,19 @@ UNIFESP.fetch = function(what, data, options){
                     var attempt = await authenticatePuppeteer(puppet.page, data, where) // data == user
 
                     if(!attempt.auth){
+                        await ModelUnifesp.update_servico(servico.id_servico)
                         return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
                     }
                 }
             }
+            options.puppeteerObject = puppet
 
             if(what == 'historico'){
                 fn = () => historico.fetch(puppet.browser, puppet.page, options)
             }else if(what == 'atestado'){
                 fn = () => atestado.fetch(puppet.browser, puppet.page, data.ra_aluno, options)
             }else if (what == 'saldo_ru') {
-                fn = () => saldo_ru.fetch(puppet.browser, puppet.page, data.ra_aluno, data.force || false, options)
+                fn = () => saldo_ru.fetch(puppet.browser, puppet.page, data.ra_aluno, options)
             }else if(what == 'agenda'){
                 fn = () => agenda.fetch(data, options) // data == reference date
             }else if(what == 'ementas'){
@@ -496,10 +501,7 @@ UNIFESP.fetch = function(what, data, options){
             }
 
 
-
             if(fn){
-                var servico = await ModelUnifesp.insert_servico(what)
-
                 fn().then(async result => {
                     await ModelUnifesp.update_servico(servico.id_servico)
                     resolve(result)

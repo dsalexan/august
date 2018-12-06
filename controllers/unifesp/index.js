@@ -123,6 +123,7 @@ router.get('/saldo_ru/:ra_aluno', async (req, res, next) => {
     let ra_aluno = req.params.ra_aluno
 
     let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    aluno.login_intranet = Crypt.decrypt(aluno.login_intranet, 'Achilles')
     aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
 
     lib.fetch('saldo_ru', aluno).then(saldo => {
@@ -293,6 +294,7 @@ router.get('/atestado/:ra_aluno', async (req, res, next) => {
     let ra_aluno = req.params.ra_aluno
 
     let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    aluno.login_intranet = Crypt.decrypt(aluno.login_intranet, 'Achilles')
     aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
 
     lib.fetch('atestado', aluno).then(atestado => {
@@ -304,6 +306,7 @@ router.get('/historico/:ra_aluno', async (req, res, next) => {
     let ra_aluno = req.params.ra_aluno
 
     let aluno = await Alunos.select_aluno_ra(ra_aluno)
+    aluno.login_intranet = Crypt.decrypt(aluno.login_intranet, 'Achilles')
     aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
 
     lib.fetch('historico', aluno).then(atestado => {

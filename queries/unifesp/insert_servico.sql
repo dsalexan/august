@@ -1,2 +1,2 @@
-INSERT INTO servico VALUES(DEFAULT, $1, TRUE)
+INSERT INTO servico VALUES(DEFAULT, ${nome}, TRUE, ${datahora}, ${ra_aluno})
 RETURNING *
