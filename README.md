@@ -20,23 +20,23 @@
 
 - [ ] Grade
     - [ ] Login
-        - [x] *`funcionaliade`* Login nao existente
-        - [x] *`funcionaliade`* Login existente
+        - [x] ~~*`funcionaliade`* Login nao existente~~
+        - [x] ~~*`funcionaliade`* Login existente~~
         - [ ] *`funcionaliade`* Melhorar criptografia (*ponta a ponta, tem isso ai --dsalexan*)
         - [ ] *`funcionaliade`* Começar a autenticar as chamadas para a API com um JWT vindo do login (*da pra fazer isso? --dsalexan*)
-        - [x] *`funcionaliade`* Criptografar também o username do aluno
+        - [x] ~~*`funcionaliade`* Criptografar também o username do aluno~~
     - [ ] Perfil
-        - [x] Visualizar perfil
+        - [x] ~~Visualizar perfil~~
         - [ ] Alterar perfil
-            - [x] Modificar perfil
+            - [x] ~~Modificar perfil~~
             - [ ] *`funcionaliade`* Adicionar coisas de perfil especifico pra piloto (placa e modelo por exemplo)
                 - *utilizar um novo campo que eu adicionei em **aluno**, um JSONB DEAFULT '{}' chamado perfil --dsalexan* 
             - [ ] Melhorar o design da tela de modificar perfil, nao precisa daquele modal
         - [ ] Alterar politica de notificacoes (horarios, frequencia, pra q)
     - [ ] Grade
         - [ ] Visualizar aulas
-            - [x] Visualizar todas as aulas
-            - [x] Visualizar aula unica
+            - [x] ~~Visualizar todas as aulas~~
+            - [x] ~~Visualizar aula unica~~
                 - [ ] Se certificar que o professor na aula ta de acordo com o **Corpo Docente** (site da unifesp)
                 - [ ] Se certificar que ta mostrando a sala corretamente
             - [ ] Questionar aulas nao encontradas pela analise
@@ -44,9 +44,9 @@
                 - [ ] Modificar aula existente
             - [ ] Remover aula
         - [ ] Visualizar todos os eventos
-            - [x] Visualizar todos os eventos de todas as aulas em um lugar
-            - [x] Visualizar eventos de uma aula
-            - [x] Adicionar eventos em uma aula
+            - [x] ~~Visualizar todos os eventos de todas as aulas em um lugar~~
+            - [x] ~~Visualizar eventos de uma aula~~
+            - [x] ~~Adicionar eventos em uma aula~~
             - [ ] Modificar evento
             - [ ] Remover evento
             - [ ] *`funcionaliade`* Notificacao de evento em momentos especificos
@@ -66,7 +66,7 @@
                 - [ ] Remover materia
     - [ ] Caronas
         - [ ] Visualizar caronas como carona
-            - [x] Lista com todas as caronas disponiveis
+            - [x] ~~Lista com todas as caronas disponiveis~~
             - [ ] Buscas com filtro avancado
                 - [ ] *`funcionaliade`* Lugares
                 - [ ] *`funcionaliade`* Horario
@@ -83,25 +83,25 @@
                 - [ ] *`funcionaliade`* Local de saida
                 - [ ] *`funcionaliade`* Local de chegada
             - [ ] Oferecer caronas
-                - [x] Oferecer uma carona
+                - [x] ~~Oferecer uma carona~~
                 - [ ] *`funcionaliade`* Notificacao para modificacao de estados de reservas
                 - [ ] *`funcionaliade`* Opcao para ser ida e volta
                 - [ ] *`funcionaliade`* Sugerir que o piloto bote uma foto caso nao possua uma
                 - [ ] *`funcionaliade`* Sugerir que o piloto insira um picpay caso nao possua um cadastrado
                 - [ ] *`funcionaliade`* Sugerir que o piloto informe a placa do carro caso nao haja uma cadastrada
-            - [x] Confirmar reservas de carona
+            - [x] ~~Confirmar reservas de carona~~
             - [ ] Modificar carona
-            - [x] Excluir carona
+            - [x] ~~Excluir carona~~
         - [ ] Minhas caronas (historico de caronas passadas)
         - [ ] **`funcionalidade`** Colocar alarme de caronas, para lembrar o aluno de pedir uma carona. Talvez até sugerir alarmes com base nos horarios das primeiras aulas do dia.
     - [ ] Utilidades
         - [ ] Saldo RU
-            - [x]  Visualizar saldo ru
+            - [x]  ~~Visualizar saldo ru~~
             - [ ] *`funcionalidade`* Criar um cronograma com todos os alunos cadastrados e espalhar atualizacoes de ru pelo dia para eficiencia
-            - [x] Botao para forcar atualizacao do saldo ru
-                - [x] *`funcionaliade`* Informar a ultima vez em que o saldo foi atualizado
+            - [x] ~~Botao para forcar atualizacao do saldo ru~~
+                - [x] ~~*`funcionaliade`* Informar a ultima vez em que o saldo foi atualizado~~
         - [ ] Cardapio RU 
-            - [x] Visualizar cardapio
+            - [x] ~~Visualizar cardapio~~
             - [ ] Melhorar o layout do cardapio RU
             - [ ] Ver cardapios passados
             - [ ] Mostrar estatisticas das comidas com base nos cardapios passado (*why not --dsalexan*)
@@ -109,7 +109,7 @@
                 - [ ] *`funcionaliade`* Guardar o cardapio no banco
                 - [ ] *`funcionaliade`* Baicar cardapio semanalmente todo domingo?
         - [ ] Histórico
-            - [x] Baixar historico
+            - [x] ~~Baixar historico~~
             - [ ] *`funcionaliade`* melhorar cara do historico pdf
         - [ ] Atestado
             - [ ] Baixar atestadoc
@@ -117,18 +117,18 @@
             - [ ] *`funcionaliade`* Baixar para a pasta downloads como o Android manda (*ios who cares --dsalexan*)
             - [ ] *`funcionaliade`* Escolher entre baixar do servidor ou pegar do local com base na data de vencimento do atestado
     - [ ] Divulgacao
-        - [x] Visualizar oferecimentos
+        - [x] ~~Visualizar oferecimentos~~
         - [ ] Oferecer coisas
-            - [x] Oferecer um oferecimento especifico
-            - [x] Modificar coisas
-            - [x] Remover coisas
+            - [x] ~~Oferecer um oferecimento especifico~~
+            - [x] ~~Modificar coisas~~
+            - [x] ~~Remover coisas~~
             - [ ] Confirmar reserva de coisa
                 - [ ] *`funcionaliade`* Notificacao para reservas novas feitas
             - [ ] Estatisticas de adesao a coisa
         - [ ] Reservar coisas
             - [ ] Visualizar todas as coisas sendo ofertadas
             - [ ] Visualizar os dados de um oferecimento especifico
-            - [x] Reservar um oferecimento especifico
+            - [x] ~~Reservar um oferecimento especifico~~
             - [ ] Remover reserva
             - [ ] *`funcionaliade`* Notificacao para modificacao de estado da reserva
 
