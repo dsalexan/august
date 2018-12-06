@@ -10,5 +10,4 @@ DateTime.toSQL = (date, format) => {
     
     return date.toString()
 }
-
 module.exports = DateTime

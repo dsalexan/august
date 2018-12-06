@@ -18,6 +18,9 @@ global.root_path = path.resolve(__dirname)
 app.use(cors())
 app.options('*', cors())
 
+const DateTime = require('./utils/luxon')
+const Crypt = require('./utils/crypt')
+
 var Test = require('./models/Test')
 var authController = require('./controllers/AuthController')
 
@@ -168,27 +171,38 @@ router.get('/api/divulgacao/put/setar_quantidade', Divulgacao.setar_quantidade)
 
 // Utilidades
 router.get('/api/utilidades/saldo/:ra_aluno', async (req, res) => {
+    var force = req.query.force
     var ra_aluno = req.params.ra_aluno
 
     let aluno = await Alunos.select_aluno_ra(ra_aluno)
-    
-    let result =  await saldo_ru.check(ra_aluno)
-    if(result.read_from_intranet){
-        let servicos_atuais = await Unifesp.select_servicos_ativos_aluno('saldo_ru', ra_aluno)
+    aluno.login_intranet = Crypt.decrypt(aluno.login_intranet, 'Achilles')
+    aluno.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
 
-        if(servicos_atuais.length > 0){
-            servicos_atuais = servicos_atuais[0]
+    let result
 
-            await service.waitFor(servicos_atuais.id_servico)
+    if(!force){
+        result = await saldo_ru.check(ra_aluno)
+        
+        if(result.read_from_intranet){
+            let servicos_atuais = await Unifesp.select_servicos_ativos_aluno('saldo_ru', ra_aluno)
 
-            result = await Utilidades.select_latest_saldo_aluno(ra_aluno)
-        }else{
-            result = await lib.fetch('saldo_ru', aluno)
+            if(servicos_atuais.length > 0){
+                servicos_atuais = servicos_atuais[0]
+
+                await service.waitFor(servicos_atuais.id_servico)
+
+                result = await Utilidades.select_latest_saldo_aluno(ra_aluno)
+            }else{
+                result = await lib.fetch('saldo_ru', aluno)
+            }
         }
+    }else{
+        result = await lib.fetch('saldo_ru', aluno)
     }
 
     res.status(200).send({
-        'saldo_ru': result.extracao && result.extracao.saldo
+        'saldo': result.extracao && result.extracao.saldo,
+        'datahora': DateTime.fromSQL(result.datahora).setZone('America/Sao_Paulo').toLocaleString(DateTime.DATETIME_FULL)
     })
 })
 

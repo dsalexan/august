@@ -98,8 +98,8 @@
         - [ ] Saldo RU
             - [x]  Visualizar saldo ru
             - [ ] *`funcionalidade`* Criar um cronograma com todos os alunos cadastrados e espalhar atualizacoes de ru pelo dia para eficiencia
-            - [ ] Botao para forcar atualizacao do saldo ru
-                - [ ] *`funcionaliade`* Informar a ultima vez em que o saldo foi atualizado
+            - [x] Botao para forcar atualizacao do saldo ru
+                - [x] *`funcionaliade`* Informar a ultima vez em que o saldo foi atualizado
         - [ ] Cardapio RU 
             - [x] Visualizar cardapio
             - [ ] Melhorar o layout do cardapio RU

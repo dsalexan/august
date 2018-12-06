@@ -27,20 +27,20 @@ var check_saldo_ru = function(ra_aluno){
                     if(_DATE.ordinal == HOJE.ordinal){ // se atualizou hoje
                         read_from_intranet = false
                     }else{ // se atualizou ontem
-                        if(_DATE.hour >= 20){ // atualizou depois das 20h ontem
+                        if(_DATE.hour >= 19){ // atualizou depois das 20h ontem
                             read_from_intranet = false
                         }else{ // atualizou antes das 20h
                             read_from_intranet = true
                         }
                     }
-                }else if(HOJE.hour >= 12 && HOJE.hour <= 14){ // durante almoco
+                }else if(HOJE.hour >= 12 && HOJE.hour <= 13){ // durante almoco
                     // nao tem como saber se provavelmente gastou ru ou nao
                     read_from_intranet = true
                 }else{ // apos almoco
                     if(_DATE.ordinal < HOJE.ordinal){ // atualizou ontem
                         read_from_intranet = true
                     }else{ // atualizou hoje
-                        if(_DATE.hour <= 14){ // atualizou hoje antes ou durante do almoco
+                        if(_DATE.hour <= 13){ // atualizou hoje antes ou durante do almoco
                             read_from_intranet = true
                         }else{ // atualizou apos o almoco
                             read_from_intranet = false
