@@ -8,7 +8,7 @@
             - [Disclaimer](#disclaimer)
         - [APRESENTACAO](#apresentacao)
             - [Roteiro](#roteiro)
-        - [Recursos](#recursos)
+            - [Recursos](#recursos)
 
 <!-- /TOC -->
 
@@ -24,12 +24,14 @@
         - [x] *`funcionaliade`* Login existente
         - [ ] *`funcionaliade`* Melhorar criptografia (*ponta a ponta, tem isso ai --dsalexan*)
         - [ ] *`funcionaliade`* Começar a autenticar as chamadas para a API com um JWT vindo do login (*da pra fazer isso? --dsalexan*)
-        - [ ] *`funcionaliade`* Criptografar também o username do aluno
+        - [x] *`funcionaliade`* Criptografar também o username do aluno
     - [ ] Perfil
         - [x] Visualizar perfil
         - [ ] Alterar perfil
             - [x] Modificar perfil
             - [ ] *`funcionaliade`* Adicionar coisas de perfil especifico pra piloto (placa e modelo por exemplo)
+                - *utilizar um novo campo que eu adicionei em **aluno**, um JSONB DEAFULT '{}' chamado perfil --dsalexan* 
+            - [ ] Melhorar o design da tela de modificar perfil, nao precisa daquele modal
         - [ ] Alterar politica de notificacoes (horarios, frequencia, pra q)
     - [ ] Grade
         - [ ] Visualizar aulas
@@ -133,6 +135,7 @@
 
 ### APRESENTACAO
 ----
+- [ ] Criar um guia para tentar lidar com os erros bizarros do Ionic
 - [ ] Roteiro ([goto](#roteiro))
 - [ ] Montar slides - *os numeros do slide sao só uma previsao* ([recursos](#recursos))
     - [ ] HOJE
@@ -215,7 +218,7 @@
         - **`EVENTOS`**. Um eixo especifico para eventos internos ou externos a faculdade. Coisas como festas, palestras, reuniões poderiam ser organizadas e divulgadas dentro do app (onde nosso aplicativo poderia gerenciar coisas como estatisticas de adesão ao evento, listas de presenças, divulgação especializada).
 5. **`FECHAMENTO`**. Terminar a apresentação falando sobre as nossas intenções de realmente terminar o app e libera-lo na unifesp (*na moral a gente vai fazer isso msm? --dsalexan*). **O QUE MAIS???**
 
-### Recursos
+#### Recursos
 
 - [How to Quickly Make a Wonderful PowerPoint Presentation | PowerPoint Skills](https://www.youtube.com/watch?v=_N7SZ7TBgCY)
 - [How to Quickly Design a Beautiful PowerPoint Presentation | PowerPoint Skills](https://www.youtube.com/watch?v=SVYwKXPBb7w)

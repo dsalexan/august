@@ -73,13 +73,10 @@ router.post('/login', function(req, res){
     perfHash = Math.random().toString(36).substring(2, 9)
     performance.mark('Begin Login Authentication')
 
-    var usuario = req.body.login
-    var encrypted_senha = req.body.senha
-    var senha = req.body.uncrypted ? encrypted_senha : decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
-
-                        // TODO: encriptar o password no outro lado da chamada usando um metodo 
-                        // conhecido para o servidor, assim mesmo que interceptem a chamada para a api
-                        // nao vao interceptar as credenciais do usuario
+    let encrypted_login = req.body.login
+    let usuario = req.body.uncrypted ? encrypted_senha : decrypt(encrypted_login, 'Achilles').toString(cryptoJS.enc.Utf8)
+    let encrypted_senha = req.body.senha
+    let senha = req.body.uncrypted ? encrypted_senha : decrypt(encrypted_senha, 'Achilles').toString(cryptoJS.enc.Utf8)
 
     if(usuario == undefined || senha == undefined){
         return res.status(400).send({
@@ -114,7 +111,8 @@ router.post('/login', function(req, res){
                             authenticated: true
                         })
 
-                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, usuario, encrypted_senha).then((user) => {
+                        Alunos.register_aluno(historico.extracao.ra_aluno, historico.extracao.nome, encrypted_login, encrypted_senha).then((user) => {
+                            user.data.login = decrypt(encrypted_login, 'Achilles').toString(cryptoJS.enc.Utf8)
                             sendResult(user.data) // Enviar os dados do usuario para fazer login
                         })
                     }).catch(err => {
