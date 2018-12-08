@@ -137,9 +137,11 @@ function run_job(job){
     return new Promise(async (resolve, reject) => {
         let index = job.index     
         global.jobs.running.push(index)
-    
+        
+        let aluno
+
         if(job.args.aluno){
-            let aluno = await Alunos.select_aluno_ra(job.args.aluno)
+            aluno = await Alunos.select_aluno_ra(job.args.aluno)
             job.args.login_intranet = Crypt.decrypt(aluno.login_intranet, 'Achilles')
             job.args.senha_intranet = Crypt.decrypt(aluno.senha_intranet, 'Achilles')
         }else if(job.args.hoje){
@@ -158,7 +160,7 @@ function run_job(job){
         global.jobs.done.push(index)
     
         console.log('Scheduled job result:')
-        console.log(result)
+        console.log(aluno && aluno.ra_aluno, result)
         resolve(result)
     })     
 }

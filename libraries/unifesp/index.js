@@ -101,9 +101,9 @@ let _RU = {
             try {
                 await page.waitForSelector('.col-sm-9', {timeout : 120000})
             } catch (e) {
-                if (e instanceof TimeoutError) {
-                    resolve(false)
-                }
+                console.log('ERROR: login saldo ru')
+                console.log(e)
+                resolve(false)
             }
 
             resolve(true)
