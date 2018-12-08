@@ -25,6 +25,8 @@
         - [ ] *`funcionaliade`* Melhorar criptografia (*ponta a ponta, tem isso ai --dsalexan*)
         - [ ] *`funcionaliade`* Começar a autenticar as chamadas para a API com um JWT vindo do login (*da pra fazer isso? --dsalexan*)
         - [x] ~~*`funcionaliade`* Criptografar também o username do aluno~~
+        - [ ] *`funcionaliade`* Pesquisar saldo ru no login
+        - [ ] *`funcionaliade`* Paralelizar busca de saldo ru e atestado e historico no login
     - [ ] Perfil
         - [x] ~~Visualizar perfil~~
         - [ ] Alterar perfil
