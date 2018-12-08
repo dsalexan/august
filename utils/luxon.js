@@ -10,4 +10,22 @@ DateTime.toSQL = (date, format) => {
     
     return date.toString()
 }
+
+DateTime.toZoneObject = (date, zone) => {
+    if(date == undefined) date = DateTime.utc()
+    else if(date.constructor.name == 'Object') date = DateTime.fromObject(date)
+
+    date.setZone(zone)
+
+    return {
+        hour: date.hour,
+        minute: date.minute,
+        second: date.second
+    }
+}
+
+DateTime.toLocalObject = (date) => {
+    return DateTime.toZoneObject(date, 'local')
+}
+
 module.exports = DateTime

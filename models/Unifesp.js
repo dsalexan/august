@@ -28,7 +28,10 @@ Unifesp.select_servicos_ativos = (nome) => db.any(sql.unifesp.select_servicos_at
 Unifesp.select_servicos_ativos_aluno = (nome, ra_aluno) => db.any(sql.unifesp.select_servicos_ativos_aluno, {nome, ra_aluno})
 Unifesp.select_servico = (id_servico) => db.oneOrNone(sql.unifesp.select_servico, [id_servico])
 
+Unifesp.select_schedules = () => db.any(sql.unifesp.select_schedules)
 
+
+Unifesp.insert_schedule = (servico, args, datahora, repetir) => db.one(sql.unifesp.insert_schedule, {servico, args, datahora, repetir})
 Unifesp.insert_extracao = (data) => db.none(sql.unifesp.insert_extracao, data)
 
 Unifesp.insert_uc = (data) => db.none(sql.unifesp.insert_uc, data)

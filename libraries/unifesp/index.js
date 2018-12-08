@@ -29,7 +29,8 @@ class Puppet {
             puppeteer: undefined,
             keep_puppet: false,
             authenticated: false,
-            headless: process.env.HEADLESS != undefined ? process.env.HEADLESS == 'true' : true
+            headless: process.env.HEADLESS != undefined ? process.env.HEADLESS == 'true' : true,
+            servico: undefined
         })
     }
 
@@ -455,7 +456,8 @@ UNIFESP.fetch = function(what, data, options){
     return new Promise(async (resolve, reject) => {
         if(options == undefined) options = {}
 
-        var servico = await ModelUnifesp.insert_servico(what, DateTime.toSQL(), data.ra_aluno || null)
+        if(options.servico == undefined)
+            options.servico = await ModelUnifesp.insert_servico(what, DateTime.toSQL(), data.ra_aluno || null)
 
         puppet = [false]
         let where = _INTRANET
@@ -481,7 +483,7 @@ UNIFESP.fetch = function(what, data, options){
                     var attempt = await authenticatePuppeteer(puppet.page, data, where) // data == user
 
                     if(!attempt.auth){
-                        await ModelUnifesp.update_servico(servico.id_servico)
+                        await ModelUnifesp.update_servico(options.servico.id_servico)
                         return reject(new Error('UNIFESP - Unable to authenticate browser before fetching'))
                     }
                 }
@@ -495,7 +497,7 @@ UNIFESP.fetch = function(what, data, options){
             }else if (what == 'saldo_ru') {
                 fn = () => saldo_ru.fetch(puppet.browser, puppet.page, data.ra_aluno, options)
             }else if(what == 'agenda'){
-                fn = () => agenda.fetch(data, options) // data == reference date
+                fn = () => agenda.fetch(data.date || data, options) // data == reference date
             }else if(what == 'ementas'){
                 fn = () => ementas.fetch(puppet.browser, puppet.page, data.path, data.download, options)
             }
@@ -503,7 +505,7 @@ UNIFESP.fetch = function(what, data, options){
 
             if(fn){
                 fn().then(async result => {
-                    await ModelUnifesp.update_servico(servico.id_servico)
+                    await ModelUnifesp.update_servico(options.servico.id_servico)
                     resolve(result)
                 })
             }else{

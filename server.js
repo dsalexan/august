@@ -12,6 +12,11 @@ var path = require('path')
 const service = require('./utils/service')
 
 global.root_path = path.resolve(__dirname)
+global.jobs = {
+    index: {},
+    running: [],
+    done: []
+}
 
 // server.setTimeout(90000)
 
@@ -36,6 +41,13 @@ const Mensagem = require('./models/Mensagens')
 const Alunos = require('./models/Alunos')
 const Unifesp = require('./models/Unifesp')
 
+let startTime;
+setInterval(function() {
+    if (!startTime) {
+        startTime = Date.now();
+    }
+    // console.log((Date.now() - startTime) / 1000);
+}, 250)
 
 // // log request middleware
 // app.use(function(req, res, next) {
@@ -403,4 +415,7 @@ app.use(function(err, req, res, next) {
 
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
+    service.analyse().then(() => {
+        service.run()
+    })
 })
