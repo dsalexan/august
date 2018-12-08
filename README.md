@@ -65,7 +65,7 @@
                 - [ ] Modificar materia
                 - [ ] Remover materia
     - [ ] Caronas
-        - [ ] Visualizar caronas como carona
+        - [ ] Visualizar caronas como carona (Visualizar caronas)
             - [x] ~~Lista com todas as caronas disponiveis~~
             - [ ] Buscas com filtro avancado
                 - [ ] *`funcionaliade`* Lugares
@@ -75,29 +75,31 @@
             - [ ] Reservar caronas
                 - [x] Reservar uma carona especifica
                 - [ ] *`funcionaliade`* Notificacoes para modificacao de estado da carona
-        - [ ] Visualizar caronas como piloto (*é diferente do passageiro?? --dsalexan*)
-            - [ ] Lista com todas as caronas disponiveis
-            - [ ] Buscas com filtro avancado
-                - [ ] *`funcionaliade`* Lugares
-                - [ ] *`funcionaliade`* Horario
-                - [ ] *`funcionaliade`* Local de saida
-                - [ ] *`funcionaliade`* Local de chegada
-            - [ ] Oferecer caronas
+        - [ ] Oferecer carona
+            - [ ] Criar caronas
                 - [x] ~~Oferecer uma carona~~
                 - [ ] *`funcionaliade`* Notificacao para modificacao de estados de reservas
                 - [ ] *`funcionaliade`* Opcao para ser ida e volta
                 - [ ] *`funcionaliade`* Sugerir que o piloto bote uma foto caso nao possua uma
                 - [ ] *`funcionaliade`* Sugerir que o piloto insira um picpay caso nao possua um cadastrado
                 - [ ] *`funcionaliade`* Sugerir que o piloto informe a placa do carro caso nao haja uma cadastrada
-            - [x] ~~Confirmar reservas de carona~~
-            - [ ] Modificar carona
-            - [x] ~~Excluir carona~~
         - [ ] Minhas caronas (historico de caronas passadas)
+            - [ ] (como piloto)
+                - [x] ~~Lista com minhas caronas oferecidas~~
+                - [ ] Carona individual
+                    - [x] ~~Visualizar dados de carona~~
+                    - [x] ~~Confirmar reservas de carona~~
+                    - [ ] Modificar carona
+                    - [x] ~~Excluir carona~~
+            - [x] ~~(como passageiro)~~
+                - [x] ~~Caronas solicitadas~~
+                - [x] ~~Reservas atuais~~
+                    - [x] ~~Cancelar reserva~~
         - [ ] **`funcionalidade`** Colocar alarme de caronas, para lembrar o aluno de pedir uma carona. Talvez até sugerir alarmes com base nos horarios das primeiras aulas do dia.
     - [ ] Utilidades
         - [ ] Saldo RU
             - [x]  ~~Visualizar saldo ru~~
-            - [ ] *`funcionalidade`* Criar um cronograma com todos os alunos cadastrados e espalhar atualizacoes de ru pelo dia para eficiencia
+            - [x] ~~*`funcionalidade`* Criar um cronograma com todos os alunos cadastrados e espalhar atualizacoes de ru pelo dia para eficiencia~~
             - [x] ~~Botao para forcar atualizacao do saldo ru~~
                 - [x] ~~*`funcionaliade`* Informar a ultima vez em que o saldo foi atualizado~~
         - [ ] Cardapio RU 
