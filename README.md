@@ -3,12 +3,13 @@
 <!-- TOC -->
 
 - [INDIA - **August**](#india---august)
-    - [Pendências](#pend%C3%AAncias)
-        - [TESTES](#testes)
-            - [Disclaimer](#disclaimer)
-        - [APRESENTACAO](#apresentacao)
-            - [Roteiro](#roteiro)
-            - [Recursos](#recursos)
+  - [## Pendências](#pend%C3%AAncias)
+    - [TESTES](#testes)
+      - [Disclaimer](#disclaimer)
+  - [### LAYOUT](#layout)
+  - [### APRESENTACAO](#apresentacao)
+      - [Roteiro](#roteiro)
+      - [Recursos](#recursos)
 
 <!-- /TOC -->
 
@@ -135,6 +136,11 @@
             - [x] ~~Reservar um oferecimento especifico~~
             - [ ] Remover reserva
             - [ ] *`funcionaliade`* Notificacao para modificacao de estado da reserva
+
+### LAYOUT
+---
+- [x] ~~Login~~
+- [ ] 
 
 
 ### APRESENTACAO
