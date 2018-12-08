@@ -40,7 +40,7 @@
             - [x] ~~Visualizar todas as aulas~~
             - [x] ~~Visualizar aula unica~~
                 - [ ] Se certificar que o professor na aula ta de acordo com o **Corpo Docente** (site da unifesp)
-                - [ ] Se certificar que ta mostrando a sala corretamente
+                - [ ] *`URGENTE`* Se certificar que ta mostrando a sala corretamente
             - [ ] Questionar aulas nao encontradas pela analise
                 - [ ] Adicionar nova aula
                 - [ ] Modificar aula existente
