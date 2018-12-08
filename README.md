@@ -73,7 +73,7 @@
                 - [ ] *`funcionaliade`* Local de saida
                 - [ ] *`funcionaliade`* Local de chegada
             - [ ] Reservar caronas
-                - [x] Reservar uma carona especifica
+                - [x] ~~Reservar uma carona especifica~~
                 - [ ] *`funcionaliade`* Notificacoes para modificacao de estado da carona
         - [ ] Oferecer carona
             - [ ] Criar caronas
