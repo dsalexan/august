@@ -1,0 +1,1 @@
+SELECT login_intranet FROM aluno

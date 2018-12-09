@@ -416,6 +416,6 @@ app.use(function(err, req, res, next) {
 var server = app.listen(port, () => {
     console.log(`server listening at port ${port}`)
     service.analyse().then(() => {
-        service.run()
+        // service.run()
     })
 })
