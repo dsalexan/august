@@ -342,6 +342,8 @@ module.exports = {
             data_fim: req.query.data_fim || req.query.dt_fim
         }
 
+        console.log('dados', dados)
+
         const query = new pq(sql.grade.select_count_compromissos_periodo_ra)
         db.any(query.text, dados)
         .then(q => {

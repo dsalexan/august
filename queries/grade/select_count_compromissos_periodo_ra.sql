@@ -15,10 +15,8 @@ WHERE R.id_passageiro = ${ra_aluno}
 GROUP BY R.id_passageiro
 UNION
 SELECT count(*) AS qtd, 'Caronas (motorista)' AS nome
-FROM reserva R
-  INNER JOIN viagem V ON V.id_viagem = R.id_viagem
+FROM  viagem V
 WHERE V.id_motorista = ${ra_aluno}
-  AND R.status_reserva = true
   AND V.dia BETWEEN ${data_inicio} AND ${data_fim}
 GROUP BY V.id_motorista
 UNION
