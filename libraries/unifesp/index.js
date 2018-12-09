@@ -457,7 +457,7 @@ UNIFESP.fetch = function(what, data, options){
         if(options == undefined) options = {}
 
         if(options.servico == undefined)
-            options.servico = await ModelUnifesp.insert_servico(what, DateTime.toSQL(), data.ra_aluno || null)
+            options.servico = await ModelUnifesp.insert_servico(what, DateTime.toSQL(), (data && data.ra_aluno) || null)
 
         puppet = [false]
         let where = _INTRANET

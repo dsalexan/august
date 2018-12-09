@@ -140,6 +140,7 @@
 ### LAYOUT
 ---
 - [x] ~~Login~~
+- [ ] Home
 - [ ] 
 
 

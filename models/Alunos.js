@@ -3,6 +3,9 @@ const sql = require('../queries')
 const pq = require('pg-promise').ParameterizedQuery
 const pgp = require('pg-promise')
 
+const Crypt = require('../utils/crypt')
+const cryptoJS = require("crypto-js")
+
 
 Alunos = {}
 
@@ -10,6 +13,7 @@ Alunos.select_aluno_ra = (ra) => db.oneOrNone(sql.aluno.select_aluno_ra, {ra_alu
 Alunos.select_alunos = () => db.any(sql.aluno.select_alunos)
 Alunos.select_aluno_credenciais = (credenciais) => db.oneOrNone(sql.aluno.select_aluno_credenciais, credenciais)
 Alunos.select_aluno_login = (login_intranet) => db.oneOrNone(sql.aluno.select_aluno_login, [login_intranet])
+Alunos.select_all_login = () => db.any(sql.aluno.select_all_login)
 
 Alunos.select_latest_atestado = (ra_aluno) => db.oneOrNone(sql.aluno.select_latest_atestado, [ra_aluno])
 
@@ -50,13 +54,24 @@ Alunos.register_aluno = (ra_aluno, nome, login_intranet, senha_intranet) => {
 }
 
 Alunos.check_register_aluno = (username_unifesp, senha_unifesp) => {
-    return new Promise((resolve, reject) => {
-        Alunos.select_aluno_login(username_unifesp).then(result => {
-            resolve({
-                exists: result != null,
-                data: result
+    return new Promise(async (resolve, reject) => {
+        try{
+            let result = await Alunos.select_alunos()
+            let logins = result.map(l => {
+                let _ = l 
+                _.login_intranet = Crypt.decrypt(l.login_intranet, 'Achilles').toString(cryptoJS.enc.Utf8)
+                return _
             })
-        }).catch(err => reject(err))
+
+            let _ = logins.filter(a => a.login_intranet == username_unifesp)[0]
+
+            resolve({
+                exists: _ != undefined,
+                data: _
+            })
+        }catch(error){
+            reject(error)
+        }
     })
 }
 
