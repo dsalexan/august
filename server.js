@@ -269,6 +269,7 @@ router.get('/api/grades/post/professor', Grade.insert_professor)
 router.get('/api/grades/post/turma', Grade.insert_turma)
 router.get('/api/grades/post/uc', Grade.insert_uc)
 
+router.get('/api/grade/:ra_aluno/compromissos/quantidade', Grade.select_count_compromissos_periodo_ra)
 router.get('/api/grade/:ra_aluno/compromissos', Grade.select_compromissos_compromisso_tq_raaluno)
 
 router.get('/api/grade/eventos', Grade.select_eventos)

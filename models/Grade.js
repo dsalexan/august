@@ -335,6 +335,25 @@ module.exports = {
             return next(error)
         })
     },
+    select_count_compromissos_periodo_ra: (req, res, next) => {
+        let dados = {
+            ra_aluno: req.params.ra_aluno,
+            data_inicio: req.query.data_inicio || req.query.dt_inicio,
+            data_fim: req.query.data_fim || req.query.dt_fim
+        }
+
+        const query = new pq(sql.grade.select_count_compromissos_periodo_ra)
+        db.any(query.text, dados)
+        .then(q => {
+            res.status(200).json({
+                data: q,
+                success: true
+            })
+        })
+        .catch(error => {
+            return next(error)
+        })
+    },
     select_eventos: (req, res, next) => {
         const query = new pq(sql.grade.select_eventos)
         db.any(query.text)
