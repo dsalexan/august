@@ -21,7 +21,7 @@
 
 - [ ] Grade
     - [ ] Login
-        - [x] ~~*`funcionaliade`* Login nao existente~~
+        - [x] ~~*`funcionaliade`* Login nao existente~~ **`OK`**
         - [x] ~~*`funcionaliade`* Login existente~~
         - [ ] *`funcionaliade`* Melhorar criptografia (*ponta a ponta, tem isso ai --dsalexan*)
         - [ ] *`funcionaliade`* Começar a autenticar as chamadas para a API com um JWT vindo do login (*da pra fazer isso? --dsalexan*)
@@ -132,7 +132,7 @@
             - [ ] Estatisticas de adesao a coisa
         - [ ] Reservar coisas
             - [ ] Visualizar todas as coisas sendo ofertadas
-            - [ ] Visualizar os dados de um oferecimento especifico
+            - [ ] Visualizar os dados de um oferecimento **especifico**
             - [x] ~~Reservar um oferecimento especifico~~
             - [ ] Remover reserva
             - [ ] *`funcionaliade`* Notificacao para modificacao de estado da reserva
@@ -150,7 +150,7 @@
 - [ ] Roteiro ([goto](#roteiro))
 - [ ] Montar slides - *os numeros do slide sao só uma previsao* ([recursos](#recursos))
     - [ ] HOJE
-        - [ ] `1` Fazer video com os processos atuais de pegar os coiso nas intranet
+        - [x] `1` Fazer video com os processos atuais de pegar os coiso nas intranet
         - [ ] `2` Após o video o primeiro slide tem que ser um só o com o logo e nome
         - [ ] `3` Ai vem o slide introdutório com os nomes de cada um
             - [ ] Arranjar uns icones pra cada um? Mt trampo?
