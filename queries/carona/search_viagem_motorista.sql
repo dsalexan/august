@@ -9,9 +9,9 @@ NATURAL JOIN (
     FROM destino
     GROUP BY destino.id_viagem
     ) AS destino_unico
-NATURAL JOIN viagem V
+NATURAL JOIN viagem
 NATURAL JOIN origem
 NATURAL JOIN destino
-	aluno A ON V.id_motorista = A.ra_aluno
+	LEFT JOIN aluno A ON viagem.id_motorista = A.ra_aluno
 WHERE viagem.id_motorista = $1
 
