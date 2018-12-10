@@ -220,7 +220,7 @@ module.exports = {
         var hora = req.body.hora
         var origem = req.body.origem
         
-        dados = [id_viagem, origem, hora]
+        dados = {id_viagem, origem, hora}
 
         const viagem = new pq(sql.caronas.ins_viagem_origem)
         db.none(viagem, dados)
