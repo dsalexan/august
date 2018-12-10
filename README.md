@@ -149,26 +149,26 @@
 - [ ] Criar um guia para tentar lidar com os erros bizarros do Ionic
 - [ ] Roteiro ([goto](#roteiro))
 - [ ] Montar slides - *os numeros do slide sao só uma previsao* ([recursos](#recursos))
-    - [ ] HOJE
+    - [x] HOJE
         - [x] `1` Fazer video com os processos atuais de pegar os coiso nas intranet
-        - [ ] `2` Após o video o primeiro slide tem que ser um só o com o logo e nome
-        - [ ] `3` Ai vem o slide introdutório com os nomes de cada um
+        - [x] `2` Após o video o primeiro slide tem que ser um só o com o logo e nome
+        - [x] `3` Ai vem o slide introdutório com os nomes de cada um
             - [ ] Arranjar uns icones pra cada um? Mt trampo?
-        - [ ] `4` Slide com HOJE escrito grandao pra introduzir o topico
-        - [ ] `5` Slide com as informacoes que a gente pega da unifeso (historico, atestado...) e exemplos de situacoes coditianas (nada de textos longos, só icones espirituosos)
-    - [ ] NOSSO PROJETO
-        - [ ] `6` Slide com NOSSO PROJETO grandao
-        - [ ] `7` Slide com alguns numeros de tempo e cliques comparando o jeito atual com o nosso app e alguns icones que comparam PC X Mobile
-        - [ ] `8` Slide com icone de email e um printscreen evidenciando o email que a gente enviou pra eles (provavelmente o print de uma caixa da gmail evidenciando pra kct só o email que enviamos)
-    - [ ] SEGURANÇA DOS DADOS
-        - [ ] `9` Slide com SEGURANÇA DOS DADOS grandao (*talvez um disclaimer escrito em algum lugar? --dsalexan*)
-        - [ ] `10` Slides com transicoes bonitinhas para os sub-topics de seguranca de dados
+        - [x] `4` Slide com HOJE escrito grandao pra introduzir o topico
+        - [x] `5` Slide com as informacoes que a gente pega da unifeso (historico, atestado...) e exemplos de situacoes coditianas (nada de textos longos, só icones espirituosos)
+    - [x] NOSSO PROJETO
+        - [x] `6` Slide com NOSSO PROJETO grandao
+        - [x] `7` Slide com alguns numeros de tempo e cliques comparando o jeito atual com o nosso app e alguns icones que comparam PC X Mobile
+        - [ ] ~~`8` Slide com icone de email e um printscreen evidenciando o email que a gente enviou pra eles (provavelmente o print de uma caixa da gmail evidenciando pra kct só o email que enviamos)~~
+    - [x] SEGURANÇA DOS DADOS
+        - [x] `9` Slide com SEGURANÇA DOS DADOS grandao (*talvez um disclaimer escrito em algum lugar? --dsalexan*)
+        - [x] `10` Slides com transicoes bonitinhas para os sub-topics de seguranca de dados
     - [ ] NOSSO APLICATIVO
-        - [ ] `11` Slide com NOSSO APLICATIVO grandao (talvez algum icone de voluntario ou app?)
-        - [ ] `12` Slide com a senha para desbloquear o download do app
-            - [ ] Descobrir algum servico online que faz isso, download bloqueado por senha
-        - [ ] `13` Slide com APP escrito grandao e uns icones (esse tipo de slide vai ser para indicar que a gente vai migrar pro espelho do celular) `ref. LOGIN`
-        - [ ] `14` Slide com links e falando sobre o JWT (icones, nao textao) `ref. LOGIN`
+        - [x] `11` Slide com NOSSO APLICATIVO grandao (talvez algum icone de voluntario ou app?)
+        - [ ] ~~`12` Slide com a senha para desbloquear o download do app~~
+            - [ ] ~~Descobrir algum servico online que faz isso, download bloqueado por senha~~
+        - [x] `13` Slide com APP escrito grandao e uns icones (esse tipo de slide vai ser para indicar que a gente vai migrar pro espelho do celular) `ref. LOGIN`
+        - [x] `14` Slide com links e falando sobre o JWT (icones, nao textao) `ref. LOGIN`
         - [ ] `15` Slide com diagrama explicando o nosso processo de compilar os dados de aulas e salas `ref. GRADE`
         - [ ] `16` Slide com a infraestrurura do projeto em icones nao texto, iniciar com postgresql, node, sql... com transicoes leves e ai transitar para **DIGITAL OCEAN** com um certo destaque `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`
         - [ ] `17` Slide com especificidades do digital ocean, como alguns numeros de preco e specs da maquina e localizacao `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`
@@ -196,8 +196,8 @@
     - *comecar a apresentação com o vídeo, e fazer a introducao depois*
     - *na introducao é importante quem estiver falando entregar as "credenciais" do projeto antes de trocar de topico: "pegar todas essas informações hoje é um processo confuso e lento. a gente ta aqui pra entregar um novo jeito mais rapido e mais fácil" ou algo assim*
 2. **`NOSSO PROJETO`**. Falar que todos (ou a maiora) dessas informacoes sao acessadas com as mesmas credenciais - o problema é a falta de um acesso ainda mais centralizado e a falta de eficiencia do que ja existe. O nosso projeto é criar esse ambiente centralizado, reunir as informaçoes espalhadas em um só lugar para acesso rápido e prático.
-    - **`APK`**. Enviar um link para o email de todos os alunos com o apk para download. Na verdade travar o download com uma senha especifica pra nao deixar os apressados ja irem logando sem antes ouvir o *disclaimer* sobre seguranca de dados. Especificar que esse **beta run** só funcionará durante a aula (ou apresentacao). **A gente pode só mostrar o link também, mas o link aparecer no email é bem mais *cool***
-        - *descobrir uma lista de emails. da pra usar a lista de alunos que a gente tem?*
+    - ~~**`APK`**. Enviar um link para o email de todos os alunos com o apk para download. Na verdade travar o download com uma senha especifica pra nao deixar os apressados ja irem logando sem antes ouvir o *disclaimer* sobre seguranca de dados. Especificar que esse **beta run** só funcionará durante a aula (ou apresentacao). **A gente pode só mostrar o link também, mas o link aparecer no email é bem mais *cool***~~
+        - ~~*descobrir uma lista de emails. da pra usar a lista de alunos que   s a gente tem?*~~
 3. **`SEGURANÇA DOS DADOS`**. Um dos aspectos mais importantes do que nos propusemos a fazer é a segurança dos dados. Precisamos lidar com as senhas do usuário para automatizar os processos da UNIFESP, e portanto é necessário ter certeza de que esses dados estão protegidos e de que não serão abusados. 
     - **`APLICATIVO SEGURO`**. Falar que o nosso app só pede o minimo de permissões do celular (*provavelmente só o de gerenciar arquivos, mas ai sei la ne --dsalexan*)
     - **`SENHAS CRIPTOGRAFADAS`**. No momento em que o usuário loga no app suas credenciais sao criptografadas com uma chave secreta que só o APP e o servidor conhecem. Explicar que dessa maneira todas requisições que envolvem as credenciais do aluno (o login nesse caso) só lidam com dados criptografados, mesmo que alguem intercepte a requisicao (em redes abertas como wifi publicos) nao seria possivel ler os dados. (*cozinhar melhores argumentos, ta fraco ainda --dsalexan*)
