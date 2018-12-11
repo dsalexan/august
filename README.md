@@ -24,6 +24,18 @@
         - [x] ~~*`funcionaliade`* Login nao existente~~ **`OK`**
         - [x] ~~*`funcionaliade`* Login existente~~
         - [ ] *`funcionaliade`* Melhorar criptografia (*ponta a ponta, tem isso ai --dsalexan*)
+          - **Secutiry issues**
+            - Se alguem interceptar a chamada de login pro nosso servidor e retornar auth: true o app vai achar que o cara logou de boas
+            - Falta assegurar a integridade das chamadas com JWT
+              - Dentro do JWT vai ter a identificacao do usuario (ra ?) e no servidor a gente vai ter uma lista de chamadas autorizadas para aquele determinado identificacao
+            - Talvez gerar uma chave de segurança diferente (chave de encriptacao) para cada novo usuário (ao instalar o APK no celular ha uma comunicacao com o server validando o celular e atribuindo uma chave secreta entre eles)
+              - Assim mesmo que alguem consiga a chave de um celular ele só vai conseguir quebrar os dados que passarem por aquele celular
+              - Mas onde guardar essa chave dentro do celular? Storage é acessivel se o cara rootear
+            - Se alguem modificar o storage do celular e trocar o ra ele vai ter acesso a informacao de outros alunos
+              - Talvez vincular o mac(?) de um celular a um ra dentro do nosso sistema, e cruzar os dois durante o request pra assegurar que ta vindo do lugar certo?
+                - Mas nao é essa a funcao do JWT? Assegurar que o pedido ao servidor API ta vindo de um lugar que foi autenticado?
+            - Talvez hashear uma chave que só o servidor conhece e guardar no celular o hasheado (nao tem como tirar a real de um hash). Ai toda resposta do servidor ele compara o hash de identificacao com o que ele tem no app pra se certificar de que é o servidor msm e nao um hijack
+              - Mas e se alguem alterar a chave no app (seja mudando um storage da vida ou alterando os bits do apk no lugar correto) ?
         - [ ] *`funcionaliade`* Começar a autenticar as chamadas para a API com um JWT vindo do login (*da pra fazer isso? --dsalexan*)
         - [x] ~~*`funcionaliade`* Criptografar também o username do aluno~~
         - [ ] *`funcionaliade`* Pesquisar saldo ru no login
@@ -169,20 +181,20 @@
             - [ ] ~~Descobrir algum servico online que faz isso, download bloqueado por senha~~
         - [x] `13` Slide com APP escrito grandao e uns icones (esse tipo de slide vai ser para indicar que a gente vai migrar pro espelho do celular) `ref. LOGIN`
         - [x] `14` Slide com links e falando sobre o JWT (icones, nao textao) `ref. LOGIN`
-        - [ ] `15` Slide com diagrama explicando o nosso processo de compilar os dados de aulas e salas `ref. GRADE`
-        - [ ] `16` Slide com a infraestrurura do projeto em icones nao texto, iniciar com postgresql, node, sql... com transicoes leves e ai transitar para **DIGITAL OCEAN** com um certo destaque `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`
-        - [ ] `17` Slide com especificidades do digital ocean, como alguns numeros de preco e specs da maquina e localizacao `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`
-        - [ ] `18` Slide com numeros de uso da nossa maquina no digital ocean e algumas previsoes numericas do quanto poderia custar um servidor para aplicacao na realidade `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`
+        - [ ] ~~`15` Slide com diagrama explicando o nosso processo de compilar os dados de aulas e salas `ref. GRADE`~~
+        - [ ] ~~`16` Slide com a infraestrurura do projeto em icones nao texto, iniciar com postgresql, node, sql... com transicoes leves e ai transitar para **DIGITAL OCEAN** com um certo destaque `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`~~
+        - [ ] ~~`17` Slide com especificidades do digital ocean, como alguns numeros de preco e specs da maquina e localizacao `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`~~
+        - [ ] ~~`18` Slide com numeros de uso da nossa maquina no digital ocean e algumas previsoes numericas do quanto poderia custar um servidor para aplicacao na realidade `ref. DIVULGAÇÃO > INFRAESTRURURA DO PROJETO`~~
         - [ ] MONETIZAÇÃO
-            - [ ] `19` Slide com monetização escrito, menos destaque do que os destaques de eixo
-            - [ ] `20` Icones exemplificando pequenos empreendimentos que poderiam utilizar nosso **EIXO DIVULGACAO**
-            - [ ] `21` Transicao legal para icones exemplificando empreendimentos maiores externos que poderiam utilizar nossa aba divulgacao
-            - [ ] `22` Mostrar alguns números que falam sobre o nosso demographics e outros que validem que o nosso demographics compra coisa e engaja bastante anuncio
-            - [ ] `23` Slide com icones pra falar da diferenca entre a nossa aba com monetizacao e um GoogleAds ou Facebook Ads
-    - [ ] FUTURO
-        - [ ] `24` Slide com FUTURO escrito grandao (*algum delorean em icone talvez? --dsalexan*)
-        - [ ] `25` Slide com transicoes e icones para os subtopics e subsubtopics de Futuro
-    - [ ] `26` Slide com nossos nomes e emails no estilao do primeiro slide que a gente apresentou
+            - [x] `19` Slide com monetização escrito, menos destaque do que os destaques de eixo
+            - [ ] ~~`20` Icones exemplificando pequenos empreendimentos que poderiam utilizar nosso **EIXO DIVULGACAO**~~
+            - [ ] ~~`21` Transicao legal para icones exemplificando empreendimentos maiores externos que poderiam utilizar nossa aba divulgacao~~
+            - [ ] ~~`22` Mostrar alguns números que falam sobre o nosso demographics e outros que validem que o nosso demographics compra coisa e engaja bastante anuncio~~
+            - [ ] ~~`23` Slide com icones pra falar da diferenca entre a nossa aba com monetizacao e um GoogleAds ou Facebook Ads~~
+    - [ ] ~~FUTURO~~
+        - [x] `24` Slide com FUTURO escrito grandao (*algum delorean em icone talvez? --dsalexan*)
+        - [ ] ~~`25` Slide com transicoes e icones para os subtopics e subsubtopics de Futuro~~
+    - [x] `26` Slide com nossos nomes e emails no estilao do primeiro slide que a gente apresentou
 - [ ] Testar condicoes ideiais para AirDroid
 - [ ] Testar a maneira de uso dos dois computadores (vamos precisar de um para o espelho do celular e outro para mostrar resultados de pesquisa do banco)
     - [ ] Vai ter que ter um esquema pratico para trocar de tela do app -> tela do powerpoint -> tela do datagrip
